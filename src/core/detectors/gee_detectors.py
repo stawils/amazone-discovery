@@ -21,7 +21,7 @@ import logging
 from pathlib import Path
 import json
 
-from .config import DetectionConfig, ScoringConfig, TargetZone
+from ..config import DetectionConfig, ScoringConfig, TargetZone
 
 logger = logging.getLogger(__name__)
 

@@ -23,9 +23,8 @@ logger = logging.getLogger(__name__)
 
 # Import our core modules
 from src.core.config import TARGET_ZONES, APIConfig, SATELLITE_DIR, RESULTS_DIR
-from src.providers.usgs_provider import USGSProvider
-from src.providers.gee_provider import GEEProvider  
-from src.core.detectors import ArchaeologicalDetector
+from src.providers.gee_provider import GEEProvider
+from core.detectors.detectors import ArchaeologicalDetector
 from src.core.scoring import ConvergentAnomalyScorer
 from src.pipeline.modular_pipeline import ModularPipeline
 

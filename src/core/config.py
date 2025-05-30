@@ -104,14 +104,8 @@ TARGET_ZONES = {
 
 # API Configuration
 class APIConfig:
-    # USGS M2M API
-    USGS_API_URL = "https://m2m.cr.usgs.gov/api/api/json/stable/"
-    USGS_USERNAME = os.getenv("USGS_USERNAME")
-    USGS_TOKEN = os.getenv("USGS_TOKEN")
-    
     # OpenAI for AI enhancement
     OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-    
     # Copernicus (if available)
     COPERNICUS_USER = os.getenv("COPERNICUS_USER") 
     COPERNICUS_PASSWORD = os.getenv("COPERNICUS_PASSWORD")

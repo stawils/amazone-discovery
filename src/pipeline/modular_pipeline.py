@@ -4,7 +4,6 @@ from src.pipeline.analysis import AnalysisStep
 from src.pipeline.scoring import ScoringStep
 from src.pipeline.report import ReportStep
 from src.pipeline.visualization import VisualizationStep
-from src.providers.usgs_provider import USGSProvider
 from src.providers.gee_provider import GEEProvider
 import logging
 
@@ -14,16 +13,9 @@ class ModularPipeline:
     """
     Orchestrates the modular archaeological discovery pipeline steps.
     """
-    def __init__(self, provider: str = 'usgs'):
+    def __init__(self, provider: str = 'gee'):
         self.provider = provider
-        if provider == 'usgs':
-            self.provider_instance = USGSProvider()
-        elif provider == 'gee':
-            self.provider_instance = GEEProvider()
-        elif provider == 'both':
-            self.provider_instance = [USGSProvider(), GEEProvider()]
-        else:
-            raise ValueError(f"Unknown provider: {provider}")
+        self.provider_instance = GEEProvider()
         self.analysis_step = AnalysisStep()
         self.scoring_step = ScoringStep()
         self.report_step = ReportStep()
@@ -41,13 +33,8 @@ class ModularPipeline:
         logger.info("\n🚀 Starting Modular Archaeological Discovery Pipeline...")
         # Download
         all_scene_data: List[SceneData] = []
-        if isinstance(self.provider_instance, list):
-            for prov in self.provider_instance:
-                logger.info(f"Using provider: {prov.__class__.__name__}")
-                all_scene_data.extend(prov.download_data(zones, max_scenes))
-        else:
-            logger.info(f"Using provider: {self.provider_instance.__class__.__name__}")
-            all_scene_data = self.provider_instance.download_data(zones, max_scenes)
+        logger.info(f"Using provider: {self.provider_instance.__class__.__name__}")
+        all_scene_data = self.provider_instance.download_data(zones, max_scenes)
         logger.info(f"✓ Downloaded {len(all_scene_data)} scenes.")
         # Analyze
         analysis_results = self.analysis_step.run(all_scene_data)
