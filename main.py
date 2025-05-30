@@ -108,7 +108,7 @@ def run_modular_pipeline(**kwargs):
         
         # Extract parameters
         zones = kwargs.get('zones')
-        provider = kwargs.get('provider', 'usgs')
+        provider = kwargs.get('provider', 'gee')
         max_scenes = kwargs.get('max_scenes', 3)
         
         print(f"\n🚀 Starting Modular Archaeological Discovery Pipeline...")
