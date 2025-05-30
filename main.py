@@ -11,7 +11,9 @@ from pathlib import Path
 from datetime import datetime
 import os
 from dotenv import load_dotenv
-
+import sys
+sys.path.insert(0, str(Path(__file__).parent))  # Ensure src is in path\
+    
 # Load environment variables
 load_dotenv()
 

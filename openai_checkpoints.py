@@ -12,6 +12,7 @@ from datetime import datetime
 from typing import Dict, List, Any, Optional
 import openai
 from dotenv import load_dotenv
+from src.core.scoring import batch_score_zones
 
 # Load environment variables
 load_dotenv()
@@ -138,22 +139,22 @@ class CheckpointRunner:
         }
         
         try:
-            # Step 1: Download one scene
+            # Step 1: Download one scene using existing provider
             logger.info(f"📡 Downloading sample data for {zone} using {provider}")
-            
+
             if provider == 'usgs':
                 provider_instance = USGSProvider()
             elif provider == 'gee':
                 provider_instance = GEEProvider()
             else:
                 raise ValueError(f"Unknown provider: {provider}")
-            
-            # Download single scene
+
+            # Download single scene using existing pipeline
             scene_data = provider_instance.download_data([zone], max_scenes=1)
-            
+
             if not scene_data:
                 raise ValueError("No data downloaded")
-            
+
             sample_scene = scene_data[0]
             
             result['data_downloaded'] = {

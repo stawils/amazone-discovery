@@ -7,6 +7,7 @@ import numpy as np
 from typing import Dict, List, Any, Tuple
 import logging
 from dataclasses import dataclass
+from src.core.scoring import batch_score_zones
 
 from .config import TARGET_ZONES, ScoringConfig
 
@@ -491,6 +492,39 @@ class ConvergentAnomalyScorer:
             })
         
         return recommendations
+
+    def calculate_score(self, analysis_results: List[Dict]) -> Dict[str, Any]:
+        """Calculate score from analysis results (integrate with existing scorer)"""
+        # Convert analysis results to expected format for existing scorer
+        combined_features = {
+            'terra_preta_patches': [],
+            'geometric_features': []
+        }
+        
+        for scene_result in analysis_results:
+            if scene_result.get('success'):
+                # Terra preta patches
+                tp_patches = scene_result.get('terra_preta', {}).get('patches', [])
+                combined_features['terra_preta_patches'].extend(tp_patches)
+                
+                # Geometric features
+                geom_features = scene_result.get('geometric_features', [])
+                combined_features['geometric_features'].extend(geom_features)
+        
+        # Use existing scoring method
+        scorer = ConvergentAnomalyScorer()
+        
+        # Get the zone_id from first successful result
+        zone_id = None
+        for result in analysis_results:
+            if result.get('success') and 'zone' in result:
+                zone_id = result['zone']
+                break
+        
+        if not zone_id:
+            return {'total_score': 0, 'classification': 'No valid analysis', 'evidence_count': 0}
+        
+        return scorer.calculate_zone_score(zone_id, combined_features)
 
 def batch_score_zones(analysis_results: Dict[str, List[Dict]]) -> Dict[str, Dict]:
     """Score multiple zones and return sorted results"""

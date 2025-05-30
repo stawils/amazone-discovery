@@ -14,16 +14,15 @@ class ScoringStep:
     def run(self, analysis_results: Dict[str, List[dict]]) -> Dict[str, dict]:
         """
         Calculate convergent anomaly scores for all detections.
-        Args:
-            analysis_results: Dictionary mapping zone_id to list of analysis result dicts.
-        Returns:
-            Dictionary mapping zone_id to scoring result dicts.
         """
         logger.info("🔢 Calculating convergent anomaly scores...")
-        scoring_results = {}
-        for zone_id, results in analysis_results.items():
-            scorer = ConvergentAnomalyScorer()
-            score = scorer.calculate_score(results)
-            scoring_results[zone_id] = score
-            logger.info(f"  ✓ Zone {zone_id}: Score {score['total_score']}")
+        
+        # Use existing batch scoring function
+        from src.core.scoring import batch_score_zones
+        scoring_results = batch_score_zones(analysis_results)
+        
+        for zone_id, result in scoring_results.items():
+            score = result.get('total_score', 0)
+            logger.info(f"  ✓ Zone {zone_id}: Score {score}/15")
+        
         return scoring_results 

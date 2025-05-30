@@ -421,8 +421,26 @@ class ArchaeologicalDetector:
         logger.info(f"Analyzing scene: {scene_path}")
         
         try:
-            # Load satellite bands
-            bands = self.load_landsat_bands(scene_path)
+            # Resolve scene directory
+            scene_path = Path(scene_path)
+            if scene_path.is_file():
+                scene_path = scene_path.parent
+            
+            if not scene_path.exists():
+                raise FileNotFoundError(f"Scene path not found: {scene_path}")
+            
+            # Load satellite bands with better error handling
+            try:
+                bands = self.load_landsat_bands(scene_path)
+            except Exception as e:
+                logger.error(f"Failed to load bands from {scene_path}: {e}")
+                # Try to find any .tif files in the directory
+                tif_files = list(scene_path.glob("*.tif")) + list(scene_path.glob("*.TIF"))
+                if tif_files:
+                    logger.info(f"Found {len(tif_files)} .tif files, attempting analysis")
+                    bands = self.load_landsat_bands(scene_path)
+                else:
+                    raise
             
             if not bands:
                 logger.error("No bands loaded - cannot analyze scene")
