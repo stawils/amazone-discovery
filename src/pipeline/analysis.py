@@ -1,7 +1,7 @@
 from typing import List, Dict
 from pathlib import Path
 from src.core.data_objects import SceneData
-from core.detectors.detectors import ArchaeologicalDetector
+from src.core.detectors.gee_detectors import ArchaeologicalDetector
 from src.core.config import TARGET_ZONES, EXPORTS_DIR
 import logging
 
