@@ -1,0 +1,19 @@
+# Data files
+data/
+*.tif
+*.tiff
+*.las
+*.laz
+*.shp
+
+# API keys
+.env
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.jupyter/
+
+# Results
+results/

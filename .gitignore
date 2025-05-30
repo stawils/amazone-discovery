@@ -1,0 +1,13 @@
+data/
+results/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pyw
+*.pyz
+
+.env
+.DS_Store
+
+
