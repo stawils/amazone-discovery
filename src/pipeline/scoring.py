@@ -1,6 +1,6 @@
 from typing import Dict, List
 from src.core.scoring import ConvergentAnomalyScorer
-from src.config import TARGET_ZONES
+from src.core.config import TARGET_ZONES
 import logging
 
 logger = logging.getLogger(__name__)

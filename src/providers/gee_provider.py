@@ -14,7 +14,7 @@ import os
 import time
 
 from src.core.config import TARGET_ZONES, APIConfig, DetectionConfig, SATELLITE_DIR
-from .data_objects import SceneData, BaseProvider
+from src.core.data_objects import SceneData, BaseProvider
 
 logger = logging.getLogger(__name__)
 

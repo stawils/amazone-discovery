@@ -48,6 +48,8 @@ tensorflow>=2.13.0
 jupyter>=1.0.0
 ipykernel>=6.25.0
 
+openai
+
 # Note: Removed problematic packages:
 # - pdal (LiDAR - requires system dependencies)
 # - laspy (LiDAR - not essential for satellite analysis)

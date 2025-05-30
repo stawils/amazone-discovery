@@ -120,7 +120,7 @@ class CheckpointRunner:
             logger.error(f"❌ Checkpoint {checkpoint_num} failed: {e}")
             raise
     
-    def checkpoint1_familiarize(self, provider: str = 'usgs', zone: str = 'negro_madeira') -> Dict[str, Any]:
+    def checkpoint1_familiarize(self, provider: str = 'usgs', zone: str = 'negro_madeira', **kwargs) -> Dict[str, Any]:
         """
         Checkpoint 1: Familiarize yourself with the challenge and data
         - Download one OpenTopography LiDAR tile or one Sentinel-2 scene ID
@@ -213,7 +213,7 @@ class CheckpointRunner:
             logger.error(f"Checkpoint 1 failed: {e}")
             return result
     
-    def checkpoint2_early_explorer(self, zones: List[str] = None, max_scenes: int = 2) -> Dict[str, Any]:
+    def checkpoint2_early_explorer(self, zones: List[str] = None, max_scenes: int = 2, **kwargs) -> Dict[str, Any]:
         """
         Checkpoint 2: Early explorer - mine and gather insights from multiple data types
         - Load two independent public sources
@@ -430,7 +430,7 @@ class CheckpointRunner:
             logger.error(f"Checkpoint 2 failed: {e}")
             return result
     
-    def checkpoint3_site_discovery(self, zone: str = 'negro_madeira') -> Dict[str, Any]:
+    def checkpoint3_site_discovery(self, zone: str = 'negro_madeira', **kwargs) -> Dict[str, Any]:
         """
         Checkpoint 3: New Site Discovery
         - Pick single best site discovery and back it up with evidence
@@ -628,7 +628,7 @@ class CheckpointRunner:
             logger.error(f"Checkpoint 3 failed: {e}")
             return result
     
-    def checkpoint4_story_impact(self, zone: str = 'negro_madeira') -> Dict[str, Any]:
+    def checkpoint4_story_impact(self, zone: str = 'negro_madeira', **kwargs) -> Dict[str, Any]:
         """
         Checkpoint 4: Story & impact draft
         - Craft narrative for livestream presentation
@@ -859,7 +859,7 @@ class CheckpointRunner:
             logger.error(f"Checkpoint 4 failed: {e}")
             return result
     
-    def checkpoint5_final_submission(self) -> Dict[str, Any]:
+    def checkpoint5_final_submission(self, **kwargs) -> Dict[str, Any]:
         """
         Checkpoint 5: Final submission
         - Everything above, plus any last-minute polish

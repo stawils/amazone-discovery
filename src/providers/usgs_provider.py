@@ -14,7 +14,7 @@ import logging
 import socket
 
 from src.core.config import APIConfig, DetectionConfig, SATELLITE_DIR, TargetZone, TARGET_ZONES
-from .data_objects import SceneData, BaseProvider
+from src.core.data_objects import SceneData, BaseProvider
 
 # Setup logging
 logging.basicConfig(level=logging.INFO)
