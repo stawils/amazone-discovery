@@ -1,7 +1,7 @@
 from typing import Dict, List
 from pathlib import Path
-from src.visualizers import ArchaeologicalVisualizer
-from src.config import MAPS_DIR
+from src.core.visualizers import ArchaeologicalVisualizer
+from src.core.config import MAPS_DIR
 import logging
 
 logger = logging.getLogger(__name__)

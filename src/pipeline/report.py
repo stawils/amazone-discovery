@@ -1,7 +1,7 @@
 from typing import Dict, List
 from pathlib import Path
 from datetime import datetime
-from src.config import TARGET_ZONES, REPORTS_DIR
+from src.core.config import TARGET_ZONES, REPORTS_DIR
 import logging
 
 logger = logging.getLogger(__name__)
@@ -40,10 +40,13 @@ class ReportStep:
         }
         # Save detailed JSON report
         report_path = REPORTS_DIR / f"archaeological_discovery_report_{report['session_info']['session_id']}.json"
-        with open(report_path, 'w') as f:
-            import json
-            json.dump(report, f, indent=2)
-        logger.info(f"✓ Report saved: {report_path}")
+        try:
+            with open(report_path, 'w') as f:
+                import json
+                json.dump(report, f, indent=2)
+            logger.info(f"✓ Report saved: {report_path}")
+        except Exception as e:
+            logger.error(f"Error saving report: {e}")
         return report
 
     def _generate_executive_summary(self, scoring_results: dict) -> dict:

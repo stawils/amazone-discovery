@@ -1,11 +1,11 @@
 from typing import List, Dict, Optional
-from src.data_objects import SceneData, BaseProvider
-from src.pipeline_steps.analysis import AnalysisStep
-from src.pipeline_steps.scoring import ScoringStep
-from src.pipeline_steps.report import ReportStep
-from src.pipeline_steps.visualization import VisualizationStep
-from src.usgs_api import USGSProvider
-from src.gee_provider import GEEProvider
+from src.core.data_objects import SceneData, BaseProvider
+from src.pipeline.analysis import AnalysisStep
+from src.pipeline.scoring import ScoringStep
+from src.pipeline.report import ReportStep
+from src.pipeline.visualization import VisualizationStep
+from src.providers.usgs_provider import USGSProvider
+from src.providers.gee_provider import GEEProvider
 import logging
 
 logger = logging.getLogger(__name__)

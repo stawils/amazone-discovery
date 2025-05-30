@@ -1,8 +1,8 @@
 from typing import List, Dict
 from pathlib import Path
-from src.data_objects import SceneData
-from src.detectors import ArchaeologicalDetector
-from src.config import TARGET_ZONES, EXPORTS_DIR
+from src.core.data_objects import SceneData
+from src.core.detectors import ArchaeologicalDetector
+from src.core.config import TARGET_ZONES, EXPORTS_DIR
 import logging
 
 logger = logging.getLogger(__name__)

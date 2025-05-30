@@ -13,7 +13,7 @@ from typing import List, Dict, Optional, Tuple, Any
 import logging
 import socket
 
-from .config import APIConfig, DetectionConfig, SATELLITE_DIR, TargetZone
+from src.core.config import APIConfig, DetectionConfig, SATELLITE_DIR, TargetZone, TARGET_ZONES
 from .data_objects import SceneData, BaseProvider
 
 # Setup logging
@@ -342,7 +342,6 @@ class USGSArchaeologyAPI:
     def batch_download_zones(self, zones: List[str] = None, 
                            max_scenes_per_zone: int = 3) -> Dict[str, Dict[str, Any]]:
         """Download optimal scenes for multiple target zones, returning both file paths and SceneData objects"""
-        from .config import TARGET_ZONES
         if zones is None:
             # Download for priority 1 zones first
             zones = [k for k, v in TARGET_ZONES.items() if v.priority == 1]
@@ -461,7 +460,6 @@ if __name__ == "__main__":
         print("✓ Authentication successful")
         
         # Test search for Negro-Madeira zone
-        from .config import TARGET_ZONES
         zone = TARGET_ZONES['negro_madeira']
         scenes = api.search_landsat_scenes(zone)
         print(f"✓ Found {len(scenes)} scenes for {zone.name}")
