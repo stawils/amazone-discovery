@@ -84,7 +84,7 @@ class CheckpointRunner:
 
 ### 3. **Reorganize by Function**
 - `src/core/` - Core archaeological algorithms
-- `src/providers/` - Data providers (USGS, GEE, future Sentinel-2)
+- `src/providers/` - Data providers (GEE, future Sentinel-2)
 - `src/checkpoints/` - OpenAI competition checkpoints
 - `src/pipeline/` - Modular pipeline steps
 - `src/utils/` - Helper utilities

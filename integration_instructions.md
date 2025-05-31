@@ -80,22 +80,19 @@ else:
 **Location:** Add new provider option in argument parser
 **Find:**
 ```python
-parser.add_argument('--provider', choices=['usgs', 'gee'], default='usgs',
-                   help='Data provider (default: usgs)')
+parser.add_argument('--provider', choices=['gee'], default='gee',
+                   help='Data provider (default: gee)')
 ```
 **Replace with:**
 ```python
-parser.add_argument('--provider', choices=['usgs', 'gee', 'sentinel2'], default='usgs',
-                   help='Data provider (default: usgs)')
+parser.add_argument('--provider', choices=['gee', 'sentinel2'], default='gee',
+                   help='Data provider (default: gee)')
 ```
 
-**Location:** In run_modular_pipeline function
+**Location:** In `run_modular_pipeline` function
 **Find:**
 ```python
-if provider == 'usgs':
-    from src.providers.usgs_provider import USGSProvider
-    provider_instance = USGSProvider()
-elif provider == 'gee':
+if provider == 'gee':
     from src.providers.gee_provider import GEEProvider
     provider_instance = GEEProvider()
 ```
@@ -111,9 +108,7 @@ elif provider == 'sentinel2':
 **Location:** In __init__ method
 **Find:**
 ```python
-if provider == 'usgs':
-    self.provider_instance = USGSProvider()
-elif provider == 'gee':
+if provider == 'gee':
     self.provider_instance = GEEProvider()
 ```
 **Add after:**
@@ -130,10 +125,7 @@ elif provider == 'sentinel2':
 **Location:** In checkpoint1_familiarize method
 **Find:**
 ```python
-if provider == 'usgs':
-    from src.providers.usgs_provider import USGSProvider
-    provider_instance = USGSProvider()
-elif provider == 'gee':
+if provider == 'gee':
     from src.providers.gee_provider import GEEProvider
     provider_instance = GEEProvider()
 ```
@@ -384,7 +376,6 @@ The Sentinel-2 provider offers enhanced archaeological detection capabilities:
 python main.py --provider sentinel2 --zones negro_madeira
 
 # Compare with other providers
-python main.py --provider usgs --zones negro_madeira    # Landsat
 python main.py --provider sentinel2 --zones negro_madeira  # Sentinel-2
 ```
 
@@ -401,7 +392,7 @@ python main.py --provider sentinel2 --zones negro_madeira  # Sentinel-2
 **Create validation script:**
 ```python
 # Compare detection performance between providers
-python scripts/compare_providers.py --zone negro_madeira --providers usgs,sentinel2
+python scripts/compare_providers.py --zone negro_madeira --providers sentinel2
 ```
 
 ### Step 20: Final Integration Test

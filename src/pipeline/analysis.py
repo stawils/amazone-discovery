@@ -7,7 +7,7 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-REQUIRED_BANDS = ['SR_B2', 'SR_B3', 'SR_B4', 'SR_B5', 'SR_B6', 'SR_B7']  # Landsat SR bands
+REQUIRED_BANDS = ['blue', 'green', 'red', 'nir', 'swir1', 'swir2']
 
 class AnalysisStep:
     """
