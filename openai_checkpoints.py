@@ -24,7 +24,9 @@ logger = logging.getLogger(__name__)
 # Import our core modules
 from src.core.config import TARGET_ZONES, APIConfig, SATELLITE_DIR, RESULTS_DIR
 from src.providers.gee_provider import GEEProvider
-from core.detectors.detectors import ArchaeologicalDetector
+from src.providers.sentinel2_provider import Sentinel2Provider
+from src.core.detectors.gee_detectors import ArchaeologicalDetector
+from src.core.detectors.sentinel2_detector import Sentinel2ArchaeologicalDetector
 from src.core.scoring import ConvergentAnomalyScorer
 from src.pipeline.modular_pipeline import ModularPipeline
 
@@ -120,10 +122,10 @@ class CheckpointRunner:
             logger.error(f"❌ Checkpoint {checkpoint_num} failed: {e}")
             raise
     
-    def checkpoint1_familiarize(self, provider: str = 'usgs', zone: str = 'negro_madeira', **kwargs) -> Dict[str, Any]:
+    def checkpoint1_familiarize(self, provider: str = 'gee', zone: str = 'negro_madeira', **kwargs) -> Dict[str, Any]:
         """
         Checkpoint 1: Familiarize yourself with the challenge and data
-        - Download one OpenTopography LiDAR tile or one Sentinel-2 scene ID
+        - Download one Sentinel-2 scene or GEE processed data
         - Run a single OpenAI prompt on that data
         - Print model version and dataset ID
         """
@@ -138,15 +140,15 @@ class CheckpointRunner:
         }
         
         try:
-            # Step 1: Download one scene using existing provider
+            # Step 1: Download one scene using selected provider
             logger.info(f"📡 Downloading sample data for {zone} using {provider}")
 
-            if provider == 'usgs':
-                provider_instance = USGSProvider()
-            elif provider == 'gee':
+            if provider == 'gee':
                 provider_instance = GEEProvider()
+            elif provider == 'sentinel2':
+                provider_instance = Sentinel2Provider()
             else:
-                raise ValueError(f"Unknown provider: {provider}")
+                raise ValueError(f"Unknown provider: {provider}. Supported: 'gee', 'sentinel2'")
 
             # Download single scene using existing pipeline
             scene_data = provider_instance.download_data([zone], max_scenes=1)
@@ -156,6 +158,7 @@ class CheckpointRunner:
 
             sample_scene = scene_data[0]
             
+            # Enhanced data context for Sentinel-2 vs GEE
             result['data_downloaded'] = {
                 'zone_id': sample_scene.zone_id,
                 'provider': sample_scene.provider,
@@ -164,13 +167,37 @@ class CheckpointRunner:
                 'metadata': sample_scene.metadata
             }
             
-            # Step 2: Prepare data context for OpenAI
+            # Step 2: Prepare enhanced data context for OpenAI
             zone_info = TARGET_ZONES[zone]
+            
+            # Create provider-specific context
+            provider_context = ""
+            if provider == 'sentinel2':
+                red_edge_bands = [b for b in sample_scene.available_bands if 'red_edge' in b or b in ['B05', 'B06', 'B07']]
+                provider_context = f"""
+                Sentinel-2 Data Advantages:
+                - Spatial Resolution: 10-20m (vs 30m Landsat)
+                - Red-edge bands available: {red_edge_bands}
+                - Enhanced vegetation stress detection capability
+                - 5-day revisit cycle for temporal analysis
+                - Superior for crop mark detection in archaeology
+                """
+            elif provider == 'gee':
+                provider_context = """
+                Google Earth Engine Processing:
+                - Cloud-processed Landsat data
+                - Median composite reducing noise
+                - Atmospheric correction applied
+                - Large-scale analysis capability
+                """
+            
             data_context = f"""
             Zone: {zone_info.name}
             Coordinates: {zone_info.center}
             Historical Evidence: {zone_info.historical_evidence}
             Expected Features: {zone_info.expected_features}
+            
+            {provider_context}
             
             Downloaded Scene:
             - Scene ID: {sample_scene.scene_id}
@@ -178,32 +205,49 @@ class CheckpointRunner:
             - Available Bands: {', '.join(sample_scene.available_bands)}
             - Acquisition Date: {sample_scene.metadata.get('acquisition_date', 'Unknown')}
             - Cloud Cover: {sample_scene.metadata.get('cloud_cover', 'Unknown')}%
+            - Quality Score: {sample_scene.metadata.get('quality_score', 'N/A')}
             """
             
-            # Step 3: Run OpenAI analysis
+            # Step 3: Enhanced OpenAI analysis prompt for archaeological potential
             logger.info("🤖 Running OpenAI analysis on downloaded data")
             
-            prompt = """
-            Analyze this satellite data from the Amazon for archaeological potential. 
-            Describe the surface features you would expect to find and what spectral 
-            signatures might indicate ancient human settlements. Focus on terra preta 
-            soils and geometric earthworks.
+            prompt = f"""
+            Analyze this {provider} satellite data from the Amazon for archaeological potential.
+            
+            {'Focus on the red-edge bands for vegetation stress analysis - these are critical for detecting crop marks over buried archaeological features.' if provider == 'sentinel2' else 'Focus on spectral indices and cloud-processed composite analysis.'}
+            
+            Describe:
+            1. Surface features you would expect to find for archaeological detection
+            2. Spectral signatures that might indicate ancient human settlements
+            3. Advantages of this specific sensor/processing for archaeological analysis
+            4. Terra preta soil detection potential
+            5. Geometric earthwork detection possibilities
+            
+            Consider the historical context: {zone_info.historical_evidence}
             """
             
             openai_result = self.openai_integration.analyze_with_openai(prompt, data_context)
             
             result['openai_analysis'] = openai_result
             
-            # Step 4: Print required information
+            # Step 4: Print required information with provider details
             print(f"\n🎯 CHECKPOINT 1 RESULTS:")
             print(f"Model Version: {openai_result.get('model', 'Unknown')}")
             print(f"Dataset ID: {sample_scene.scene_id}")
             print(f"Provider: {sample_scene.provider}")
             print(f"Zone: {zone_info.name}")
+            print(f"Spatial Resolution: {sample_scene.metadata.get('spatial_resolution', 'Unknown')}")
+            print(f"Bands Available: {len(sample_scene.available_bands)}")
             print(f"Tokens Used: {openai_result.get('tokens_used', 'Unknown')}")
             
+            # Provider-specific advantages
+            if provider == 'sentinel2':
+                red_edge_count = len([b for b in sample_scene.available_bands if 'red_edge' in b or b in ['B05', 'B06', 'B07']])
+                print(f"Red-edge Bands: {red_edge_count}/3 (critical for archaeology)")
+                print(f"Archaeological Suitability: {sample_scene.metadata.get('archaeological_suitability', {}).get('overall_score', 'Unknown')}")
+            
             result['success'] = True
-            result['summary'] = f"Successfully downloaded {sample_scene.scene_id} and analyzed with {openai_result.get('model', 'OpenAI')}"
+            result['summary'] = f"Successfully downloaded {sample_scene.scene_id} using {provider} and analyzed with {openai_result.get('model', 'OpenAI')}"
             
             return result
             
@@ -285,7 +329,10 @@ class CheckpointRunner:
                 
                 # Run archaeological detection
                 zone = TARGET_ZONES[scene.zone_id]
-                detector = ArchaeologicalDetector(zone)
+                if getattr(scene, 'provider', None) == 'sentinel-2':
+                    detector = Sentinel2ArchaeologicalDetector(zone)
+                else:
+                    detector = ArchaeologicalDetector(zone)
                 
                 try:
                     analysis_result = detector.analyze_scene(scene_dir)
@@ -395,7 +442,10 @@ class CheckpointRunner:
                 
                 if scene_dir.exists():
                     zone = TARGET_ZONES[scene.zone_id]
-                    detector2 = ArchaeologicalDetector(zone)
+                    if getattr(scene, 'provider', None) == 'sentinel-2':
+                        detector2 = Sentinel2ArchaeologicalDetector(zone)
+                    else:
+                        detector2 = ArchaeologicalDetector(zone)
                     analysis_result2 = detector2.analyze_scene(scene_dir)
                     
                     if analysis_result2.get('success'):

@@ -241,8 +241,8 @@ Examples:
                        help='Target zones to process (default: priority zones)')
     parser.add_argument('--zone', type=str, choices=list(TARGET_ZONES.keys()),
                        help='Single target zone (for checkpoints)')
-    parser.add_argument('--provider', choices=['gee'], default='gee',
-                       help='Data provider (only gee is supported)')
+    parser.add_argument('--provider', choices=['gee', 'sentinel2'], default='gee',
+                       help='Data provider (gee or sentinel2)')
     
     # Pipeline options
     parser.add_argument('--max-scenes', type=int, default=3,

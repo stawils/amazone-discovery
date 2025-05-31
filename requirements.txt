@@ -56,3 +56,8 @@ openai
 # - tensorflow (large, optional for now)
 # - earthpy (dependency issues)
 # - sentinelsat (Copernicus - backup only)
+
+pystac-client
+pystac
+
+rioxarray

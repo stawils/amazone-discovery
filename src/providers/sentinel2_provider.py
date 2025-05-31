@@ -13,7 +13,7 @@ import pandas as pd
 from pathlib import Path
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Tuple, Any, Union
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 import warnings
 warnings.filterwarnings('ignore')
 
@@ -43,7 +43,7 @@ class Sentinel2Config:
     L1C_COLLECTION: str = "sentinel-2-l1c"  # Top of atmosphere
     
     # Band mapping optimized for archaeological analysis
-    ARCHAEOLOGICAL_BANDS: Dict[str, str] = {
+    ARCHAEOLOGICAL_BANDS: Dict[str, str] = field(default_factory=lambda: {
         'coastal': 'B01',     # 443nm, 60m - Coastal aerosol
         'blue': 'B02',        # 490nm, 10m - Blue
         'green': 'B03',       # 560nm, 10m - Green  
@@ -57,17 +57,17 @@ class Sentinel2Config:
         'cirrus': 'B10',      # 1375nm, 60m - Cirrus
         'swir1': 'B11',       # 1610nm, 20m - SWIR1 (terra preta detection)
         'swir2': 'B12'        # 2190nm, 20m - SWIR2
-    }
+    })
     
     # Priority bands for archaeological analysis (highest resolution + key bands)
-    PRIORITY_BANDS: List[str] = ['B02', 'B03', 'B04', 'B05', 'B07', 'B08', 'B11', 'B12']
+    PRIORITY_BANDS: List[str] = field(default_factory=lambda: ['B02', 'B03', 'B04', 'B05', 'B07', 'B08', 'B11', 'B12'])
     
     # Quality filters
     MAX_CLOUD_COVER: float = 20.0
     MIN_DATA_COVERAGE: float = 80.0
     
     # Preferred dates (dry season for Amazon)
-    PREFERRED_MONTHS: List[int] = [6, 7, 8, 9]  # June-September
+    PREFERRED_MONTHS: List[int] = field(default_factory=lambda: [6, 7, 8, 9])  # June-September
     
     # Temporal range
     DEFAULT_START_DATE: str = "2023-01-01"
@@ -98,97 +98,73 @@ class Sentinel2Provider(BaseProvider):
         logger.info("🛰️ Sentinel-2 AWS Provider initialized")
         logger.info(f"STAC API: {self.config.STAC_API_URL}")
         logger.info(f"Collection: {self.config.L2A_COLLECTION}")
-    
+
     def download_data(self, zones: List[str], max_scenes: int = 3) -> List[SceneData]:
         """
         Download Sentinel-2 data for archaeological analysis
-        
         Args:
             zones: List of zone IDs from TARGET_ZONES
             max_scenes: Maximum scenes per zone
-            
         Returns:
             List of SceneData objects with downloaded Sentinel-2 data
         """
-        
         all_scene_data = []
-        
         for zone_id in zones:
             if zone_id not in TARGET_ZONES:
                 logger.warning(f"Unknown zone: {zone_id}")
                 continue
-                
             zone = TARGET_ZONES[zone_id]
             logger.info(f"\n🎯 Processing {zone.name} with Sentinel-2")
-            
             try:
-                # Search for optimal scenes
                 scenes = self.search_scenes(zone, max_scenes * 2)  # Get more to filter best
-                
                 if not scenes:
                     logger.warning(f"No suitable Sentinel-2 scenes found for {zone.name}")
                     continue
-                
-                # Process best scenes
                 zone_scenes = []
                 for i, scene in enumerate(scenes[:max_scenes]):
                     logger.info(f"Processing scene {i+1}/{max_scenes}: {scene['id']}")
-                    
                     scene_data = self.process_scene(scene, zone)
                     if scene_data:
                         zone_scenes.append(scene_data)
                         logger.info(f"✓ Successfully processed scene {scene['id']}")
                     else:
                         logger.warning(f"Failed to process scene {scene['id']}")
-                
                 all_scene_data.extend(zone_scenes)
                 logger.info(f"✓ Completed {zone.name}: {len(zone_scenes)} scenes processed")
-                
             except Exception as e:
                 logger.error(f"Error processing zone {zone.name}: {e}")
                 continue
-        
         logger.info(f"🎯 Sentinel-2 download complete: {len(all_scene_data)} scenes total")
         return all_scene_data
-    
+
     def search_scenes(self, zone, max_results: int = 10) -> List[Dict[str, Any]]:
         """
         Search for optimal Sentinel-2 scenes for archaeological analysis
-        
         Args:
             zone: TargetZone object
             max_results: Maximum number of results
-            
         Returns:
             List of scene metadata dictionaries sorted by quality score
         """
-        
         logger.info(f"🔍 Searching Sentinel-2 scenes for {zone.name}")
-        
         try:
-            # Create search parameters
-            bbox = zone.bbox  # (south, west, north, east)
-            
-            # Search with STAC API
+            config_bbox = zone.bbox  # (south, west, north, east)
+            # Convert to STAC format: (west, south, east, north)
+            stac_bbox = [config_bbox[1], config_bbox[0], config_bbox[3], config_bbox[2]]
             search = self.stac_client.search(
                 collections=[self.config.L2A_COLLECTION],
-                bbox=bbox,
+                bbox=stac_bbox,
                 datetime=f"{self.config.DEFAULT_START_DATE}/{self.config.DEFAULT_END_DATE}",
                 limit=max_results * 3,  # Get more to filter
                 query={
-                    "eo:cloud_cover": {"lt": self.config.MAX_CLOUD_COVER}
+                    "eo:cloud_cover": {"lt": 50.0}  # Use 50.0 as per fix
                 }
             )
-            
             items = list(search.items())
             logger.info(f"Found {len(items)} candidate scenes")
-            
             if not items:
                 return []
-            
-            # Score and filter scenes for archaeological suitability
             scored_scenes = []
-            
             for item in items:
                 try:
                     score_data = self.score_archaeological_suitability(item, zone)
@@ -197,16 +173,12 @@ class Sentinel2Provider(BaseProvider):
                 except Exception as e:
                     logger.warning(f"Error scoring scene {item.id}: {e}")
                     continue
-            
-            # Sort by quality score
             scored_scenes.sort(key=lambda x: x['quality_score'], reverse=True)
-            
             logger.info(f"✓ Selected {len(scored_scenes)} high-quality scenes")
             return scored_scenes[:max_results]
-            
         except Exception as e:
             raise Sentinel2Error(f"Scene search failed for {zone.name}: {e}")
-    
+
     def score_archaeological_suitability(self, item: pystac.Item, zone) -> Dict[str, Any]:
         """
         Score Sentinel-2 scene for archaeological analysis suitability

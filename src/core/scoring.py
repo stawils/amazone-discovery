@@ -7,7 +7,6 @@ import numpy as np
 from typing import Dict, List, Any, Tuple
 import logging
 from dataclasses import dataclass
-from src.core.scoring import batch_score_zones
 
 from .config import TARGET_ZONES, ScoringConfig
 

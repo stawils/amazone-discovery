@@ -23,11 +23,11 @@ setup(
     name="amazon-archaeological-discovery",
     version="1.0.0",
     author="Amazon Archaeological Discovery Team",
-    author_email="discovery@example.com",
+    author_email="stawils@gmail.com",
     description="AI-powered archaeological site detection system for the Amazon Basin",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/your-org/amazon-archaeological-discovery",
+    url="https://github.com/stawils/amazone-discovery",
     packages=find_packages(),
     classifiers=[
         "Development Status :: 4 - Beta",

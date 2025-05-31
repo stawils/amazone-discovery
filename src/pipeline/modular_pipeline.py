@@ -5,6 +5,7 @@ from src.pipeline.scoring import ScoringStep
 from src.pipeline.report import ReportStep
 from src.pipeline.visualization import VisualizationStep
 from src.providers.gee_provider import GEEProvider
+from src.providers.sentinel2_provider import Sentinel2Provider
 import logging
 
 logger = logging.getLogger(__name__)
@@ -15,7 +16,12 @@ class ModularPipeline:
     """
     def __init__(self, provider: str = 'gee'):
         self.provider = provider
-        self.provider_instance = GEEProvider()
+        if provider == 'gee':
+            self.provider_instance = GEEProvider()
+        elif provider == 'sentinel2':
+            self.provider_instance = Sentinel2Provider()
+        else:
+            raise ValueError(f"Unknown provider: {provider}. Supported: 'gee', 'sentinel2'")
         self.analysis_step = AnalysisStep()
         self.scoring_step = ScoringStep()
         self.report_step = ReportStep()
