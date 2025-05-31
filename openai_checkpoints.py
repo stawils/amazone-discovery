@@ -12,7 +12,6 @@ from datetime import datetime
 from typing import Dict, List, Any, Optional
 import openai
 from dotenv import load_dotenv
-from src.core.scoring import batch_score_zones
 
 # Load environment variables
 load_dotenv()
@@ -280,30 +279,23 @@ class CheckpointRunner:
         }
         
         try:
-            # Step 1: Load two independent sources
-            logger.info("📡 Loading data from multiple sources")
-            
-            # Source 1: USGS data
-            usgs_provider = USGSProvider()
-            usgs_scenes = usgs_provider.download_data(zones, max_scenes)
-            
-            # Source 2: Try GEE (fallback if not available)
+            # Step 1: Load data from Google Earth Engine
+            logger.info("📡 Loading data from Google Earth Engine")
+
             try:
                 gee_provider = GEEProvider()
                 gee_scenes = gee_provider.download_data(zones, max_scenes)
             except Exception as e:
                 logger.warning(f"GEE not available: {e}")
                 gee_scenes = []
-            
-            all_scenes = usgs_scenes + gee_scenes
-            
-            if len(all_scenes) < 2:
-                raise ValueError("Need at least 2 scenes from different sources")
-            
+
+            all_scenes = gee_scenes
+
+            if not all_scenes:
+                raise ValueError("No scenes downloaded")
+
             result['data_sources'] = {
-                'usgs_scenes': len(usgs_scenes),
                 'gee_scenes': len(gee_scenes),
-                'total_scenes': len(all_scenes),
                 'scene_ids': [scene.scene_id for scene in all_scenes]
             }
             
@@ -459,7 +451,7 @@ class CheckpointRunner:
             
             # Print results
             print(f"\n🎯 CHECKPOINT 2 RESULTS:")
-            print(f"Data Sources: USGS ({len(usgs_scenes)} scenes), GEE ({len(gee_scenes)} scenes)")
+            print(f"Data Sources: GEE ({len(gee_scenes)} scenes)")
             print(f"Total Anomalies Found: {len(anomaly_footprints)}")
             print(f"Top 5 Footprints Selected: {len(top_5_footprints)}")
             print(f"OpenAI Prompts Generated: {len(openai_prompts)}")
@@ -503,7 +495,7 @@ class CheckpointRunner:
             # Step 1: Run full archaeological analysis
             logger.info(f"🔍 Running comprehensive analysis for {zone}")
             
-            pipeline = ModularPipeline(provider='usgs')
+            pipeline = ModularPipeline(provider='gee')
             pipeline_results = pipeline.run(zones=[zone], max_scenes=3)
             
             analysis_results = pipeline_results.get('analysis', {})
@@ -936,7 +928,7 @@ class CheckpointRunner:
                     'team_approach': 'AI-Enhanced Convergent Anomaly Detection'
                 },
                 'methodology_summary': {
-                    'data_sources': ['USGS Landsat', 'Google Earth Engine', 'Historical Records'],
+                    'data_sources': ['Google Earth Engine', 'Historical Records'],
                     'detection_algorithms': [
                         'Terra preta spectral analysis (NIR-SWIR)',
                         'Geometric pattern detection (Hough transforms)',

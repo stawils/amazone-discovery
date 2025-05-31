@@ -8,6 +8,8 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+REQUIRED_BANDS = ['SR_B2', 'SR_B3', 'SR_B4', 'SR_B5', 'SR_B6', 'SR_B7']  # Landsat SR bands
+
 class AnalysisStep:
     """
     Modular analysis step for archaeological pipeline.
