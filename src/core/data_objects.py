@@ -20,12 +20,12 @@ class SceneData:
         """
         Args:
             zone_id: Identifier for the target zone
-            provider: Data provider (e.g., 'usgs', 'gee')
+            provider: Data provider (e.g., 'gee')
             scene_id: Unique scene identifier (provider-specific)
             file_paths: Mapping of band/feature names to file paths
             available_bands: List of available bands/features (e.g., ['blue', 'green', ...])
             metadata: Additional metadata (acquisition date, cloud cover, etc.)
-            features: Optional, provider-specific features (e.g., GEE indices, USGS extras)
+            features: Optional, provider-specific features (e.g., GEE indices)
         """
         self.zone_id = zone_id
         self.provider = provider

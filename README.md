@@ -60,10 +60,8 @@ pip install -r requirements.txt
 ### **3. Configure Environment**
 ```bash
 cp .env.template .env
-# Edit .env with your API keys:
+# Edit .env with your API key:
 # OPENAI_API_KEY=your_openai_key
-# USGS_USERNAME=your_usgs_username  
-# USGS_TOKEN=your_usgs_application_token
 ```
 
 ### **4. Test Installation**
@@ -102,7 +100,6 @@ amazon-discovery/
 │   │   ├── scoring.py          # Convergent anomaly scoring
 │   │   └── visualizers.py      # Interactive mapping
 │   ├── providers/              # Satellite data providers
-│   │   ├── usgs_provider.py    # USGS Landsat data
 │   │   └── gee_provider.py     # Google Earth Engine
 │   ├── checkpoints/            # OpenAI competition checkpoints
 │   │   ├── checkpoint1.py      # Familiarize with data
@@ -196,8 +193,8 @@ python main.py --checkpoint 3 --zone negro_madeira
 
 #### **Quick Analysis**
 ```bash
-# Analyze priority zones with USGS data
-python main.py --pipeline --provider usgs
+# Analyze priority zones with Google Earth Engine
+python main.py --pipeline
 ```
 
 #### **Comprehensive Analysis**
@@ -250,11 +247,7 @@ python main.py --pipeline --zones negro_madeira trombetas --max-scenes 3
 # Required for competition
 OPENAI_API_KEY=your_openai_api_key
 
-# Required for USGS satellite data
-USGS_USERNAME=your_usgs_username
-USGS_TOKEN=your_usgs_application_token
-
-# Optional for Google Earth Engine
+# Required for Google Earth Engine
 GEE_SERVICE_ACCOUNT_PATH=path/to/service_account.json
 GEE_PROJECT_ID=your_gee_project
 ```
