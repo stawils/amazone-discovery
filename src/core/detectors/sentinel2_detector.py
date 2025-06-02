@@ -61,39 +61,22 @@ class Sentinel2ArchaeologicalDetector:
         if ref_band is None:
             ref_band = next(iter(bands.values()))
         ref_shape = ref_band.shape
+        
         resampled_bands = {}
         for name, arr in bands.items():
             if arr.shape == ref_shape:
                 resampled_bands[name] = arr
             else:
-                # Resample to reference shape
-                dst = np.empty(ref_shape, dtype=np.float32)
-                
-                # Create identity transforms for source and destination
-                # This avoids the 'cannot unpack non-iterable NoneType object' error
-                src_height, src_width = arr.shape
+                # Use cv2.resize as a simple resampling method
                 dst_height, dst_width = ref_shape
-                
-                # Create simple affine transforms (identity transforms with appropriate scaling)
-                src_transform = rasterio.transform.Affine(1.0, 0.0, 0.0, 0.0, 1.0, 0.0)
-                dst_transform = rasterio.transform.Affine(1.0, 0.0, 0.0, 0.0, 1.0, 0.0)
-                
                 try:
-                    reproject(
-                        source=arr,
-                        destination=dst,
-                        src_transform=src_transform,
-                        src_crs=None,
-                        dst_transform=dst_transform,
-                        dst_crs=None,
-                        resampling=Resampling.bilinear
-                    )
-                except Exception as e:
-                    # Fallback to simple resize if reproject fails
-                    logger.warning(f"Resampling with reproject failed: {e}. Using cv2.resize instead.")
-                    # Use cv2.resize as a fallback method
                     dst = cv2.resize(arr, (dst_width, dst_height), interpolation=cv2.INTER_LINEAR)
-                resampled_bands[name] = dst
+                    resampled_bands[name] = dst
+                except Exception as e:
+                    logger.warning(f"Error resampling band {name}: {e}")
+                    # Fallback: just use the original array
+                    resampled_bands[name] = arr
+        
         return resampled_bands
 
     def load_sentinel2_bands(self, scene_path: Path) -> Dict[str, np.ndarray]:
@@ -272,7 +255,8 @@ class Sentinel2ArchaeologicalDetector:
             indices['clay_minerals'] = swir1 / (swir2 + eps)
             
             # Normalized Difference Infrared Index
-            indices['ndii'] = (nir - swir1) / (nir + swir1 + eps) if 'nir' in bands else None
+            if 'nir' in bands:
+                indices['ndii'] = (nir - swir1) / (nir + swir1 + eps)
         
         # Water and moisture indices
         if 'green' in bands and 'nir' in bands:
@@ -319,11 +303,11 @@ class Sentinel2ArchaeologicalDetector:
         
         if 'terra_preta_enhanced' not in indices:
             logger.warning("Cannot perform enhanced terra preta detection - missing red-edge bands")
-            std = self.detect_standard_terra_preta(bands, indices)
-            if std is None:
+            std_result = self.detect_standard_terra_preta(bands, indices)
+            if std_result is None:
                 logger.error("detect_standard_terra_preta returned None; replacing with empty result dict.")
                 return {'patches': [], 'mask': None, 'total_pixels': 0, 'coverage_percent': 0, 'detection_method': None, 'red_edge_enhanced': False}
-            return std
+            return std_result
         
         # Use enhanced terra preta index with red-edge
         tp_enhanced = indices['terra_preta_enhanced']
@@ -331,11 +315,11 @@ class Sentinel2ArchaeologicalDetector:
         ndre1 = indices.get('ndre1')
         
         if ndvi is None or ndre1 is None:
-            std = self.detect_standard_terra_preta(bands, indices)
-            if std is None:
+            std_result = self.detect_standard_terra_preta(bands, indices)
+            if std_result is None:
                 logger.error("detect_standard_terra_preta returned None; replacing with empty result dict.")
                 return {'patches': [], 'mask': None, 'total_pixels': 0, 'coverage_percent': 0, 'detection_method': None, 'red_edge_enhanced': False}
-            return std
+            return std_result
         
         # Enhanced detection criteria using red-edge sensitivity
         tp_mask = (
@@ -368,7 +352,7 @@ class Sentinel2ArchaeologicalDetector:
                 centroid_x = np.mean(patch_coords[1])
                 
                 # Convert to geographic coordinates
-                if hasattr(self, 'transform'):
+                if hasattr(self, 'transform') and self.transform:
                     geo_x, geo_y = rasterio.transform.xy(
                         self.transform, centroid_y, centroid_x
                     )
@@ -441,7 +425,7 @@ class Sentinel2ArchaeologicalDetector:
                 centroid_y = np.mean(patch_coords[0])
                 centroid_x = np.mean(patch_coords[1])
                 
-                if hasattr(self, 'transform'):
+                if hasattr(self, 'transform') and self.transform:
                     geo_x, geo_y = rasterio.transform.xy(
                         self.transform, centroid_y, centroid_x
                     )
@@ -523,7 +507,7 @@ class Sentinel2ArchaeologicalDetector:
                     centroid_y = np.mean(coords[0])
                     centroid_x = np.mean(coords[1])
                     
-                    if hasattr(self, 'transform'):
+                    if hasattr(self, 'transform') and self.transform:
                         geo_x, geo_y = rasterio.transform.xy(
                             self.transform, centroid_y, centroid_x
                         )
@@ -553,6 +537,220 @@ class Sentinel2ArchaeologicalDetector:
         logger.info(f"Detected {len(crop_marks)} crop marks")
         return crop_marks
     
+    def detect_geometric_patterns(self, bands: Dict[str, np.ndarray]) -> List[Dict]:
+        """
+        Detect geometric patterns optimized for Sentinel-2 10m resolution
+        """
+        
+        # Use NIR band for geometric detection (best contrast)
+        if 'nir' in bands:
+            detection_band = bands['nir']
+        elif 'red' in bands:
+            detection_band = bands['red']
+        else:
+            logger.warning("No suitable band for geometric detection")
+            return []
+        
+        # Normalize to 8-bit for OpenCV
+        band_norm = ((detection_band - np.nanmin(detection_band)) / 
+                    (np.nanmax(detection_band) - np.nanmin(detection_band)) * 255).astype(np.uint8)
+        
+        geometric_features = []
+        
+        # Enhanced parameters for 10m resolution
+        # Circular feature detection
+        circles = self._detect_circular_features_s2(band_norm)
+        geometric_features.extend(circles)
+        
+        # Linear feature detection
+        lines = self._detect_linear_features_s2(band_norm)
+        geometric_features.extend(lines)
+        
+        # Rectangular feature detection
+        rectangles = self._detect_rectangular_features_s2(band_norm)
+        geometric_features.extend(rectangles)
+        
+        logger.info(f"Detected {len(geometric_features)} geometric patterns at 10m resolution")
+        return geometric_features
+    
+    def _detect_circular_features_s2(self, image: np.ndarray) -> List[Dict]:
+        """Circular feature detection optimized for Sentinel-2 10m resolution"""
+        
+        # Gaussian blur optimized for 10m pixels
+        blurred = cv2.GaussianBlur(image, (3, 3), 0)
+        
+        # Edge detection
+        edges = cv2.Canny(blurred, 50, 150)
+        
+        # Default values for feature sizes if zone is None
+        default_min_feature_size = 60  # 60m minimum feature size
+        default_max_feature_size = 1000  # 1000m maximum feature size
+        
+        # Safely get min/max feature sizes with fallback to defaults
+        min_feature_size = getattr(self.zone, 'min_feature_size_m', default_min_feature_size) if self.zone else default_min_feature_size
+        max_feature_size = getattr(self.zone, 'max_feature_size_m', default_max_feature_size) if self.zone else default_max_feature_size
+        
+        # Hough Circle Transform with 10m resolution parameters
+        min_radius = max(3, int(min_feature_size / 20))  # 10m pixels
+        max_radius = min(50, int(max_feature_size / 20))
+        
+        circles = cv2.HoughCircles(
+            edges,
+            cv2.HOUGH_GRADIENT,
+            dp=1,
+            minDist=min_radius * 2,
+            param1=50,
+            param2=25,  # Lower threshold for 10m resolution
+            minRadius=min_radius,
+            maxRadius=max_radius
+        )
+        
+        circular_features = []
+        
+        if circles is not None:
+            circles = np.round(circles[0, :]).astype("int")
+            
+            for (x, y, r) in circles:
+                # Convert to geographic coordinates
+                if hasattr(self, 'transform') and self.transform:
+                    geo_x, geo_y = rasterio.transform.xy(self.transform, y, x)
+                    radius_m = r * 10  # 10m pixel size
+                else:
+                    geo_x, geo_y = x, y
+                    radius_m = r
+                
+                # Calculate confidence
+                mask = np.zeros_like(image)
+                cv2.circle(mask, (x, y), r, 255, 2)
+                edge_strength = np.mean(edges[mask > 0]) / 255.0
+                
+                circular_features.append({
+                    'type': 'circle',
+                    'center': (geo_x, geo_y),
+                    'pixel_center': (x, y),
+                    'radius_m': radius_m,
+                    'diameter_m': radius_m * 2,
+                    'area_m2': np.pi * radius_m**2,
+                    'confidence': edge_strength,
+                    'resolution': '10m',
+                    'expected_feature': 'settlement_ring' if radius_m > 50 else 'house_ring'
+                })
+        
+        return circular_features
+    
+    def _detect_linear_features_s2(self, image: np.ndarray) -> List[Dict]:
+        """Linear feature detection optimized for Sentinel-2 10m resolution"""
+        
+        edges = cv2.Canny(image, 50, 150)
+        
+        # Default values for feature sizes if zone is None
+        default_min_feature_size = 60  # 60m minimum feature size
+        
+        # Safely get min feature size with fallback to default
+        min_feature_size = getattr(self.zone, 'min_feature_size_m', default_min_feature_size) if self.zone else default_min_feature_size
+        
+        lines = cv2.HoughLinesP(
+            edges,
+            rho=1,
+            theta=np.pi/180,
+            threshold=80,  # Adjusted for 10m resolution
+            minLineLength=int(min_feature_size / 10),
+            maxLineGap=5   # Smaller gap for higher resolution
+        )
+        
+        linear_features = []
+        
+        if lines is not None:
+            for line in lines:
+                x1, y1, x2, y2 = line[0]
+                
+                length_pixels = np.sqrt((x2-x1)**2 + (y2-y1)**2)
+                length_m = length_pixels * 10  # 10m pixels
+                
+                # Default value for min feature size if zone is None
+                default_min_feature_size = 60  # 60m minimum feature size
+                
+                # Safely get min feature size with fallback to default
+                min_feature_size = getattr(self.zone, 'min_feature_size_m', default_min_feature_size) if self.zone else default_min_feature_size
+                
+                if length_m < min_feature_size:
+                    continue
+                
+                if hasattr(self, 'transform') and self.transform:
+                    geo_x1, geo_y1 = rasterio.transform.xy(self.transform, y1, x1)
+                    geo_x2, geo_y2 = rasterio.transform.xy(self.transform, y2, x2)
+                else:
+                    geo_x1, geo_y1 = x1, y1
+                    geo_x2, geo_y2 = x2, y2
+                
+                linear_features.append({
+                    'type': 'line',
+                    'start': (geo_x1, geo_y1),
+                    'end': (geo_x2, geo_y2),
+                    'pixel_start': (x1, y1),
+                    'pixel_end': (x2, y2),
+                    'length_m': length_m,
+                    'angle_degrees': np.degrees(np.arctan2(y2-y1, x2-x1)),
+                    'resolution': '10m',
+                    'expected_feature': 'causeway' if length_m > 200 else 'path'
+                })
+        
+        return linear_features
+    
+    def _detect_rectangular_features_s2(self, image: np.ndarray) -> List[Dict]:
+        """Rectangular feature detection optimized for Sentinel-2 10m resolution"""
+        
+        edges = cv2.Canny(image, 50, 150)
+        contours, _ = cv2.findContours(edges, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        
+        rectangular_features = []
+        
+        for contour in contours:
+            epsilon = 0.02 * cv2.arcLength(contour, True)
+            approx = cv2.approxPolyDP(contour, epsilon, True)
+            
+            if len(approx) == 4:
+                area_pixels = cv2.contourArea(contour)
+                area_m2 = area_pixels * 10 * 10  # 10m pixels
+                
+                # Default value for min feature size if zone is None
+                default_min_feature_size = 60  # 60m minimum feature size
+                
+                # Safely get min feature size with fallback to default
+                min_feature_size = getattr(self.zone, 'min_feature_size_m', default_min_feature_size) if self.zone else default_min_feature_size
+                
+                if area_m2 < (min_feature_size ** 2):
+                    continue
+                
+                M = cv2.moments(contour)
+                if M["m00"] != 0:
+                    cx = int(M["m10"] / M["m00"])
+                    cy = int(M["m01"] / M["m00"])
+                    
+                    if hasattr(self, 'transform') and self.transform:
+                        geo_x, geo_y = rasterio.transform.xy(self.transform, cy, cx)
+                    else:
+                        geo_x, geo_y = cx, cy
+                    
+                    rect = cv2.minAreaRect(contour)
+                    width_m = rect[1][0] * 10
+                    height_m = rect[1][1] * 10
+                    
+                    rectangular_features.append({
+                        'type': 'rectangle',
+                        'center': (geo_x, geo_y),
+                        'pixel_center': (cx, cy),
+                        'width_m': width_m,
+                        'height_m': height_m,
+                        'area_m2': area_m2,
+                        'angle_degrees': rect[2],
+                        'aspect_ratio': max(width_m, height_m) / min(width_m, height_m),
+                        'resolution': '10m',
+                        'expected_feature': 'plaza' if area_m2 > 5000 else 'compound'
+                    })
+        
+        return rectangular_features
+
     def analyze_scene(self, scene_path: Path) -> Dict[str, Any]:
         """
         Complete archaeological analysis optimized for Sentinel-2 data
@@ -680,210 +878,194 @@ class Sentinel2ArchaeologicalDetector:
                 'total_features': 0,
                 'red_edge_analysis': False,
                 'band_count': 0,
-                'available_bands': [],`
-            detection_band = bands['nir']
-        elif 'red' in bands:
-            detection_band = bands['red']
-        else:
-            logger.warning("No suitable band for geometric detection")
-            return []
+                'available_bands': [],
+            }
+
+    def analyze_vector_scene(self, vector_path: Path) -> Dict[str, Any]:
+        """Analyze a vector file (KML or GeoJSON) for archaeological features"""
+        import geopandas as gpd
+        import pandas as pd
         
-        # Normalize to 8-bit for OpenCV
-        band_norm = ((detection_band - np.nanmin(detection_band)) / 
-                    (np.nanmax(detection_band) - np.nanmin(detection_band)) * 255).astype(np.uint8)
-        
-        geometric_features = []
-        
-        # Enhanced parameters for 10m resolution
-        # Circular feature detection
-        circles = self._detect_circular_features_s2(band_norm)
-        geometric_features.extend(circles)
-        
-        # Linear feature detection
-        lines = self._detect_linear_features_s2(band_norm)
-        geometric_features.extend(lines)
-        
-        # Rectangular feature detection
-        rectangles = self._detect_rectangular_features_s2(band_norm)
-        geometric_features.extend(rectangles)
-        
-        logger.info(f"Detected {len(geometric_features)} geometric patterns at 10m resolution")
-        return geometric_features
-    
-    def _detect_circular_features_s2(self, image: np.ndarray) -> List[Dict]:
-        """Circular feature detection optimized for Sentinel-2 10m resolution"""
-        
-        # Gaussian blur optimized for 10m pixels
-        blurred = cv2.GaussianBlur(image, (3, 3), 0)
-        
-        # Edge detection
-        edges = cv2.Canny(blurred, 50, 150)
-        
-        # Default values for feature sizes if zone is None
-        default_min_feature_size = 60  # 60m minimum feature size
-        default_max_feature_size = 1000  # 1000m maximum feature size
-        
-        # Safely get min/max feature sizes with fallback to defaults
-        min_feature_size = getattr(self.zone, 'min_feature_size_m', default_min_feature_size) if self.zone else default_min_feature_size
-        max_feature_size = getattr(self.zone, 'max_feature_size_m', default_max_feature_size) if self.zone else default_max_feature_size
-        
-        # Hough Circle Transform with 10m resolution parameters
-        min_radius = max(3, int(min_feature_size / 20))  # 10m pixels
-        max_radius = min(50, int(max_feature_size / 20))
-        
-        circles = cv2.HoughCircles(
-            edges,
-            cv2.HOUGH_GRADIENT,
-            dp=1,
-            minDist=min_radius * 2,
-            param1=50,
-            param2=25,  # Lower threshold for 10m resolution
-            minRadius=min_radius,
-            maxRadius=max_radius
-        )
-        
-        circular_features = []
-        
-        if circles is not None:
-            circles = np.round(circles[0, :]).astype("int")
+        vector_path = Path(vector_path)
+        try:
+            gdf = gpd.read_file(vector_path)
+            if gdf.empty:
+                return {'success': False, 'error': 'No features in vector file'}
             
-            for (x, y, r) in circles:
-                # Convert to geographic coordinates
-                if hasattr(self, 'transform'):
-                    geo_x, geo_y = rasterio.transform.xy(self.transform, y, x)
-                    radius_m = r * 10  # 10m pixel size
+            features = []
+            for _, row in gdf.iterrows():
+                geom = row.geometry
+                props = row.drop('geometry').to_dict()
+                
+                # Handle Points, Polygons, LineStrings
+                if geom.geom_type == 'Point':
+                    centroid = (geom.x, geom.y)
+                    area = 0
+                elif geom.geom_type in ['Polygon', 'MultiPolygon']:
+                    centroid = (geom.centroid.x, geom.centroid.y)
+                    area = geom.area
+                elif geom.geom_type in ['LineString', 'MultiLineString']:
+                    centroid = (geom.centroid.x, geom.centroid.y)
+                    area = 0
                 else:
-                    geo_x, geo_y = x, y
-                    radius_m = r
+                    centroid = (0, 0)
+                    area = 0
                 
-                # Calculate confidence
-                mask = np.zeros_like(image)
-                cv2.circle(mask, (x, y), r, 255, 2)
-                edge_strength = np.mean(edges[mask > 0]) / 255.0
-                
-                circular_features.append({
-                    'type': 'circle',
-                    'center': (geo_x, geo_y),
-                    'pixel_center': (x, y),
-                    'radius_m': radius_m,
-                    'diameter_m': radius_m * 2,
-                    'area_m2': np.pi * radius_m**2,
-                    'confidence': edge_strength,
-                    'resolution': '10m',
-                    'expected_feature': 'settlement_ring' if radius_m > 50 else 'house_ring'
+                features.append({
+                    'geometry_type': geom.geom_type,
+                    'centroid': centroid,
+                    'area': area,
+                    'properties': props
                 })
-        
-        return circular_features
-    
-    def _detect_linear_features_s2(self, image: np.ndarray) -> List[Dict]:
-        """Linear feature detection optimized for Sentinel-2 10m resolution"""
-        
-        edges = cv2.Canny(image, 50, 150)
-        
-        # Default values for feature sizes if zone is None
-        default_min_feature_size = 60  # 60m minimum feature size
-        
-        # Safely get min feature size with fallback to default
-        min_feature_size = getattr(self.zone, 'min_feature_size_m', default_min_feature_size) if self.zone else default_min_feature_size
-        
-        lines = cv2.HoughLinesP(
-            edges,
-            rho=1,
-            theta=np.pi/180,
-            threshold=80,  # Adjusted for 10m resolution
-            minLineLength=int(min_feature_size / 10),
-            maxLineGap=5   # Smaller gap for higher resolution
-        )
-        
-        linear_features = []
-        
-        if lines is not None:
-            for line in lines:
-                x1, y1, x2, y2 = line[0]
-                
-                length_pixels = np.sqrt((x2-x1)**2 + (y2-y1)**2)
-                length_m = length_pixels * 10  # 10m pixels
-                
-                # Default value for min feature size if zone is None
-                default_min_feature_size = 60  # 60m minimum feature size
-                
-                # Safely get min feature size with fallback to default
-                min_feature_size = getattr(self.zone, 'min_feature_size_m', default_min_feature_size) if self.zone else default_min_feature_size
-                
-                if length_m < min_feature_size:
-                    continue
-                
-                if hasattr(self, 'transform'):
-                    geo_x1, geo_y1 = rasterio.transform.xy(self.transform, y1, x1)
-                    geo_x2, geo_y2 = rasterio.transform.xy(self.transform, y2, x2)
-                else:
-                    geo_x1, geo_y1 = x1, y1
-                    geo_x2, geo_y2 = x2, y2
-                
-                linear_features.append({
-                    'type': 'line',
-                    'start': (geo_x1, geo_y1),
-                    'end': (geo_x2, geo_y2),
-                    'pixel_start': (x1, y1),
-                    'pixel_end': (x2, y2),
-                    'length_m': length_m,
-                    'angle_degrees': np.degrees(np.arctan2(y2-y1, x2-x1)),
-                    'resolution': '10m',
-                    'expected_feature': 'causeway' if length_m > 200 else 'path'
-                })
-        
-        return linear_features
-    
-    def _detect_rectangular_features_s2(self, image: np.ndarray) -> List[Dict]:
-        """Rectangular feature detection optimized for Sentinel-2 10m resolution"""
-        
-        edges = cv2.Canny(image, 50, 150)
-        contours, _ = cv2.findContours(edges, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-        
-        rectangular_features = []
-        
-        for contour in contours:
-            epsilon = 0.02 * cv2.arcLength(contour, True)
-            approx = cv2.approxPolyDP(contour, epsilon, True)
             
-            if len(approx) == 4:
-                area_pixels = cv2.contourArea(contour)
-                area_m2 = area_pixels * 10 * 10  # 10m pixels
-                
-                # Default value for min feature size if zone is None
-                default_min_feature_size = 60  # 60m minimum feature size
-                
-                # Safely get min feature size with fallback to default
-                min_feature_size = getattr(self.zone, 'min_feature_size_m', default_min_feature_size) if self.zone else default_min_feature_size
-                
-                if area_m2 < (min_feature_size ** 2):
-                    continue
-                
-                M = cv2.moments(contour)
-                if M["m00"] != 0:
-                    cx = int(M["m10"] / M["m00"])
-                    cy = int(M["m01"] / M["m00"])
-                    
-                    if hasattr(self, 'transform'):
-                        geo_x, geo_y = rasterio.transform.xy(self.transform, cy, cx)
-                    else:
-                        geo_x, geo_y = cx, cy
-                    
-                    rect = cv2.minAreaRect(contour)
-                    width_m = rect[1][0] * 10
-                    height_m = rect[1][1] * 10
-                    
-                    rectangular_features.append({
-                        'type': 'rectangle',
-                        'center': (geo_x, geo_y),
-                        'pixel_center': (cx, cy),
-                        'width_m': width_m,
-                        'height_m': height_m,
-                        'area_m2': area_m2,
-                        'angle_degrees': rect[2],
-                        'aspect_ratio': max(width_m, height_m) / min(width_m, height_m),
-                        'resolution': '10m',
-                        'expected_feature': 'plaza' if area_m2 > 5000 else 'compound'
-                    })
+            result = {
+                'scene_path': str(vector_path),
+                'zone': self.zone.name if self.zone and hasattr(self.zone, 'name') else 'unknown_zone',
+                'analysis_timestamp': pd.Timestamp.now().isoformat(),
+                'vector_features': features,
+                'total_features': len(features),
+                'success': True
+            }
+            
+            self.detection_results = result
+            return result
+            
+        except Exception as e:
+            return {'success': False, 'error': str(e)}
+
+    def export_detections_to_geojson(self, output_path: Path) -> bool:
+        """Export detected features to GeoJSON format"""
         
-        return rectangular_features
+        if not self.detection_results or not self.detection_results.get('success'):
+            logger.warning("No successful detection results to export")
+            return False
+        
+        features = []
+        
+        # Export terra preta patches
+        tp_patches = self.detection_results.get('terra_preta', {}).get('patches', [])
+        for patch in tp_patches:
+            feature = {
+                'type': 'Feature',
+                'geometry': {
+                    'type': 'Point',
+                    'coordinates': [patch['centroid'][0], patch['centroid'][1]]
+                },
+                'properties': {
+                    'feature_type': 'terra_preta',
+                    'area_m2': patch['area_m2'],
+                    'confidence': patch['confidence'],
+                    'detection_method': patch.get('detection_method', 'sentinel2'),
+                    **{k: v for k, v in patch.items() if k not in ['centroid', 'pixel_centroid']}
+                }
+            }
+            features.append(feature)
+        
+        # Export crop marks
+        crop_marks = self.detection_results.get('crop_marks', [])
+        for crop_mark in crop_marks:
+            feature = {
+                'type': 'Feature',
+                'geometry': {
+                    'type': 'Point',
+                    'coordinates': [crop_mark['center'][0], crop_mark['center'][1]]
+                },
+                'properties': {
+                    'feature_type': crop_mark['type'],
+                    'area_m2': crop_mark['area_m2'],
+                    'confidence': crop_mark['confidence'],
+                    'crop_mark_index': crop_mark['crop_mark_index'],
+                    'archaeological_significance': crop_mark['archaeological_significance']
+                }
+            }
+            features.append(feature)
+        
+        # Export geometric features
+        geometric_features = self.detection_results.get('geometric_features', [])
+        for geom in geometric_features:
+            if geom['type'] == 'circle':
+                feature = {
+                    'type': 'Feature',
+                    'geometry': {
+                        'type': 'Point',
+                        'coordinates': [geom['center'][0], geom['center'][1]]
+                    },
+                    'properties': {
+                        'feature_type': f"geometric_{geom['type']}",
+                        'diameter_m': geom['diameter_m'],
+                        'area_m2': geom['area_m2'],
+                        'confidence': geom['confidence'],
+                        'expected_feature': geom['expected_feature'],
+                        'resolution': geom.get('resolution', '10m')
+                    }
+                }
+            elif geom['type'] == 'line':
+                feature = {
+                    'type': 'Feature',
+                    'geometry': {
+                        'type': 'LineString',
+                        'coordinates': [
+                            [geom['start'][0], geom['start'][1]],
+                            [geom['end'][0], geom['end'][1]]
+                        ]
+                    },
+                    'properties': {
+                        'feature_type': f"geometric_{geom['type']}",
+                        'length_m': geom['length_m'],
+                        'angle_degrees': geom['angle_degrees'],
+                        'expected_feature': geom['expected_feature'],
+                        'resolution': geom.get('resolution', '10m')
+                    }
+                }
+            else:  # rectangle
+                feature = {
+                    'type': 'Feature',
+                    'geometry': {
+                        'type': 'Point',
+                        'coordinates': [geom['center'][0], geom['center'][1]]
+                    },
+                    'properties': {
+                        'feature_type': f"geometric_{geom['type']}",
+                        'area_m2': geom['area_m2'],
+                        'width_m': geom['width_m'],
+                        'height_m': geom['height_m'],
+                        'expected_feature': geom['expected_feature'],
+                        'resolution': geom.get('resolution', '10m')
+                    }
+                }
+            
+            features.append(feature)
+        
+        # Create GeoJSON
+        geojson = {
+            'type': 'FeatureCollection',
+            'features': features,
+            'metadata': {
+                'zone': self.detection_results.get('zone', 'unknown'),
+                'scene_path': self.detection_results['scene_path'],
+                'analysis_timestamp': self.detection_results['analysis_timestamp'],
+                'total_features': len(features),
+                'sensor': 'sentinel-2',
+                'red_edge_analysis': self.detection_results.get('red_edge_analysis', False),
+                'confidence_factors': self.detection_results.get('confidence_factors', [])
+            }
+        }
+        
+        # Write to file
+        try:
+            def convert_np(obj):
+                if isinstance(obj, (np.integer, np.int64, np.int32)):
+                    return int(obj)
+                if isinstance(obj, (np.floating, np.float64, np.float32)):
+                    return float(obj)
+                return obj
+
+            with open(output_path, 'w') as f:
+                json.dump(geojson, f, indent=2, default=convert_np)
+            
+            logger.info(f"Exported {len(features)} features to {output_path}")
+            return True
+            
+        except Exception as e:
+            logger.error(f"Error exporting GeoJSON: {e}")
+            return False
