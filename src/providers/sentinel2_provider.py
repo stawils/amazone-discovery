@@ -284,24 +284,50 @@ class Sentinel2Provider(BaseProvider):
             available_bands = []
             
             logger.info(f"Downloading bands for {scene_id}")
-            
-            for band_name in self.config.PRIORITY_BANDS:
+            # Debug: Print all available assets
+            logger.info(f"Available assets in scene: {list(item.assets.keys())}")
+            # Map band names to actual asset names in STAC
+            band_mapping = {
+                'B02': 'blue',     # Blue
+                'B03': 'green',    # Green
+                'B04': 'red',      # Red
+                'B05': 'rededge1', # Red edge 1
+                'B07': 'rededge3', # Red edge 3
+                'B08': 'nir',      # NIR
+                'B11': 'swir16',   # SWIR 1610nm
+                'B12': 'swir22'    # SWIR 2190nm
+            }
+            for band_code in self.config.PRIORITY_BANDS:
                 try:
-                    if band_name in item.assets:
-                        asset = item.assets[band_name]
-                        band_file = self.download_band(asset, scene_dir, band_name)
-                        
+                    # Try the mapped asset name first
+                    asset_name = band_mapping.get(band_code, band_code.lower())
+                    if asset_name in item.assets:
+                        asset = item.assets[asset_name]
+                        band_file = self.download_band(asset, scene_dir, band_code)
                         if band_file and band_file.exists():
-                            file_paths[band_name] = band_file
-                            available_bands.append(band_name)
-                            logger.debug(f"  ✓ Downloaded {band_name}")
+                            file_paths[band_code] = band_file
+                            available_bands.append(band_code)
+                            logger.debug(f"  ✓ Downloaded {band_code} ({asset_name})")
                         else:
-                            logger.warning(f"  ❌ Failed to download {band_name}")
+                            logger.warning(f"  ❌ Failed to download {band_code}")
                     else:
-                        logger.warning(f"  ⚠️ Band {band_name} not available in scene")
-                        
+                        # Try alternative naming
+                        alt_names = [band_code, band_code.lower(), f"{band_code.lower()}-cog"]
+                        found = False
+                        for alt_name in alt_names:
+                            if alt_name in item.assets:
+                                asset = item.assets[alt_name]
+                                band_file = self.download_band(asset, scene_dir, band_code)
+                                if band_file and band_file.exists():
+                                    file_paths[band_code] = band_file
+                                    available_bands.append(band_code)
+                                    logger.debug(f"  ✓ Downloaded {band_code} ({alt_name})")
+                                    found = True
+                                    break
+                        if not found:
+                            logger.warning(f"  ⚠️ Band {band_code} not available in scene")
                 except Exception as e:
-                    logger.warning(f"Error downloading band {band_name}: {e}")
+                    logger.warning(f"Error downloading band {band_code}: {e}")
                     continue
             
             if len(available_bands) < 4:  # Need minimum bands

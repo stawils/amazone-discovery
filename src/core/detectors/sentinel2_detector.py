@@ -18,8 +18,10 @@ from sklearn.preprocessing import StandardScaler
 import pandas as pd
 from typing import List, Dict, Tuple, Optional, Any
 import logging
+import traceback
 from pathlib import Path
 import json
+from rasterio.warp import reproject, Resampling
 
 logger = logging.getLogger(__name__)
 
@@ -45,6 +47,55 @@ class Sentinel2ArchaeologicalDetector:
             'B8A': 20, 'B09': 60, 'B10': 60, 'B11': 20, 'B12': 20
         }
     
+    def _resample_bands_to_reference(self, bands: Dict[str, np.ndarray]) -> Dict[str, np.ndarray]:
+        """
+        Resample all bands to the shape of the highest-resolution band (preferably 10m, e.g., 'nir' or 'red').
+        Uses bilinear resampling for continuous data.
+        """
+        # Pick reference band (prefer 'nir', then 'red', then any)
+        ref_band = None
+        for key in ['nir', 'red', 'blue', 'green']:
+            if key in bands:
+                ref_band = bands[key]
+                break
+        if ref_band is None:
+            ref_band = next(iter(bands.values()))
+        ref_shape = ref_band.shape
+        resampled_bands = {}
+        for name, arr in bands.items():
+            if arr.shape == ref_shape:
+                resampled_bands[name] = arr
+            else:
+                # Resample to reference shape
+                dst = np.empty(ref_shape, dtype=np.float32)
+                
+                # Create identity transforms for source and destination
+                # This avoids the 'cannot unpack non-iterable NoneType object' error
+                src_height, src_width = arr.shape
+                dst_height, dst_width = ref_shape
+                
+                # Create simple affine transforms (identity transforms with appropriate scaling)
+                src_transform = rasterio.transform.Affine(1.0, 0.0, 0.0, 0.0, 1.0, 0.0)
+                dst_transform = rasterio.transform.Affine(1.0, 0.0, 0.0, 0.0, 1.0, 0.0)
+                
+                try:
+                    reproject(
+                        source=arr,
+                        destination=dst,
+                        src_transform=src_transform,
+                        src_crs=None,
+                        dst_transform=dst_transform,
+                        dst_crs=None,
+                        resampling=Resampling.bilinear
+                    )
+                except Exception as e:
+                    # Fallback to simple resize if reproject fails
+                    logger.warning(f"Resampling with reproject failed: {e}. Using cv2.resize instead.")
+                    # Use cv2.resize as a fallback method
+                    dst = cv2.resize(arr, (dst_width, dst_height), interpolation=cv2.INTER_LINEAR)
+                resampled_bands[name] = dst
+        return resampled_bands
+
     def load_sentinel2_bands(self, scene_path: Path) -> Dict[str, np.ndarray]:
         """
         Load and process Sentinel-2 bands optimized for archaeological detection
@@ -148,6 +199,8 @@ class Sentinel2ArchaeologicalDetector:
         self.crs = crs
         
         logger.info(f"Loaded {len(bands)} Sentinel-2 bands: {list(bands.keys())}")
+        # Resample all bands to the shape of the highest-resolution band
+        bands = self._resample_bands_to_reference(bands)
         return bands
     
     def calculate_archaeological_indices(self, bands: Dict[str, np.ndarray]) -> Dict[str, np.ndarray]:
@@ -266,7 +319,11 @@ class Sentinel2ArchaeologicalDetector:
         
         if 'terra_preta_enhanced' not in indices:
             logger.warning("Cannot perform enhanced terra preta detection - missing red-edge bands")
-            return self.detect_standard_terra_preta(bands, indices)
+            std = self.detect_standard_terra_preta(bands, indices)
+            if std is None:
+                logger.error("detect_standard_terra_preta returned None; replacing with empty result dict.")
+                return {'patches': [], 'mask': None, 'total_pixels': 0, 'coverage_percent': 0, 'detection_method': None, 'red_edge_enhanced': False}
+            return std
         
         # Use enhanced terra preta index with red-edge
         tp_enhanced = indices['terra_preta_enhanced']
@@ -274,7 +331,11 @@ class Sentinel2ArchaeologicalDetector:
         ndre1 = indices.get('ndre1')
         
         if ndvi is None or ndre1 is None:
-            return self.detect_standard_terra_preta(bands, indices)
+            std = self.detect_standard_terra_preta(bands, indices)
+            if std is None:
+                logger.error("detect_standard_terra_preta returned None; replacing with empty result dict.")
+                return {'patches': [], 'mask': None, 'total_pixels': 0, 'coverage_percent': 0, 'detection_method': None, 'red_edge_enhanced': False}
+            return std
         
         # Enhanced detection criteria using red-edge sensitivity
         tp_mask = (
@@ -301,6 +362,8 @@ class Sentinel2ArchaeologicalDetector:
             if patch_size >= 50:  # Minimum size threshold
                 # Calculate statistics
                 patch_coords = np.where(patch_mask)
+                if patch_coords[0].size == 0 or patch_coords[1].size == 0:
+                    continue  # skip this patch if no valid pixels
                 centroid_y = np.mean(patch_coords[0])
                 centroid_x = np.mean(patch_coords[1])
                 
@@ -347,7 +410,7 @@ class Sentinel2ArchaeologicalDetector:
         
         if 'terra_preta' not in indices or 'ndvi' not in indices:
             logger.warning("Cannot detect terra preta - missing required bands")
-            return {}
+            return {'patches': [], 'mask': None, 'total_pixels': 0, 'coverage_percent': 0, 'detection_method': None, 'red_edge_enhanced': False}
         
         terra_preta_index = indices['terra_preta']
         ndvi = indices['ndvi']
@@ -373,6 +436,8 @@ class Sentinel2ArchaeologicalDetector:
             
             if patch_size >= 100:  # Minimum size
                 patch_coords = np.where(patch_mask)
+                if patch_coords[0].size == 0 or patch_coords[1].size == 0:
+                    continue  # skip this patch if no valid pixels
                 centroid_y = np.mean(patch_coords[0])
                 centroid_x = np.mean(patch_coords[1])
                 
@@ -512,22 +577,34 @@ class Sentinel2ArchaeologicalDetector:
             # Enhanced terra preta detection using red-edge
             logger.info("Detecting terra preta signatures with red-edge enhancement...")
             terra_preta_results = self.detect_enhanced_terra_preta(bands)
-            
+            if terra_preta_results is None:
+                logger.error("terra_preta_results is None; replacing with empty result dict.")
+                terra_preta_results = {'patches': [], 'mask': None, 'total_pixels': 0, 'coverage_percent': 0, 'detection_method': None, 'red_edge_enhanced': False}
+
             # Crop mark detection using red-edge bands
             logger.info("Detecting crop marks using red-edge sensitivity...")
             crop_marks = self.detect_crop_marks(bands)
-            
+            if crop_marks is None:
+                logger.error("crop_marks is None; replacing with empty list.")
+                crop_marks = []
+
             # Standard geometric detection (inherited from base class)
             logger.info("Detecting geometric patterns...")
             geometric_features = self.detect_geometric_patterns(bands)
-            
+            if geometric_features is None:
+                logger.error("geometric_features is None; replacing with empty list.")
+                geometric_features = []
+
             # Calculate comprehensive spectral indices
             indices = self.calculate_archaeological_indices(bands)
+            
+            # Safely get zone name with fallback
+            zone_name = self.zone.name if self.zone and hasattr(self.zone, 'name') else 'unknown_zone'
             
             # Compile enhanced results
             analysis_results = {
                 'scene_path': str(scene_path),
-                'zone': self.zone.name,
+                'zone': zone_name,
                 'analysis_timestamp': pd.Timestamp.now().isoformat(),
                 'sensor': 'sentinel-2',
                 'terra_preta': terra_preta_results,
@@ -567,23 +644,43 @@ class Sentinel2ArchaeologicalDetector:
             return analysis_results
             
         except Exception as e:
-            logger.error(f"Error analyzing Sentinel-2 scene {scene_path}: {e}")
+            # Enhanced error handling with detailed logging
+            import traceback
+            tb_str = traceback.format_exc()
+            
+            # Safely get scene path for logging
+            try:
+                scene_path_repr = str(scene_path) if scene_path else "<no path>"
+            except Exception:
+                scene_path_repr = "<error getting path>"
+                
+            logger.error(f"Unhandled error in analyze_scene for {scene_path_repr}: {e}\nTraceback:\n{tb_str}")
+            
+            # Safe zone name extraction
+            zone_name = 'unknown_zone'
+            if self.zone:
+                if hasattr(self.zone, 'name'):
+                    zone_name = self.zone.name
+                elif hasattr(self.zone, 'get') and callable(getattr(self.zone, 'get')):
+                    zone_name = self.zone.get('name', 'unknown_zone')
+            
+            # Return error details
             return {
-                'scene_path': str(scene_path),
-                'zone': self.zone.name,
-                'error': str(e),
                 'success': False,
-                'sensor': 'sentinel-2'
-            }
-    
-    def detect_geometric_patterns(self, bands: Dict[str, np.ndarray]) -> List[Dict]:
-        """
-        Geometric pattern detection optimized for Sentinel-2 resolution
-        Uses the highest resolution bands (10m) for best geometric detection
-        """
-        
-        # Use NIR band (10m resolution) for geometric detection
-        if 'nir' in bands:
+                'error': str(e),
+                'zone': zone_name,
+                'scene_path': scene_path_repr,
+                'analysis_timestamp': pd.Timestamp.now().isoformat(),
+                'sensor': 'sentinel-2',
+                'error_type': e.__class__.__name__,
+                'terra_preta': {'patches': [], 'mask': None, 'total_pixels': 0, 'coverage_percent': 0, 'detection_method': 'error', 'red_edge_enhanced': False},
+                'crop_marks': [],
+                'geometric_features': [],
+                'spectral_indices': [],
+                'total_features': 0,
+                'red_edge_analysis': False,
+                'band_count': 0,
+                'available_bands': [],`
             detection_band = bands['nir']
         elif 'red' in bands:
             detection_band = bands['red']
@@ -622,9 +719,17 @@ class Sentinel2ArchaeologicalDetector:
         # Edge detection
         edges = cv2.Canny(blurred, 50, 150)
         
+        # Default values for feature sizes if zone is None
+        default_min_feature_size = 60  # 60m minimum feature size
+        default_max_feature_size = 1000  # 1000m maximum feature size
+        
+        # Safely get min/max feature sizes with fallback to defaults
+        min_feature_size = getattr(self.zone, 'min_feature_size_m', default_min_feature_size) if self.zone else default_min_feature_size
+        max_feature_size = getattr(self.zone, 'max_feature_size_m', default_max_feature_size) if self.zone else default_max_feature_size
+        
         # Hough Circle Transform with 10m resolution parameters
-        min_radius = max(3, int(self.zone.min_feature_size_m / 20))  # 10m pixels
-        max_radius = min(50, int(self.zone.max_feature_size_m / 20))
+        min_radius = max(3, int(min_feature_size / 20))  # 10m pixels
+        max_radius = min(50, int(max_feature_size / 20))
         
         circles = cv2.HoughCircles(
             edges,
@@ -675,12 +780,18 @@ class Sentinel2ArchaeologicalDetector:
         
         edges = cv2.Canny(image, 50, 150)
         
+        # Default values for feature sizes if zone is None
+        default_min_feature_size = 60  # 60m minimum feature size
+        
+        # Safely get min feature size with fallback to default
+        min_feature_size = getattr(self.zone, 'min_feature_size_m', default_min_feature_size) if self.zone else default_min_feature_size
+        
         lines = cv2.HoughLinesP(
             edges,
             rho=1,
             theta=np.pi/180,
             threshold=80,  # Adjusted for 10m resolution
-            minLineLength=int(self.zone.min_feature_size_m / 10),
+            minLineLength=int(min_feature_size / 10),
             maxLineGap=5   # Smaller gap for higher resolution
         )
         
@@ -693,7 +804,13 @@ class Sentinel2ArchaeologicalDetector:
                 length_pixels = np.sqrt((x2-x1)**2 + (y2-y1)**2)
                 length_m = length_pixels * 10  # 10m pixels
                 
-                if length_m < self.zone.min_feature_size_m:
+                # Default value for min feature size if zone is None
+                default_min_feature_size = 60  # 60m minimum feature size
+                
+                # Safely get min feature size with fallback to default
+                min_feature_size = getattr(self.zone, 'min_feature_size_m', default_min_feature_size) if self.zone else default_min_feature_size
+                
+                if length_m < min_feature_size:
                     continue
                 
                 if hasattr(self, 'transform'):
@@ -733,7 +850,13 @@ class Sentinel2ArchaeologicalDetector:
                 area_pixels = cv2.contourArea(contour)
                 area_m2 = area_pixels * 10 * 10  # 10m pixels
                 
-                if area_m2 < (self.zone.min_feature_size_m ** 2):
+                # Default value for min feature size if zone is None
+                default_min_feature_size = 60  # 60m minimum feature size
+                
+                # Safely get min feature size with fallback to default
+                min_feature_size = getattr(self.zone, 'min_feature_size_m', default_min_feature_size) if self.zone else default_min_feature_size
+                
+                if area_m2 < (min_feature_size ** 2):
                     continue
                 
                 M = cv2.moments(contour)

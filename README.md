@@ -168,9 +168,19 @@ Classification:
 ```bash
 python main.py --checkpoint 1
 # ✅ Downloads satellite data
-# ✅ Runs OpenAI analysis
-# ✅ Prints model version and dataset ID
+# ✅ Analyzes real Sentinel-2 pixel data (NDVI, Terra Preta, Crop Marks)
+# ✅ Creates a detailed prompt with actual spectral measurements
+# ✅ Runs OpenAI (GPT-4.1) analysis on real pixel values
+# ✅ Prints model version, dataset ID, and pixel analysis summary
 ```
+
+**New in this version:**
+- Checkpoint 1 now loads actual Sentinel-2 pixel data (center 1000x1000 sample)
+- Computes real spectral indices: NDVI (vegetation), Terra Preta index (anthropogenic soil), Red Edge NDVI (crop marks)
+- Sends these real measurements to GPT-4.1 for expert archaeological interpretation
+- Output includes:
+  - `pixel_analysis`: Real computed statistics for each index
+  - `openai_analysis`: GPT-4.1 interpretation of the real data
 
 #### **Checkpoint 2: Early Explorer**
 ```bash
