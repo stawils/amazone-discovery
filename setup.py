@@ -2,8 +2,24 @@
 Setup script for Amazon Archaeological Discovery Pipeline
 """
 
-from setuptools import setup, find_packages
+import sys
+import subprocess
 from pathlib import Path
+
+# Handle missing setuptools
+try:
+    from setuptools import setup, find_packages
+except ImportError:
+    print("Setuptools not found. Attempting to install...")
+    try:
+        # Try to install setuptools using pip
+        subprocess.check_call([sys.executable, "-m", "pip", "install", "setuptools", "--user"])
+        print("Setuptools installed successfully.")
+        from setuptools import setup, find_packages
+    except Exception as e:
+        print(f"Error installing setuptools: {e}")
+        print("Please install setuptools manually: pip install setuptools")
+        sys.exit(1)
 
 # Read README
 readme_path = Path(__file__).parent / "README.md"
@@ -18,6 +34,10 @@ if requirements_path.exists():
             line.strip() for line in f 
             if line.strip() and not line.startswith('#') and not line.startswith('--')
         ]
+    
+    # Ensure setuptools is in requirements
+    if 'setuptools' not in requirements:
+        requirements.append('setuptools')
 
 setup(
     name="amazon-archaeological-discovery",
