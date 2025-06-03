@@ -3,6 +3,11 @@ Setup script for Amazon Archaeological Discovery Pipeline
 """
 
 import sys
+# Inject 'install' command if none provided
+if __name__ == "__main__" and len(sys.argv) == 1:
+    print("No command provided. Running 'install' command by default.")
+    sys.argv.append("install")
+
 import subprocess
 from pathlib import Path
 
