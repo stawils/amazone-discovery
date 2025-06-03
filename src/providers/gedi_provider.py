@@ -455,6 +455,8 @@ class GEDIProvider(BaseProvider):
                     except Exception as exc:  # noqa: BLE001
                         logger.debug("Optional GEDI algorithms failed: %s", exc)
 
+
+    
                 logger.info(
                     "✅ Extracted %s archaeological metrics from GEDI data",
                     len(extracted),
