@@ -135,10 +135,10 @@ class GEDIProvider(BaseProvider):
             if broad_response.status_code == 200:
                 broad_results = broad_response.json()
                 broad_total = broad_results.get("feed", {}).get("totalResults", 0)
-                logger.info(f"✅ Broader search found {broad_total} GEDI granules globally")
+                logger.info(f"✅ GEDI API Test: Broader (global) search found {broad_total} granules.")
                 
                 if broad_total == 0:
-                    logger.warning("❌ No GEDI data found even in global search - collection may be empty")
+                    logger.info("ℹ️ GEDI API Test: Broader (global) search found 0 granules. This is an API availability check, specific search for the zone will follow.")
             else:
                 logger.error(f"❌ Broader search also failed: {broad_response.status_code}")
                 logger.error(f"Response: {broad_response.text[:300]}")
@@ -456,7 +456,9 @@ class GEDIProvider(BaseProvider):
         try:
             extracted: Dict[str, np.ndarray] = {}
             with h5py.File(hdf5_file, "r") as f:
+                logger.debug(f"Inspecting HDF5 file: {hdf5_file.name}")
                 beam_groups = [key for key in f.keys() if key.startswith("BEAM")]
+                logger.debug(f"Found {len(beam_groups)} beam groups: {beam_groups}")
                 if not beam_groups:
                     logger.warning("No beam groups found in %s", hdf5_file)
                     return None
@@ -470,7 +472,25 @@ class GEDIProvider(BaseProvider):
 
                 for beam in beam_groups:
                     try:
+                        logger.debug(f"Processing beam: {beam}")
                         beam_group = f[beam]
+                        essential_datasets = ["lat_lowestmode", "lon_lowestmode", "rh", "elev_lowestmode", "quality_flag"]
+                        present_datasets = [ds for ds in essential_datasets if ds in beam_group]
+                        missing_datasets = [ds for ds in essential_datasets if ds not in beam_group]
+                        if "rh" in present_datasets and not isinstance(beam_group["rh"], h5py.Group):
+                            logger.warning(f"Dataset 'rh' in beam {beam} is not a group as expected.")
+                            present_datasets.remove("rh") # Treat as missing if not a group
+                            missing_datasets.append("rh (not a group)")
+                        elif "rh" in present_datasets:
+                            rh_sub_datasets = ["rh_95", "rh_100"] # Example sub-datasets under 'rh' group
+                            rh_present_sub = [sd for sd in rh_sub_datasets if sd in beam_group["rh"]]
+                            rh_missing_sub = [sd for sd in rh_sub_datasets if sd not in beam_group["rh"]]
+                            logger.debug(f"Beam {beam} 'rh' group check: Present sub-datasets: {rh_present_sub}, Missing sub-datasets: {rh_missing_sub}")
+                        logger.debug(f"Beam {beam}: Present essential datasets: {present_datasets}. Missing: {missing_datasets}.")
+
+                        if "lat_lowestmode" not in beam_group or "lon_lowestmode" not in beam_group:
+                            logger.warning(f"Beam {beam} is missing lat_lowestmode or lon_lowestmode. Skipping beam.")
+                            continue
 
                         if (
                             "lat_lowestmode" in beam_group
@@ -478,6 +498,7 @@ class GEDIProvider(BaseProvider):
                         ):
                             lats = beam_group["lat_lowestmode"][:]
                             lons = beam_group["lon_lowestmode"][:]
+                            logger.debug(f"Beam {beam}: Found {len(lats)} points before zone filtering.")
 
                             rh95 = beam_group.get("rh", {}).get("rh_95", [])
                             rh100 = beam_group.get("rh", {}).get("rh_100", [])
@@ -485,67 +506,142 @@ class GEDIProvider(BaseProvider):
                             quality = beam_group.get("quality_flag", [])
 
                             mask = self.filter_points_in_zone(lats, lons, zone)
+                            logger.debug(f"Beam {beam}: Found {np.sum(mask)} points after zone filtering.")
 
                             if np.any(mask):
-                                all_lats.extend(lats[mask])
-                                all_lons.extend(lons[mask])
-                                if len(rh95) > 0:
-                                    all_rh95.extend(rh95[mask])
-                                if len(rh100) > 0:
-                                    all_rh100.extend(rh100[mask])
-                                if len(ground) > 0:
-                                    all_ground.extend(ground[mask])
-                                if len(quality) > 0:
-                                    all_quality.extend(quality[mask])
+                                current_lats = lats[mask]
+                                current_lons = lons[mask]
+                                num_points_in_beam_after_filter = len(current_lats)
+
+                                all_lats.extend(current_lats)
+                                all_lons.extend(current_lons)
+
+                                # For optional datasets, ensure they have the same length as lats before masking
+                                rh_group = beam_group.get("rh")
+                                if rh_group and isinstance(rh_group, h5py.Group):
+                                    rh95_data = rh_group.get("rh_95")
+                                    if rh95_data is not None and len(rh95_data) == len(lats):
+                                        all_rh95.extend(rh95_data[:][mask])
+                                    else: # Pad with NaNs if missing or mismatched length for this beam
+                                        all_rh95.extend([np.nan] * num_points_in_beam_after_filter)
+                                        if rh95_data is None: logger.debug(f"Beam {beam}: rh/rh_95 not found or None.")
+                                        elif len(rh95_data) != len(lats): logger.debug(f"Beam {beam}: rh/rh_95 length mismatch (expected {len(lats)}, got {len(rh95_data)}).")
+
+                                    rh100_data = rh_group.get("rh_100")
+                                    if rh100_data is not None and len(rh100_data) == len(lats):
+                                        all_rh100.extend(rh100_data[:][mask])
+                                    else: # Pad with NaNs
+                                        all_rh100.extend([np.nan] * num_points_in_beam_after_filter)
+                                        if rh100_data is None: logger.debug(f"Beam {beam}: rh/rh_100 not found or None.")
+                                        elif len(rh100_data) != len(lats): logger.debug(f"Beam {beam}: rh/rh_100 length mismatch.")
+
+                                else: # rh group itself is missing or not a group
+                                    all_rh95.extend([np.nan] * num_points_in_beam_after_filter)
+                                    all_rh100.extend([np.nan] * num_points_in_beam_after_filter)
+                                    if not rh_group: logger.debug(f"Beam {beam}: 'rh' group not found.")
+                                    elif not isinstance(rh_group, h5py.Group): logger.debug(f"Beam {beam}: 'rh' dataset is not a group.")
+
+                                ground_data = beam_group.get("elev_lowestmode")
+                                if ground_data is not None and len(ground_data) == len(lats):
+                                    all_ground.extend(ground_data[:][mask])
+                                else: # Pad with NaNs
+                                    all_ground.extend([np.nan] * num_points_in_beam_after_filter)
+                                    if ground_data is None: logger.debug(f"Beam {beam}: elev_lowestmode not found or None.")
+                                    elif len(ground_data) != len(lats): logger.debug(f"Beam {beam}: elev_lowestmode length mismatch.")
+
+                                quality_data = beam_group.get("quality_flag")
+                                if quality_data is not None and len(quality_data) == len(lats):
+                                    all_quality.extend(quality_data[:][mask])
+                                else: # Pad with a default/NaN quality flag, e.g., -1 or np.nan
+                                    all_quality.extend([np.nan] * num_points_in_beam_after_filter) # Or use 0 or -1 if NaN is problematic for int arrays later
+                                    if quality_data is None: logger.debug(f"Beam {beam}: quality_flag not found or None.")
+                                    elif len(quality_data) != len(lats): logger.debug(f"Beam {beam}: quality_flag length mismatch.")
                     except Exception as exc:  # noqa: BLE001
-                        logger.warning("Error processing beam %s: %s", beam, exc)
+                        logger.error(f"Error processing beam {beam} in {hdf5_file.name}: {exc}", exc_info=True)
 
                 if len(all_lats) > 0:
                     extracted["coordinates"] = np.column_stack((all_lats, all_lons))
-                    if all_rh95:
-                        extracted["canopy_height_95"] = np.array(all_rh95)
-                    if all_rh100:
-                        extracted["canopy_height_100"] = np.array(all_rh100)
-                    if all_ground:
-                        extracted["ground_elevation"] = np.array(all_ground)
-                    if all_quality:
-                        extracted["quality_flags"] = np.array(all_quality)
 
-                    if all_rh95 and all_rh100:
+                    # Only add other arrays if they have meaningful data (not all NaNs)
+                    # and convert lists to numpy arrays here.
+                    if any(not np.isnan(x) for x in all_rh95): # Check if there's at least one non-NaN value
+                        extracted["canopy_height_95"] = np.array(all_rh95)
+                    else:
+                        logger.debug("No valid rh95 data collected across all beams.")
+
+                    if any(not np.isnan(x) for x in all_rh100):
+                        extracted["canopy_height_100"] = np.array(all_rh100)
+                    else:
+                        logger.debug("No valid rh100 data collected across all beams.")
+
+                    if any(not np.isnan(x) for x in all_ground):
+                        extracted["ground_elevation"] = np.array(all_ground)
+                    else:
+                        logger.debug("No valid ground_elevation data collected across all beams.")
+
+                    if any(not np.isnan(x) for x in all_quality): # Assuming quality_flags can be float due to NaNs
+                        extracted["quality_flags"] = np.array(all_quality)
+                    else:
+                        logger.debug("No valid quality_flags data collected across all beams.")
+
+                    # Keep the logic for canopy_gaps, elevation_anomalies, and detector calls,
+                    # but ensure they can handle potential NaNs in their inputs if these arrays are added.
+                    # For example, detect_canopy_gaps might need np.nanmean or np.nanstd.
+                    # The placeholder detectors don't do much yet, so this is fine for now.
+                    if "canopy_height_95" in extracted and "canopy_height_100" in extracted: # Check if keys exist after NaN filtering
                         extracted["canopy_gaps"] = self.detect_canopy_gaps(
-                            all_rh95, all_rh100
+                            extracted["canopy_height_95"], extracted["canopy_height_100"] # Pass the numpy arrays
                         )
-                    if all_ground:
+                    if "ground_elevation" in extracted: # Check if key exists
                         extracted["elevation_anomalies"] = (
-                            self.detect_elevation_anomalies(all_ground)
+                            self.detect_elevation_anomalies(extracted["ground_elevation"]) # Pass the numpy array
                         )
 
                     # Advanced detection using dedicated algorithms
-                    try:
-                        from src.core.detectors.gedi_detector import (
-                            detect_archaeological_clearings,
-                            detect_archaeological_earthworks,
-                        )
+                    if "coordinates" in extracted and extracted["coordinates"].size > 0:
+                        try:
+                            from src.detectors.gedi_detector import (
+                                detect_archaeological_clearings,
+                                detect_archaeological_earthworks,
+                            )
 
-                        clearing = detect_archaeological_clearings(
-                            np.array(all_rh95),
-                            np.array(all_rh100),
-                            extracted["coordinates"],
-                        )
-                        earthworks = detect_archaeological_earthworks(
-                            np.array(all_ground), extracted["coordinates"]
-                        )
-                        extracted["gap_clusters"] = clearing.get("gap_clusters", [])
-                        extracted["earthwork_clusters"] = earthworks.get(
-                            "mound_clusters", []
-                        )
-                    except Exception as exc:  # noqa: BLE001
-                        logger.debug("Optional GEDI algorithms failed: %s", exc)
+                            # Prepare inputs for detectors, using .get for safety, providing empty arrays if not present
+                            # The detectors themselves also handle empty/NaN inputs.
+                            rh95_input = extracted.get("canopy_height_95", np.array([]))
+                            rh100_input = extracted.get("canopy_height_100", np.array([]))
+                            ground_elev_input = extracted.get("ground_elevation", np.array([]))
+                            coords_input = extracted["coordinates"] # Already checked for presence
 
-                logger.info(
-                    "✅ Extracted %s archaeological metrics from GEDI data",
-                    len(extracted),
-                )
+                            logger.debug(f"Calling clearing detector. RH95 size: {rh95_input.size}, RH100 size: {rh100_input.size}, Coords size: {coords_input.size}")
+                            clearing_results = detect_archaeological_clearings(
+                                rh95_input,
+                                rh100_input,
+                                coords_input
+                            )
+                            # The detector returns a dict like {"potential_clearings": [...], "feature_type": "clearing"}
+                            extracted["potential_clearings"] = clearing_results.get("potential_clearings", [])
+                            logger.info(f"Found {len(extracted['potential_clearings'])} potential clearing points.")
+
+                            logger.debug(f"Calling earthwork detector. Ground elev size: {ground_elev_input.size}, Coords size: {coords_input.size}")
+                            earthwork_results = detect_archaeological_earthworks(
+                                ground_elev_input,
+                                coords_input
+                            )
+                            # The detector returns a dict like {"potential_earthworks": [...], "feature_type": "earthwork"}
+                            extracted["potential_earthworks"] = earthwork_results.get("potential_earthworks", [])
+                            logger.info(f"Found {len(extracted['potential_earthworks'])} potential earthwork points.")
+
+                        except ImportError as imp_err:
+                            logger.error(f"Could not import GEDI detectors: {imp_err}")
+                        except Exception as exc:
+                            logger.error(f"Error during GEDI advanced detection: {exc}", exc_info=True)
+                    else:
+                        logger.debug("Skipping advanced GEDI detection as no coordinate data was extracted.")
+
+                if extracted:
+                    logger.info(f"✅ Extracted {len(extracted)} types of metrics from {hdf5_file.name} (e.g., {list(extracted.keys())[:3]}) with {len(extracted.get('coordinates', []))} data points.")
+                else:
+                    logger.warning(f"No metrics extracted from {hdf5_file.name}.")
                 return extracted if extracted else None
 
         except Exception as exc:  # noqa: BLE001
