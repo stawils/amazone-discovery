@@ -32,6 +32,8 @@ from src.core.scoring import ConvergentAnomalyScorer
 from src.pipeline.modular_pipeline import ModularPipeline
 
 
+
+
 class OpenAIIntegration:
     """OpenAI API integration for archaeological analysis"""
 
@@ -39,32 +41,12 @@ class OpenAIIntegration:
         api_key = os.getenv("OPENAI_API_KEY")
         if not api_key:
             raise ValueError("OPENAI_API_KEY not found in environment variables")
-
         self.client = openai.OpenAI(api_key=api_key)
 
     def analyze_with_openai(
-        self,
-        prompt: str,
-        data_context: str = "",
-        model: str = "o3",
-        max_completion_tokens: int = 1000,
-        tools: Optional[list] = None,
-        tool_choice: Optional[str] = None,
-        seed: Optional[int] = None
+        self, prompt: str, data_context: str = "", model: str = "o3"
     ) -> Dict[str, Any]:
-        """
-        Analyze archaeological data using an OpenAI model.
-
-        :param prompt: Main task or question to analyze
-        :param data_context: Background context for the model
-        :param model: Model name (default: "o3")
-        :param temperature: Sampling temperature
-        :param max_completion_tokens: Max tokens for output
-        :param tools: Optional tools to enable (e.g., code interpreter)
-        :param tool_choice: Optional tool selection policy
-        :param seed: Optional reproducibility seed
-        :return: Dictionary with model response and metadata
-        """
+        """Send prompt to OpenAI and return analysis"""
 
         full_prompt = f"""
 You are an expert archaeologist analyzing Amazon satellite imagery and data for potential archaeological sites.
@@ -78,35 +60,37 @@ Task:
 Please provide a detailed analysis focusing on archaeological significance, patterns, and recommendations.
 """
 
-        request_payload = {
-            "model": model,
-            "messages": [
-                {
-                    "role": "system",
-                    "content": "You are an expert archaeologist specializing in Amazon pre-Columbian civilizations and remote sensing."
-                },
-                {
-                    "role": "user",
-                    "content": full_prompt.strip()
-                },
-            ],
-            "max_completion_tokens": max_completion_tokens,
-        }
-
-        # Optional API parameters
-        if tools is not None:
-            request_payload["tools"] = tools
-        if tool_choice is not None:
-            request_payload["tool_choice"] = tool_choice
-        if seed is not None:
-            request_payload["seed"] = seed
-
         try:
-            response = self.client.chat.completions.create(**request_payload)
+            response = self.client.chat.completions.create(
+                model=model,
+                messages=[
+                    {
+                        "role": "system",
+                        "content": "You are an expert archaeologist specializing in Amazon pre-Columbian civilizations and remote sensing."
+                    },
+                    {
+                        "role": "user",
+                        "content": full_prompt.strip()
+                    }
+                ],
+                max_completion_tokens=5000,  # Adjust as needed
+                temperature=1.0,
+                top_p=1.0
+            )
+
+            message = response.choices[0].message
+            content = message.content or ""
+            tool_calls = getattr(message, "tool_calls", None)
+            function_call = getattr(message, "function_call", None)
+
+            if not content and not tool_calls and not function_call:
+                logger.warning("OpenAI model response was empty")
 
             return {
                 "model": model,
-                "response": response.choices[0].message.content.strip(),
+                "response": content.strip(),
+                "tool_calls": tool_calls,
+                "function_call": function_call,
                 "tokens_used": response.usage.total_tokens,
                 "timestamp": datetime.now().isoformat(),
             }

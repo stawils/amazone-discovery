@@ -1,5 +1,6 @@
 from typing import List, Dict, Optional
 from src.core.data_objects import SceneData, BaseProvider
+from src.core.config import TARGET_ZONES
 from src.pipeline.analysis import AnalysisStep
 from src.pipeline.scoring import ScoringStep
 from src.pipeline.report import ReportStep
@@ -38,8 +39,9 @@ class ModularPipeline:
         """
         logger.info("\n🚀 Starting Modular Archaeological Discovery Pipeline...")
         # Download
-        all_scene_data: List[SceneData] = []
         logger.info(f"Using provider: {self.provider_instance.__class__.__name__}")
+        
+        # Let the provider handle zones parameter - it now has proper handling for None and string cases
         all_scene_data = self.provider_instance.download_data(zones, max_scenes)
         logger.info(f"✓ Downloaded {len(all_scene_data)} scenes.")
         # Analyze

@@ -1,6 +1,6 @@
 """
-Sentinel-2 AWS Open Data Provider for Archaeological Discovery
-Optimized for Amazon basin archaeological analysis using 13-band multispectral data
+IMPROVED Sentinel-2 AWS Open Data Provider for Archaeological Discovery
+Fixed: Precise location targeting with overlap filtering and center distance
 """
 
 import os
@@ -21,7 +21,8 @@ warnings.filterwarnings('ignore')
 from pystac_client import Client
 import pystac
 import geopandas as gpd
-from shapely.geometry import box, Point
+from shapely.geometry import box, Point, Polygon
+from shapely.ops import unary_union
 import rioxarray
 import xarray as xr
 
@@ -66,6 +67,10 @@ class Sentinel2Config:
     MAX_CLOUD_COVER: float = 20.0
     MIN_DATA_COVERAGE: float = 80.0
     
+    # NEW: Precise targeting filters
+    MIN_OVERLAP_PERCENTAGE: float = 70.0  # Minimum overlap with AOI
+    MAX_CENTER_DISTANCE_KM: float = 50.0  # Maximum distance from AOI center
+    
     # Preferred dates (dry season for Amazon)
     PREFERRED_MONTHS: List[int] = field(default_factory=lambda: [6, 7, 8, 9])  # June-September
     
@@ -79,15 +84,13 @@ class Sentinel2Error(Exception):
 
 class Sentinel2Provider(BaseProvider):
     """
-    Advanced Sentinel-2 provider for archaeological discovery
+    IMPROVED Sentinel-2 provider with precise location targeting
     
-    Features:
-    - 13-band multispectral analysis optimized for archaeology
-    - Red-edge bands for vegetation stress detection (crop marks)
-    - SWIR bands for soil composition analysis (terra preta)
-    - 5-day revisit cycle for temporal analysis
-    - Cloud-optimized GeoTIFF access via AWS
-    - STAC API integration for efficient search
+    Key Improvements:
+    1. Overlap percentage filtering - scenes must overlap significantly with AOI
+    2. Center distance filtering - scenes must be reasonably close to AOI center
+    3. AOI clipping support - option to clip downloaded data to exact AOI
+    4. Better scene ranking based on spatial fit, not just cloud cover
     """
     
     def __init__(self, config: Optional[Sentinel2Config] = None):
@@ -95,34 +98,42 @@ class Sentinel2Provider(BaseProvider):
         self.stac_client = Client.open(self.config.STAC_API_URL)
         self.session = requests.Session()
         
-        logger.info("🛰️ Sentinel-2 AWS Provider initialized")
+        logger.info("🛰️ IMPROVED Sentinel-2 AWS Provider initialized")
         logger.info(f"STAC API: {self.config.STAC_API_URL}")
         logger.info(f"Collection: {self.config.L2A_COLLECTION}")
+        logger.info(f"Min Overlap: {self.config.MIN_OVERLAP_PERCENTAGE}%")
+        logger.info(f"Max Center Distance: {self.config.MAX_CENTER_DISTANCE_KM}km")
 
-    def download_data(self, zones: List[str], max_scenes: int = 3) -> List[SceneData]:
+    def download_data(self, zones: Optional[List[str]] = None, max_scenes: int = 3) -> List[SceneData]:
         """
-        Download Sentinel-2 data for archaeological analysis
-        Args:
-            zones: List of zone IDs from TARGET_ZONES
-            max_scenes: Maximum scenes per zone
-        Returns:
-            List of SceneData objects with downloaded Sentinel-2 data
+        Download Sentinel-2 data for archaeological analysis with improved targeting
         """
         all_scene_data = []
+        
+        # Handle None or empty zones list
+        if zones is None or len(zones) == 0:
+            # Default to priority 1 zones
+            zones = [zone_id for zone_id, zone in TARGET_ZONES.items() if zone.priority == 1]
+            logger.info(f"No zones specified, using priority 1 zones: {zones}")
+        
+        # Ensure zones is a list
+        if isinstance(zones, str):
+            zones = [zones]
+            
         for zone_id in zones:
             if zone_id not in TARGET_ZONES:
                 logger.warning(f"Unknown zone: {zone_id}")
                 continue
             zone = TARGET_ZONES[zone_id]
-            logger.info(f"\n🎯 Processing {zone.name} with Sentinel-2")
+            logger.info(f"\n🎯 Processing {zone.name} with IMPROVED Sentinel-2 targeting")
             try:
-                scenes = self.search_scenes(zone, max_scenes * 2)  # Get more to filter best
+                scenes = self.search_scenes_improved(zone, max_scenes * 3)  # Get more to filter better
                 if not scenes:
                     logger.warning(f"No suitable Sentinel-2 scenes found for {zone.name}")
                     continue
                 zone_scenes = []
                 for i, scene in enumerate(scenes[:max_scenes]):
-                    logger.info(f"Processing scene {i+1}/{max_scenes}: {scene['id']}")
+                    logger.info(f"Processing scene {i+1}/{max_scenes}: {scene['id']} (overlap: {scene.get('overlap_percentage', 0):.1f}%)")
                     scene_data = self.process_scene(scene, zone)
                     if scene_data:
                         zone_scenes.append(scene_data)
@@ -134,63 +145,97 @@ class Sentinel2Provider(BaseProvider):
             except Exception as e:
                 logger.error(f"Error processing zone {zone.name}: {e}")
                 continue
-        logger.info(f"🎯 Sentinel-2 download complete: {len(all_scene_data)} scenes total")
+        logger.info(f"🎯 IMPROVED Sentinel-2 download complete: {len(all_scene_data)} scenes total")
         return all_scene_data
 
-    def search_scenes(self, zone, max_results: int = 10) -> List[Dict[str, Any]]:
+    def search_scenes_improved(self, zone, max_results: int = 10) -> List[Dict[str, Any]]:
         """
-        Search for optimal Sentinel-2 scenes for archaeological analysis
-        Args:
-            zone: TargetZone object
-            max_results: Maximum number of results
-        Returns:
-            List of scene metadata dictionaries sorted by quality score
+        IMPROVED scene search with precise location targeting and overlap filtering
         """
-        logger.info(f"🔍 Searching Sentinel-2 scenes for {zone.name}")
+        logger.info(f"🔍 IMPROVED Sentinel-2 search for {zone.name} with spatial filtering")
         try:
+            # Create AOI geometry for overlap calculations
             config_bbox = zone.bbox  # (south, west, north, east)
-            # Convert to STAC format: (west, south, east, north)
+            aoi_polygon = box(config_bbox[1], config_bbox[0], config_bbox[3], config_bbox[2])  # (west, south, east, north)
+            aoi_center = Point((config_bbox[1] + config_bbox[3])/2, (config_bbox[0] + config_bbox[2])/2)
+            
+            # Convert to STAC format: (west, south, east, north) 
             stac_bbox = [config_bbox[1], config_bbox[0], config_bbox[3], config_bbox[2]]
+            
+            # Search with larger bbox to get more candidates for filtering
+            expanded_bbox = self._expand_bbox(stac_bbox, factor=1.5)  # 50% larger search area
+            
             search = self.stac_client.search(
                 collections=[self.config.L2A_COLLECTION],
-                bbox=stac_bbox,
+                bbox=expanded_bbox,  # Use expanded bbox to get more candidates
                 datetime=f"{self.config.DEFAULT_START_DATE}/{self.config.DEFAULT_END_DATE}",
-                limit=max_results * 3,  # Get more to filter
+                limit=max_results * 5,  # Get many more to filter spatially
                 query={
-                    "eo:cloud_cover": {"lt": 50.0}  # Use 50.0 as per fix
+                    "eo:cloud_cover": {"lt": 50.0}  # Initial cloud filter
                 }
             )
             items = list(search.items())
-            logger.info(f"Found {len(items)} candidate scenes")
+            logger.info(f"Found {len(items)} candidate scenes in expanded search area")
+            
             if not items:
                 return []
-            scored_scenes = []
+            
+            # NEW: Apply spatial filtering and scoring
+            spatially_filtered_scenes = []
             for item in items:
                 try:
-                    score_data = self.score_archaeological_suitability(item, zone)
-                    if score_data['quality_score'] > 40:  # Minimum threshold
-                        scored_scenes.append(score_data)
+                    score_data = self.score_archaeological_suitability_improved(item, zone, aoi_polygon, aoi_center)
+                    
+                    # Apply spatial filters
+                    if (score_data.get('overlap_percentage', 0) >= self.config.MIN_OVERLAP_PERCENTAGE and
+                        score_data.get('center_distance_km', float('inf')) <= self.config.MAX_CENTER_DISTANCE_KM):
+                        spatially_filtered_scenes.append(score_data)
+                        logger.debug(f"✓ Scene {item.id}: overlap={score_data['overlap_percentage']:.1f}%, distance={score_data['center_distance_km']:.1f}km")
+                    else:
+                        logger.debug(f"✗ Scene {item.id}: overlap={score_data.get('overlap_percentage', 0):.1f}%, distance={score_data.get('center_distance_km', 999):.1f}km (filtered out)")
+                        
                 except Exception as e:
                     logger.warning(f"Error scoring scene {item.id}: {e}")
                     continue
-            scored_scenes.sort(key=lambda x: x['quality_score'], reverse=True)
-            logger.info(f"✓ Selected {len(scored_scenes)} high-quality scenes")
-            return scored_scenes[:max_results]
-        except Exception as e:
-            raise Sentinel2Error(f"Scene search failed for {zone.name}: {e}")
-
-    def score_archaeological_suitability(self, item: pystac.Item, zone) -> Dict[str, Any]:
-        """
-        Score Sentinel-2 scene for archaeological analysis suitability
-        
-        Args:
-            item: STAC item
-            zone: TargetZone object
             
-        Returns:
-            Dictionary with scene metadata and quality score
-        """
+            if not spatially_filtered_scenes:
+                logger.warning(f"No scenes passed spatial filtering for {zone.name}")
+                return []
+            
+            # Sort by improved quality score (includes spatial fit)
+            spatially_filtered_scenes.sort(key=lambda x: x['quality_score'], reverse=True)
+            
+            logger.info(f"✓ Selected {len(spatially_filtered_scenes)} spatially-suitable scenes for {zone.name}")
+            logger.info(f"Best scene: {spatially_filtered_scenes[0]['id']} (score: {spatially_filtered_scenes[0]['quality_score']:.1f}, overlap: {spatially_filtered_scenes[0]['overlap_percentage']:.1f}%)")
+            
+            return spatially_filtered_scenes[:max_results]
+            
+        except Exception as e:
+            raise Sentinel2Error(f"IMPROVED scene search failed for {zone.name}: {e}")
+
+    def _expand_bbox(self, bbox: List[float], factor: float = 1.5) -> List[float]:
+        """Expand bounding box by a factor to get more search candidates"""
+        west, south, east, north = bbox
+        center_lon = (west + east) / 2
+        center_lat = (south + north) / 2
         
+        width = east - west
+        height = north - south
+        
+        new_width = width * factor
+        new_height = height * factor
+        
+        return [
+            center_lon - new_width/2,  # west
+            center_lat - new_height/2,  # south  
+            center_lon + new_width/2,  # east
+            center_lat + new_height/2   # north
+        ]
+
+    def score_archaeological_suitability_improved(self, item: pystac.Item, zone, aoi_polygon: Polygon, aoi_center: Point) -> Dict[str, Any]:
+        """
+        IMPROVED scoring with spatial overlap and center distance calculations
+        """
         properties = item.properties
         
         # Extract key metadata
@@ -198,51 +243,86 @@ class Sentinel2Provider(BaseProvider):
         data_coverage = properties.get('s2:data_coverage', 0)
         acquisition_date = datetime.fromisoformat(properties['datetime'].replace('Z', '+00:00'))
         
-        # Calculate quality score
+        # NEW: Calculate spatial metrics
+        item_geometry = Polygon(item.geometry['coordinates'][0])
+        
+        # Calculate overlap percentage
+        try:
+            intersection = item_geometry.intersection(aoi_polygon)
+            aoi_area = aoi_polygon.area
+            overlap_area = intersection.area
+            overlap_percentage = (overlap_area / aoi_area) * 100 if aoi_area > 0 else 0
+        except Exception as e:
+            logger.warning(f"Error calculating overlap for {item.id}: {e}")
+            overlap_percentage = 0
+        
+        # Calculate center distance
+        try:
+            item_center = item_geometry.centroid
+            # Convert degrees to km (rough approximation)
+            distance_degrees = aoi_center.distance(item_center)
+            center_distance_km = distance_degrees * 111.32  # 1 degree ≈ 111.32 km
+        except Exception as e:
+            logger.warning(f"Error calculating center distance for {item.id}: {e}")
+            center_distance_km = float('inf')
+        
+        # Calculate IMPROVED quality score with spatial weighting
         quality_score = 0
         
-        # Cloud cover score (0-30 points)
+        # Cloud cover score (0-25 points, reduced from 30)
         if cloud_cover <= 5:
-            quality_score += 30
-        elif cloud_cover <= 10:
             quality_score += 25
+        elif cloud_cover <= 10:
+            quality_score += 20
         elif cloud_cover <= 15:
-            quality_score += 15
+            quality_score += 12
         elif cloud_cover <= 20:
             quality_score += 5
         
-        # Data coverage score (0-20 points)
+        # Data coverage score (0-15 points, reduced from 20)
         if data_coverage >= 95:
-            quality_score += 20
+            quality_score += 15
         elif data_coverage >= 90:
-            quality_score += 15
+            quality_score += 12
         elif data_coverage >= 80:
-            quality_score += 10
+            quality_score += 8
         
-        # Seasonal preference (0-20 points)
-        if acquisition_date.month in self.config.PREFERRED_MONTHS:
+        # NEW: Spatial overlap score (0-30 points) - HIGH WEIGHT
+        if overlap_percentage >= 95:
+            quality_score += 30
+        elif overlap_percentage >= 85:
+            quality_score += 25
+        elif overlap_percentage >= 75:
             quality_score += 20
-        elif acquisition_date.month in [5, 10]:  # Shoulder months
+        elif overlap_percentage >= 65:
+            quality_score += 15
+        elif overlap_percentage >= 50:
             quality_score += 10
         
-        # Recent data bonus (0-15 points)
-        days_old = (datetime.now(acquisition_date.tzinfo) - acquisition_date).days
-        if days_old < 365:
+        # NEW: Center distance score (0-20 points)
+        if center_distance_km <= 10:
+            quality_score += 20
+        elif center_distance_km <= 25:
             quality_score += 15
-        elif days_old < 730:
+        elif center_distance_km <= 50:
             quality_score += 10
-        elif days_old < 1095:
+        elif center_distance_km <= 75:
             quality_score += 5
         
-        # Solar angle bonus (0-15 points)
-        sun_azimuth = properties.get('s2:mean_solar_azimuth', 0)
+        # Seasonal preference (0-10 points, reduced from 20)
+        if acquisition_date.month in self.config.PREFERRED_MONTHS:
+            quality_score += 10
+        elif acquisition_date.month in [5, 10]:  # Shoulder months
+            quality_score += 5
+        
+        # Solar angle bonus (0-10 points, reduced from 15)
         sun_zenith = properties.get('s2:mean_solar_zenith', 90)
         if sun_zenith < 30:  # High sun angle
-            quality_score += 15
-        elif sun_zenith < 40:
             quality_score += 10
+        elif sun_zenith < 40:
+            quality_score += 7
         elif sun_zenith < 50:
-            quality_score += 5
+            quality_score += 3
         
         return {
             'id': item.id,
@@ -251,25 +331,21 @@ class Sentinel2Provider(BaseProvider):
             'cloud_cover': cloud_cover,
             'data_coverage': data_coverage,
             'sun_zenith': sun_zenith,
-            'sun_azimuth': sun_azimuth,
+            'sun_azimuth': properties.get('s2:mean_solar_azimuth', 0),
             'quality_score': quality_score,
             'mgrs_tile': properties.get('s2:mgrs_tile', 'unknown'),
             'processing_level': properties.get('s2:processing_level', 'L2A'),
-            'constellation': properties.get('constellation', 'sentinel-2')
+            'constellation': properties.get('constellation', 'sentinel-2'),
+            # NEW spatial metrics
+            'overlap_percentage': overlap_percentage,
+            'center_distance_km': center_distance_km,
+            'spatial_fit_score': overlap_percentage - center_distance_km  # Combined spatial metric
         }
-    
+
     def process_scene(self, scene_data: Dict[str, Any], zone) -> Optional[SceneData]:
         """
-        Process and download a Sentinel-2 scene for archaeological analysis
-        
-        Args:
-            scene_data: Scene metadata from search
-            zone: TargetZone object
-            
-        Returns:
-            SceneData object or None if processing failed
+        Process and download a Sentinel-2 scene with enhanced spatial metadata
         """
-        
         item = scene_data['stac_item']
         scene_id = scene_data['id']
         
@@ -284,8 +360,7 @@ class Sentinel2Provider(BaseProvider):
             available_bands = []
             
             logger.info(f"Downloading bands for {scene_id}")
-            # Debug: Print all available assets
-            logger.info(f"Available assets in scene: {list(item.assets.keys())}")
+            
             # Map band names to actual asset names in STAC
             band_mapping = {
                 'B02': 'blue',     # Blue
@@ -297,6 +372,7 @@ class Sentinel2Provider(BaseProvider):
                 'B11': 'swir16',   # SWIR 1610nm
                 'B12': 'swir22'    # SWIR 2190nm
             }
+            
             for band_code in self.config.PRIORITY_BANDS:
                 try:
                     # Try the mapped asset name first
@@ -334,7 +410,7 @@ class Sentinel2Provider(BaseProvider):
                 logger.warning(f"Insufficient bands downloaded for {scene_id}: {len(available_bands)}")
                 return None
             
-            # Create enhanced metadata for archaeological analysis
+            # Create enhanced metadata with spatial fit information
             metadata = {
                 'provider': 'sentinel-2',
                 'acquisition_date': scene_data['acquisition_date'],
@@ -350,6 +426,10 @@ class Sentinel2Provider(BaseProvider):
                 'stac_url': item.get_self_href(),
                 'spatial_resolution': self.get_band_resolutions(),
                 'spectral_bands': len(available_bands),
+                # NEW: Spatial fit metadata
+                'overlap_percentage': scene_data.get('overlap_percentage', 0),
+                'center_distance_km': scene_data.get('center_distance_km', 0),
+                'spatial_fit_score': scene_data.get('spatial_fit_score', 0),
                 'archaeological_suitability': self.assess_archaeological_potential(scene_data, available_bands)
             }
             
@@ -368,27 +448,16 @@ class Sentinel2Provider(BaseProvider):
             with open(metadata_file, 'w') as f:
                 json.dump(metadata, f, indent=2, default=str)
             
-            logger.info(f"✓ Scene processed: {len(available_bands)} bands, quality score: {scene_data['quality_score']}")
+            logger.info(f"✓ Scene processed: {len(available_bands)} bands, quality: {scene_data['quality_score']:.1f}, overlap: {scene_data.get('overlap_percentage', 0):.1f}%")
             
             return scene_obj
             
         except Exception as e:
             logger.error(f"Error processing scene {scene_id}: {e}")
             return None
-    
+
     def download_band(self, asset: pystac.Asset, scene_dir: Path, band_name: str) -> Optional[Path]:
-        """
-        Download a single Sentinel-2 band from AWS S3
-        
-        Args:
-            asset: STAC asset object
-            scene_dir: Local directory for the scene
-            band_name: Band identifier (e.g., 'B04')
-            
-        Returns:
-            Path to downloaded file or None if failed
-        """
-        
+        """Download a single Sentinel-2 band from AWS S3"""
         try:
             # Get the HTTPS URL for the band
             band_url = asset.href
@@ -441,23 +510,14 @@ class Sentinel2Provider(BaseProvider):
         }
     
     def assess_archaeological_potential(self, scene_data: Dict, available_bands: List[str]) -> Dict[str, Any]:
-        """
-        Assess the archaeological analysis potential of a Sentinel-2 scene
-        
-        Args:
-            scene_data: Scene metadata
-            available_bands: List of successfully downloaded bands
-            
-        Returns:
-            Dictionary with archaeological assessment
-        """
-        
+        """Assess archaeological analysis potential with spatial fit considerations"""
         assessment = {
             'overall_score': 0,
             'vegetation_analysis': False,
             'soil_analysis': False,
             'red_edge_available': False,
             'swir_available': False,
+            'spatial_suitability': False,
             'limitations': []
         }
         
@@ -493,142 +553,123 @@ class Sentinel2Provider(BaseProvider):
         if scene_data['data_coverage'] > 90:
             assessment['overall_score'] += 10
         
-        # Archaeological indices that can be calculated
-        indices_possible = []
-        if all(b in available_bands for b in ['B04', 'B08']):
-            indices_possible.append('NDVI')
-        if all(b in available_bands for b in ['B04', 'B05']):
-            indices_possible.append('NDRE (Red Edge)')
-        if all(b in available_bands for b in ['B08', 'B11']):
-            indices_possible.append('Terra Preta Index')
-        if all(b in available_bands for b in ['B11', 'B12']):
-            indices_possible.append('Clay Mineral Index')
+        # NEW: Spatial fit evaluation
+        overlap_pct = scene_data.get('overlap_percentage', 0)
+        center_dist = scene_data.get('center_distance_km', float('inf'))
         
-        assessment['indices_available'] = indices_possible
-        assessment['spectral_richness'] = len(available_bands)
-        
+        if overlap_pct >= 85 and center_dist <= 25:
+            assessment['spatial_suitability'] = True
+            assessment['overall_score'] += 15
+        elif overlap_pct >= 70 and center_dist <= 50:
+            assessment['overall_score'] += 10
+        else:
+            assessment['limitations'].append(f'Suboptimal spatial fit: {overlap_pct:.1f}% overlap, {center_dist:.1f}km from center')
+            
         return assessment
-    
-    def create_composite_for_analysis(self, scene_data: SceneData, output_path: Optional[Path] = None) -> Optional[Path]:
+
+    def create_composite_for_analysis(self, scene_data: SceneData, aoi_polygon: Optional[Polygon] = None) -> Optional[xr.Dataset]:
         """
-        Create a multi-band composite optimized for archaeological analysis
-        
-        Args:
-            scene_data: SceneData object with downloaded bands
-            output_path: Optional output path for composite
-            
-        Returns:
-            Path to created composite or None if failed
+        Create analysis-ready composite from Sentinel-2 bands with optional AOI clipping
         """
-        
         try:
-            if not output_path:
-                scene_dir = Path(scene_data.metadata['scene_directory'])
-                output_path = scene_dir / 'archaeological_composite.tif'
+            # Load available bands
+            band_arrays = {}
+            crs = None
+            transform = None
             
-            # Priority band order for archaeological analysis
-            band_order = ['B02', 'B03', 'B04', 'B05', 'B07', 'B08', 'B11', 'B12']
+            for band_code, file_path in scene_data.file_paths.items():
+                try:
+                    with rioxarray.open_rasterio(file_path) as da:
+                        # Clip to AOI if provided
+                        if aoi_polygon:
+                            da = da.rio.clip([aoi_polygon], crs=da.rio.crs)
+                        
+                        band_arrays[band_code] = da.squeeze()
+                        
+                        # Store CRS and transform from first band
+                        if crs is None:
+                            crs = da.rio.crs
+                            transform = da.rio.transform()
+                            
+                except Exception as e:
+                    logger.warning(f"Error loading band {band_code}: {e}")
+                    continue
             
-            # Collect available bands in priority order
-            bands_to_stack = []
-            band_names = []
-            
-            for band in band_order:
-                if band in scene_data.file_paths:
-                    bands_to_stack.append(scene_data.file_paths[band])
-                    band_names.append(band)
-            
-            if len(bands_to_stack) < 4:
-                logger.warning("Insufficient bands for composite creation")
+            if not band_arrays:
+                logger.error("No bands could be loaded for composite creation")
                 return None
             
-            # Stack bands using rioxarray
-            band_arrays = []
-            profile = None
+            # Create xarray Dataset
+            composite = xr.Dataset(band_arrays)
             
-            for i, band_path in enumerate(bands_to_stack):
-                with rasterio.open(band_path) as src:
-                    band_data = src.read(1)
-                    band_arrays.append(band_data)
-                    
-                    if profile is None:
-                        profile = src.profile
-                        profile.update({
-                            'count': len(bands_to_stack),
-                            'compress': 'lzw',
-                            'tiled': True,
-                            'blockxsize': 512,
-                            'blockysize': 512
-                        })
+            # Add metadata
+            composite.attrs.update({
+                'provider': 'sentinel-2-improved',
+                'scene_id': scene_data.scene_id,
+                'zone_id': scene_data.zone_id,
+                'crs': str(crs),
+                'spatial_resolution': scene_data.metadata.get('spatial_resolution', {}),
+                'overlap_percentage': scene_data.metadata.get('overlap_percentage', 0),
+                'center_distance_km': scene_data.metadata.get('center_distance_km', 0),
+                'quality_score': scene_data.metadata.get('quality_score', 0),
+                'archaeological_suitability': scene_data.metadata.get('archaeological_suitability', {})
+            })
             
-            # Write composite
-            with rasterio.open(output_path, 'w', **profile) as dst:
-                for i, band_array in enumerate(band_arrays):
-                    dst.write(band_array, i + 1)
-                
-                # Add band descriptions
-                dst.descriptions = band_names
+            logger.info(f"✓ Created composite for {scene_data.scene_id} with {len(band_arrays)} bands")
             
-            logger.info(f"✓ Archaeological composite created: {output_path}")
-            logger.info(f"  Bands included: {', '.join(band_names)}")
-            
-            return output_path
+            return composite
             
         except Exception as e:
-            logger.error(f"Error creating archaeological composite: {e}")
+            logger.error(f"Error creating composite for {scene_data.scene_id}: {e}")
             return None
 
-# Integration function for your existing pipeline
+# Integration functions for your existing pipeline
 def create_sentinel2_provider() -> Sentinel2Provider:
-    """Create and configure Sentinel-2 provider for archaeological pipeline"""
+    """Create and configure IMPROVED Sentinel-2 provider"""
     return Sentinel2Provider()
 
-# Convenience function for quick testing
-def test_sentinel2_access(zone_id: str = 'negro_madeira') -> bool:
-    """
-    Test Sentinel-2 access for a specific zone
-    
-    Args:
-        zone_id: Zone ID to test
-        
-    Returns:
-        True if successful, False otherwise
-    """
-    
+def test_sentinel2_targeting(zone_id: str = 'negro_madeira') -> bool:
+    """Test the IMPROVED Sentinel-2 targeting for a specific zone"""
     try:
+        if zone_id not in TARGET_ZONES:
+            logger.error(f"Zone {zone_id} not found in TARGET_ZONES")
+            return False
+            
         provider = Sentinel2Provider()
-        scenes = provider.search_scenes(TARGET_ZONES[zone_id], max_results=1)
+        scenes = provider.search_scenes_improved(TARGET_ZONES[zone_id], max_results=3)
         
         if scenes:
-            logger.info(f"✓ Sentinel-2 access test successful for {zone_id}")
-            logger.info(f"  Found scene: {scenes[0]['id']}")
-            logger.info(f"  Quality score: {scenes[0]['quality_score']}")
-            logger.info(f"  Cloud cover: {scenes[0]['cloud_cover']}%")
+            logger.info(f"✓ IMPROVED Sentinel-2 targeting test successful for {zone_id}")
+            for i, scene in enumerate(scenes[:3]):
+                logger.info(f"  Scene {i+1}: {scene['id']}")
+                logger.info(f"    Overlap: {scene['overlap_percentage']:.1f}%")
+                logger.info(f"    Distance: {scene['center_distance_km']:.1f}km")
+                logger.info(f"    Quality: {scene['quality_score']:.1f}")
+                logger.info(f"    Cloud: {scene['cloud_cover']:.1f}%")
             return True
         else:
-            logger.warning(f"No Sentinel-2 scenes found for {zone_id}")
+            logger.warning(f"No spatially-suitable Sentinel-2 scenes found for {zone_id}")
             return False
             
     except Exception as e:
-        logger.error(f"Sentinel-2 access test failed: {e}")
+        logger.error(f"IMPROVED Sentinel-2 targeting test failed: {e}")
         return False
 
+# For command-line testing
 if __name__ == "__main__":
-    # Test the Sentinel-2 provider
-    print("🛰️ Testing Sentinel-2 AWS Provider...")
+    print("🛰️ Testing IMPROVED Sentinel-2 Provider with Precise Targeting...")
     
-    # Test basic functionality
-    success = test_sentinel2_access('negro_madeira')
+    # Test the improved targeting
+    success = test_sentinel2_targeting('negro_madeira')
     
     if success:
-        print("✅ Sentinel-2 provider test successful!")
-        print("\nKey features available:")
-        print("- 13-band multispectral analysis")
-        print("- Red-edge bands for vegetation stress (crop marks)")
-        print("- SWIR bands for soil analysis (terra preta)")
-        print("- 5-day revisit cycle")
-        print("- Cloud-optimized GeoTIFF access via AWS")
-        print("- STAC API integration")
+        print("✅ IMPROVED Sentinel-2 provider test successful!")
+        print("\nKey improvements:")
+        print("- Spatial overlap filtering (minimum 70% overlap with AOI)")
+        print("- Center distance filtering (maximum 50km from AOI center)")
+        print("- Enhanced quality scoring with spatial fit weighting")
+        print("- Expanded search area to find better candidates")
+        print("- Precise location targeting eliminates distant/offset scenes")
     else:
-        print("❌ Sentinel-2 provider test failed")
+        print("❌ IMPROVED Sentinel-2 provider test failed")
         print("Check internet connection and API access")
