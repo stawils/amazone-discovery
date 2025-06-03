@@ -2,547 +2,342 @@
 
 **AI-Enhanced Satellite Remote Sensing for Archaeological Site Discovery**
 
-A revolutionary archaeological discovery system that combines satellite imagery, AI pattern recognition, and convergent anomaly detection to identify previously unknown archaeological sites in the Amazon rainforest.
+A systematic archaeological discovery framework that combines satellite imagery, space-based LiDAR, AI pattern recognition, and convergent anomaly detection to identify potential archaeological sites in the Amazon rainforest.
 
-[![OpenAI to Z Challenge](https://img.shields.io/badge/OpenAI%20to%20Z-Competition%20Ready-green)](https://kaggle.com/competitions/openai-to-z-challenge)
+---
+
+## 🎯 Competition Entry
+
+This pipeline is designed for the **OpenAI to Z Challenge** and implements all 5 required checkpoints with OpenAI integration. 
+
+[![Competition Status](https://img.shields.io/badge/OpenAI%20to%20Z-In%20Development-blue)](https://kaggle.com/competitions/openai-to-z-challenge)
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ---
 
-## 🎯 Executive Summary
+## 📋 Project Overview
 
-This pipeline implements a **convergent anomaly detection** methodology for archaeological discovery, combining multiple independent evidence sources to identify potential archaeological sites with unprecedented accuracy. Instead of seeking perfect signatures, we identify locations where multiple anomalies converge - when 4-5 different evidence types point to the same coordinates, the probability of coincidence drops below 1%.
+### **Core Innovation: Convergent Anomaly Detection**
 
-### Key Innovation: Convergent Anomaly Detection
+Our approach addresses the challenge of high false positive rates in individual remote sensing techniques by combining multiple independent evidence sources. When 3-4 different anomaly types converge at the same location, the probability of all being false positives decreases significantly.
 
-Our breakthrough approach combines:
-- **Historical Intelligence**: 16th-century expedition coordinates from primary sources
-- **Terra Preta Detection**: Anthropogenic dark soil spectral signatures
-- **Geometric Pattern Recognition**: Circular earthworks, linear causeways, rectangular compounds
-- **Vegetation Stress Analysis**: Crop marks indicating buried archaeological features
-- **Environmental Context**: Settlement suitability and resource availability
+### **Multi-Modal Data Integration**
+- **🛰️ Satellite Spectral Analysis**: Terra preta detection and vegetation patterns (Sentinel-2/Landsat)
+- **🚀 Space-Based LiDAR**: Canopy structure and ground elevation (GEDI from ISS)
+- **📜 Historical Intelligence**: Systematic extraction of coordinates from expedition accounts
+- **🧠 AI Enhancement**: OpenAI model integration for pattern analysis and text mining
+- **🌍 Environmental Context**: Settlement suitability and resource availability
+
+**Note**: While GEDI space LiDAR data is included, research has shown limitations for direct archaeological detection. We address this through convergent analysis rather than relying on any single data source.
 
 ---
 
 ## 🚀 Quick Start
 
-### **Competition Ready (OpenAI to Z Challenge)**
+### **OpenAI to Z Challenge Checkpoints**
 ```bash
-# Clone and setup
+# Setup
 git clone https://github.com/stawils/amazon-discovery.git
 cd amazon-discovery
 pip install -r requirements.txt
-
-# Configure environment
 cp .env.template .env
-# Edit .env with your API keys
+# Add your OpenAI API key to .env
 
-# Run all OpenAI to Z checkpoints
-python openai_checkpoints.py --all
+# Run individual checkpoints
+python main.py --checkpoint 1  # Familiarize with data
+python main.py --checkpoint 3 --zone negro_madeira  # Site discovery
 
-# Full competition pipeline
-python main.py --competition-ready
+# Complete checkpoint sequence
+python main.py --all-checkpoints
 ```
 
 ### **Research Pipeline**
 ```bash
-# Explore target zones
-python main.py --list-zones
-
-# Run modular pipeline for specific zones
+# Analyze priority zones
 python main.py --pipeline --zones negro_madeira trombetas
 
-# Generate comprehensive analysis
-python main.py --pipeline --provider gee --full --visualize
+# Full multi-modal analysis
+python main.py --pipeline --multi-modal --visualize
 ```
 
 ---
 
-## 📋 Installation & Configuration
-
-### **1. System Requirements**
-- Python 3.8+
-- 8GB+ RAM (16GB recommended)
-- 10GB+ storage for satellite data
-- Internet connection for data downloads
-
-### **2. Dependencies Installation**
-```bash
-# Core dependencies
-pip install -r requirements.txt
-
-# Optional: For enhanced analysis
-pip install tensorflow  # For deep learning models
-pip install plotly      # For interactive visualizations
-```
-
-### **3. Environment Configuration**
-```bash
-# Copy template and configure
-cp .env.template .env
-```
-
-**Required Environment Variables:**
-```env
-# OpenAI API (Required for competition)
-OPENAI_API_KEY=your_openai_api_key
-
-# Google Earth Engine (Optional but recommended)
-GEE_SERVICE_ACCOUNT_PATH=path/to/service_account.json
-GEE_PROJECT_ID=your_gee_project
-
-# Copernicus/Sentinel Data (Optional)
-COPERNICUS_USER=your_username
-COPERNICUS_PASSWORD=your_password
-```
-
----
-
-## 🏗️ System Architecture
+## 📁 System Architecture
 
 ### **Modular Pipeline Design**
 ```
-📊 Data Providers → 🔍 Detection → 🧮 Scoring → 📈 Analysis → 🗺️ Visualization
+📊 Data Sources → 🔍 Detection → 🧮 Scoring → 📈 Analysis → 🗺️ Visualization
 ```
 
-### **Core Components**
-
-#### **1. Data Providers** (`src/providers/`)
-- **Google Earth Engine Provider**: Cloud-processed Landsat analysis
-- **Sentinel-2 Provider**: High-resolution multispectral analysis via AWS
-- **USGS Provider**: Direct Landsat data access
-
-#### **2. Detection Engine** (`src/core/detectors/`)
-- **Archaeological Detector**: Landsat-optimized feature detection
-- **Sentinel-2 Detector**: Enhanced red-edge and SWIR analysis
-- **Terra Preta Detection**: Anthropogenic soil spectral signatures
-- **Geometric Pattern Recognition**: Hough transforms for earthwork detection
-
-#### **3. Scoring System** (`src/core/scoring.py`)
-- **15-Point Convergent Anomaly Scale**
-- **Multi-modal Evidence Integration**
-- **Confidence Classification and Prioritization**
-
-#### **4. Visualization Suite** (`src/core/visualizers.py`)
-- **Interactive Folium Maps** with archaeological discoveries
-- **Plotly Dashboards** for scoring analysis
-- **Statistical Analysis Plots** for method effectiveness
-
-#### **5. OpenAI Integration** (`openai_checkpoints.py`)
-- **Complete 5-Checkpoint Implementation** for competition
-- **o3 Analysis** of archaeological patterns
-- **Historical Text Mining** for coordinate extraction
-
----
-
-## 📁 Project Structure
-
+### **Project Structure**
 ```
 amazon-discovery/
 ├── src/
-│   ├── core/                       # Core algorithms and config
-│   │   ├── config.py              # Target zones and configuration
-│   │   ├── data_objects.py        # SceneData and provider interfaces
-│   │   ├── scoring.py             # Convergent anomaly scoring
-│   │   ├── processors.py          # Image processing utilities
-│   │   ├── visualizers.py         # Interactive mapping and plots
-│   │   └── detectors/             # Archaeological detection algorithms
-│   │       ├── gee_detectors.py   # Google Earth Engine optimized
-│   │       └── sentinel2_detector.py # Sentinel-2 enhanced detection
-│   ├── providers/                  # Satellite data providers
-│   │   ├── gee_provider.py        # Google Earth Engine
-│   │   └── sentinel2_provider.py  # Sentinel-2 AWS access
-│   ├── pipeline/                   # Modular pipeline components
-│   │   ├── modular_pipeline.py    # Main pipeline orchestrator
-│   │   ├── analysis.py            # Feature analysis step
-│   │   ├── scoring.py             # Scoring step
-│   │   ├── report.py              # Report generation
-│   │   └── visualization.py       # Map creation step
-│   ├── checkpoints/               # OpenAI to Z Challenge checkpoints
-│   │   ├── validator.py           # Competition validation
-│   │   └── checkpoint[1-5].py     # Individual checkpoint classes
-│   └── utils/                      # Helper utilities
-├── main.py                         # Main entry point
-├── openai_checkpoints.py          # Competition checkpoint runner
-├── requirements.txt                # Python dependencies
-├── .env.template                   # Environment configuration template
-├── data/                          # Downloaded satellite data
-├── results/                       # Analysis results and outputs
-└── notebooks/                     # Jupyter analysis notebooks
+│   ├── core/                    # Core algorithms and scoring
+│   │   ├── config.py           # Target zones and parameters
+│   │   ├── detectors.py        # Archaeological feature detection
+│   │   ├── scoring.py          # Convergent anomaly scoring
+│   │   └── visualizers.py      # Interactive mapping
+│   ├── providers/              # Data providers
+│   │   ├── sentinel2_provider.py  # Sentinel-2 spectral analysis
+│   │   ├── gedi_provider.py    # GEDI space LiDAR
+│   │   ├── usgs_provider.py    # Landsat data
+│   │   └── gee_provider.py     # Google Earth Engine
+│   ├── checkpoints/            # Competition checkpoints
+│   │   ├── checkpoint1.py      # Data familiarization
+│   │   ├── checkpoint2.py      # Multi-source analysis
+│   │   ├── checkpoint3.py      # Site discovery
+│   │   ├── checkpoint4.py      # Impact narrative
+│   │   └── checkpoint5.py      # Final submission
+│   └── pipeline/               # Analysis workflows
+├── main.py                     # Main entry point
+├── openai_checkpoints.py       # Competition runner
+└── README.md                   # This file
 ```
 
 ---
 
 ## 🎯 Target Zones
 
-Our analysis focuses on 5 priority archaeological zones based on historical evidence and environmental suitability:
+Based on historical research and environmental analysis, we focus on 5 priority zones:
 
-| Zone | Priority | Coordinates | Historical Evidence | Expected Features |
-|------|----------|-------------|-------------------|-------------------|
-| **Negro-Madeira Confluence** | 🔴 **1** | -3.17°, -60.00° | Orellana 1542 battle site | Large ceremonial complexes, fortified settlements |
-| **Trombetas River Junction** | 🔴 **1** | -1.50°, -56.00° | Amazon warrior encounters | Fortified settlements, 100-300m earthworks |
-| **Upper Xingu Region** | 🟡 **2** | -11.72°, -54.58° | Fawcett's "Lost City Z" target | Mound villages, road networks |
-| **Upper Napo Region** | 🟢 **3** | -0.50°, -72.50° | Multiple expedition reports | Circular settlements, defensive works |
-| **Marañón River System** | 🟢 **3** | -4.00°, -75.00° | 60+ Jesuit missions documented | Large settlement complexes |
+| Zone | Coordinates | Historical Evidence | Environmental Context |
+|------|-------------|-------------------|---------------------|
+| **Negro-Madeira Confluence** | -3.17°, -60.00° | Orellana 1542 battle accounts | Major river confluence |
+| **Trombetas River Junction** | -1.50°, -56.00° | Amazon warrior encounters | Clearwater tributary access |
+| **Upper Xingu Region** | -11.72°, -54.58° | Fawcett expedition target | 81 known sites nearby |
+| **Upper Napo Region** | -0.50°, -72.50° | Multiple expedition reports | Major Andean access route |
+| **Marañón River System** | -4.00°, -75.00° | 60+ documented Jesuit missions | Western Amazon hub |
 
 ---
 
-## 🧠 Detection Algorithms
+## 🔬 Detection Methodology
 
-### **Terra Preta Detection**
-**Method**: NIR-SWIR spectral analysis with NDVI filtering  
-**Target**: Anthropogenic dark soils from ancient settlements  
-**Accuracy**: 75%+ precision in identifying archaeological soils
+### **Terra Preta Spectral Analysis**
+- **Method**: NIR-SWIR index calculation with vegetation analysis
+- **Target**: Anthropogenic dark soils indicating ancient settlements
+- **Data Sources**: Sentinel-2 (10m), Landsat 8/9 (30m)
+- **Validation**: Cross-reference with published archaeological soil studies
 
-```python
-# Terra Preta Index calculation
-terra_preta_index = (NIR - SWIR1) / (NIR + SWIR1)
-detection_mask = (terra_preta_index > 0.1) & (NDVI > 0.3) & (NDVI < 0.8)
-```
+### **GEDI Space LiDAR Analysis**
+- **Method**: Canopy gap detection and elevation anomaly analysis
+- **Limitations**: Research shows GEDI has constraints for direct archaeological detection
+- **Integration**: Combined with spectral analysis for convergent evidence
+- **Data Source**: NASA GEDI mission from International Space Station
 
 ### **Geometric Pattern Recognition**
-**Method**: Hough transforms + edge detection on satellite imagery  
-**Targets**: Circular earthworks, linear causeways, rectangular compounds  
-**Features**: 50-800m diameter patterns indicating settlements
+- **Targets**: Circular earthworks (50-400m), linear causeways, rectangular compounds
+- **Methods**: Hough transforms, edge detection, morphological analysis
+- **Validation**: Comparison with known Amazon archaeological features
 
-### **Convergent Anomaly Scoring**
-```
-Score = Historical(2) + Geometric(3) + Spectral(2) + Environmental(1) + Convergence(3)
-
-Classification Thresholds:
-• 10+ points: HIGH CONFIDENCE ARCHAEOLOGICAL SITE
-• 7-9 points: PROBABLE ARCHAEOLOGICAL FEATURE  
-• 4-6 points: POSSIBLE ANOMALY - INVESTIGATE
-• 0-3 points: NATURAL VARIATION
-```
-
-### **Enhanced Sentinel-2 Analysis**
-- **Red-edge bands** (705nm, 783nm) for vegetation stress detection
-- **Crop mark analysis** for buried archaeological features
-- **Enhanced terra preta detection** using red-edge spectral signatures
-- **10m spatial resolution** for detailed pattern recognition
+### **Historical Intelligence Mining**
+- **Sources**: 16th-century expedition accounts, Jesuit mission records
+- **Processing**: OpenAI GPT-4.1 extraction of geographic coordinates
+- **Validation**: Cross-reference multiple historical sources
 
 ---
 
-## 📊 Usage Examples
+## 📊 Convergent Scoring System
 
-### **OpenAI to Z Challenge Checkpoints**
+**Evidence Integration:**
+```
+Total Score = Historical(2) + Spectral(3) + Geometric(3) + Environmental(1) + 
+              GEDI_Analysis(2) + Convergence_Bonus(3) = 14 points max
 
-You can run checkpoints individually, all at once, or generate reports. All options are available via both `main.py` and `openai_checkpoints.py`.
+Classification:
+• 10+ points: HIGH CONFIDENCE - Multiple evidence convergence
+• 7-9 points: PROBABLE FEATURE - Strong indicators present  
+• 4-6 points: POSSIBLE ANOMALY - Investigate further
+• 0-3 points: NATURAL VARIATION - Unlikely archaeological
+```
 
-#### **Run Individual Checkpoints**
+**Quality Control:**
+- Minimum 2 independent evidence sources required
+- Spatial convergence within 100m radius
+- Cross-validation against known non-archaeological features
+
+---
+
+## 📈 Usage Examples
+
+### **Competition Checkpoints**
+
+#### **Checkpoint 1: Data Familiarization**
 ```bash
-# Run a specific checkpoint (1-5) with default zone/provider
 python main.py --checkpoint 1
+# Downloads satellite scene, runs OpenAI analysis, logs model version
+```
 
-# Specify a zone (see --list-zones for options)
+#### **Checkpoint 3: Site Discovery**  
+```bash
 python main.py --checkpoint 3 --zone negro_madeira
-
-# Use a different provider (gee or sentinel2)
-python main.py --checkpoint 2 --zone trombetas --provider sentinel2
-
-# Limit the number of scenes analyzed
-python main.py --checkpoint 4 --zone upper_naporegion --max-scenes 1
+# Algorithmic detection + historical cross-reference + comparison to known sites
 ```
 
-#### **Run All Checkpoints in Sequence**
+### **Research Analysis**
+
+#### **Multi-Zone Analysis**
 ```bash
-# Run all 5 checkpoints with default settings
-python main.py --all-checkpoints
+# Analyze multiple priority zones
+python main.py --pipeline --zones negro_madeira trombetas upper_xingu
 
-# Specify provider and max scenes for all checkpoints
-python main.py --all-checkpoints --provider sentinel2 --max-scenes 2
-
-# Run all checkpoints and generate a competition report
-python openai_checkpoints.py --all --report
+# Generate comprehensive report
+python main.py --pipeline --full --report --visualize
 ```
 
-#### **Generate Competition Report**
+#### **Single Zone Deep Dive**
 ```bash
-# After running checkpoints, generate a full competition report
-python openai_checkpoints.py --report
+# Detailed analysis of highest priority zone
+python main.py --pipeline --zone negro_madeira --provider sentinel2 --max-scenes 5
 ```
 
-#### **List Available Zones**
+---
+
+## 🔧 Installation & Configuration
+
+### **1. Dependencies**
 ```bash
+pip install -r requirements.txt
+```
+
+**Key Libraries:**
+- `rasterio`, `geopandas` - Geospatial processing
+- `scikit-learn`, `opencv-python` - Pattern recognition  
+- `folium`, `plotly` - Visualization
+- `openai` - AI integration
+- `h5py` - GEDI data processing
+
+### **2. Environment Setup**
+```bash
+cp .env.template .env
+```
+
+**Required Variables:**
+```env
+# OpenAI (Required for competition)
+OPENAI_API_KEY=your_openai_api_key
+
+# USGS (Recommended for Landsat)
+USGS_USERNAME=your_usgs_username
+USGS_TOKEN=your_usgs_application_token
+
+# Google Earth Engine (Optional)
+GEE_SERVICE_ACCOUNT_PATH=path/to/service_account.json
+GEE_PROJECT_ID=your_gee_project
+```
+
+### **3. Validation**
+```bash
+# Test system setup
 python main.py --list-zones
-```
 
-#### **Quick Competition-Ready Run**
-```bash
-# Run all checkpoints and the full pipeline for submission
-python main.py --competition-ready
+# Validate competition compliance
+python -m src.checkpoints.validator
 ```
 
 ---
 
-### **Modular Pipeline Usage**
+## 📊 Expected Results
 
-The modular pipeline can be run for any combination of zones, providers, and scene limits. It supports both quick and full analysis.
-
-#### **Basic Pipeline Run**
-```bash
-# Run pipeline on default (priority) zones with default provider (gee)
-python main.py --pipeline
-
-# Specify zones (space-separated, see --list-zones for options)
-python main.py --pipeline --zones negro_madeira trombetas
-
-# Use Sentinel-2 provider
-python main.py --pipeline --provider sentinel2
-
-# Limit number of scenes per zone
-python main.py --pipeline --zones upper_naporegion --max-scenes 2
+### **Typical Analysis Output**
 ```
-
-#### **Full Pipeline Analysis**
-```bash
-# Run all pipeline steps (download, analyze, score, report, visualize)
-python main.py --pipeline --full
-
-# Full pipeline for all zones with Sentinel-2
-python main.py --pipeline --zones all --provider sentinel2 --full
-```
-
-#### **Competition-Ready (All Checkpoints + Full Pipeline)**
-```bash
-python main.py --competition-ready
-```
-
-#### **Python API Usage**
-```python
-from src.pipeline.modular_pipeline import ModularPipeline
-
-# Initialize pipeline with a provider
-pipeline = ModularPipeline(provider='sentinel2')
-
-# Run analysis on specific zones
-results = pipeline.run(zones=['negro_madeira', 'trombetas'], max_scenes=3)
-
-# Access results
-scene_data = results['scene_data']
-analysis = results['analysis']
-scores = results['scores']
-map_path = results['map_path']
-```
-
----
-
-### **Advanced CLI Options**
-
-- `--provider gee|sentinel2` : Choose data provider
-- `--zones [zone1 zone2 ...]` : Specify one or more zones (see `--list-zones`)
-- `--zone [zone]` : Single zone for checkpoint mode
-- `--max-scenes N` : Limit number of scenes per zone
-- `--full` : Run all pipeline steps (for `--pipeline`)
-- `--report` : Generate a competition report (for checkpoints)
-- `--verbose` or `-v` : Enable verbose logging
-
----
-
-**Tip:**  
-For a full list of options and examples, run:
-```bash
-python main.py --help
-```
-
----
-
-## 📈 Expected Results
-
-### **Typical Discovery Output**
-```
-🎯 ANALYSIS RESULTS:
-   Zones Analyzed: 2
-   Features Detected: 23
-   Success Rate: 85%
+🎯 CONVERGENT ANALYSIS RESULTS:
+   Zones Analyzed: 3
+   Evidence Sources: 4 (Spectral, GEDI, Historical, Environmental)
+   Features Detected: 18
+   High Confidence Sites: 3 (scores 10+)
 
 🏆 TOP DISCOVERY:
-   Negro-Madeira Confluence
-   Score: 12/15 points
-   Classification: HIGH CONFIDENCE ARCHAEOLOGICAL SITE
+   Location: Negro-Madeira Confluence
+   Score: 12/14 points
+   Evidence: Historical + Terra Preta + Geometric + Environmental
 
-📊 FEATURE BREAKDOWN:
-   Terra Preta Patches: 8 (covering 2.3 hectares)
-   Circular Earthworks: 3 (150-300m diameter)
-   Linear Features: 12 (causeways and roads)
-   Crop Marks: 6 (vegetation stress indicators)
+📊 EVIDENCE BREAKDOWN:
+   Terra Preta Signatures: 8 locations
+   Geometric Patterns: 5 locations  
+   GEDI Anomalies: 6 locations
+   Convergent Sites: 3 locations (multiple evidence types)
 ```
 
 ### **Generated Outputs**
-- **Interactive Maps**: `results/maps/archaeological_discoveries.html`
-- **Analysis Reports**: `results/reports/discovery_report_[timestamp].json`
-- **Scoring Results**: Convergent anomaly confidence scores
-- **Export Data**: `results/exports/[zone]_detections.geojson`
-- **Visualizations**: Statistical plots and dashboards
+- **Interactive Maps**: Web-based discovery visualization
+- **Analysis Reports**: JSON/Markdown documentation
+- **Competition Package**: All checkpoint requirements satisfied
+- **Export Data**: GeoJSON files for further analysis
 
 ---
 
-## 🔬 Scientific Foundation
+## 🔍 Data Sources & Limitations
 
-### **Archaeological Context**
-This system is built on solid archaeological research:
+### **Satellite Data**
+- **Sentinel-2**: 10m resolution, 5-day revisit, red-edge bands for vegetation analysis
+- **Landsat 8/9**: 30m resolution, 16-day revisit, long historical archive
+- **Coverage**: Good for Amazon region, limited by cloud cover
 
-- **Terra Preta**: Anthropogenic dark soils indicating ancient settlements (Glaser et al., 2004)
-- **Geometric Earthworks**: Pre-Columbian organized societies (Schaan, 2012)
-- **Historical Accounts**: 16th-century expedition records (Carvajal, 1542; Orellana expeditions)
-- **Modern Discoveries**: Recent LiDAR revelations (Rostain et al., 2024)
+### **GEDI Space LiDAR**  
+- **Capabilities**: Forest structure, canopy height, ground elevation
+- **Limitations**: Research shows constraints for direct archaeological detection
+- **Coverage**: 25m footprints, ~4% of Earth's surface, limited spatial density
+- **Integration**: Most effective when combined with other data sources
 
-### **Remote Sensing Innovation**
-- **Convergent Anomaly Detection**: Novel multi-modal approach
-- **Historical Intelligence Integration**: First systematic use of expedition coordinates
-- **AI-Enhanced Pattern Recognition**: o3 analysis of archaeological patterns
-- **Multi-temporal Analysis**: Seasonal change detection for buried features
-
-### **Validation Methodology**
-- **Cross-validation** against known archaeological sites
-- **Ground-truth verification** protocols
-- **Statistical confidence** assessment (ROC curves, precision/recall)
-- **Expert review** integration with archaeological professionals
+### **Historical Sources**
+- **16th Century**: Spanish expedition accounts (Orellana, Carvajal)
+- **Colonial Period**: Jesuit mission records, Portuguese expeditions  
+- **Processing**: AI-assisted coordinate extraction and validation
 
 ---
 
-## 🔧 Advanced Configuration
+## 🤝 Contribution & Collaboration
 
-### **Custom Zone Configuration**
-```python
-# Add new target zones in src/core/config.py
-TARGET_ZONES['my_zone'] = TargetZone(
-    name="My Archaeological Zone",
-    center=(-5.0, -65.0),
-    bbox=(-5.5, -65.5, -4.5, -64.5),
-    priority=2,
-    expected_features="Ancient settlements",
-    historical_evidence="Local indigenous accounts",
-    search_radius_km=25.0,
-    min_feature_size_m=50,
-    max_feature_size_m=500
-)
-```
+### **Research Foundation**
+This system builds on established archaeological research:
+- Terra preta studies (Glaser et al., Lehmann et al.)
+- Amazon earthwork discoveries (Schaan, Iriarte et al.)
+- Remote sensing archaeology (Parcak, Canuto et al.)
+- GEDI archaeological applications (Kokalj & Mast, 2021)
 
-### **Detection Parameter Tuning**
-```python
-# Modify detection thresholds in src/core/config.py
-class DetectionConfig:
-    TERRA_PRETA_INDEX_MIN = 0.1      # Adjust sensitivity
-    TERRA_PRETA_NDVI_MIN = 0.3       # Vegetation threshold
-    MIN_ANOMALY_PIXELS = 100         # Minimum feature size
-    MAX_CLOUD_COVER = 20             # Data quality filter
-```
+### **Contributing**
+1. Follow existing code structure and documentation
+2. Add tests for new functionality  
+3. Ensure competition compliance
+4. Update documentation with new features
 
-### **Provider Selection**
-```python
-# Choose optimal provider for your analysis
-providers = {
-    'gee': 'Google Earth Engine - Cloud processing, Landsat archive',
-    'sentinel2': 'Sentinel-2 AWS - High resolution, red-edge bands',
-    'usgs': 'USGS Direct - Landsat surface reflectance products'
-}
-```
-
----
-
-## 🔍 Quality Control & Validation
-
-### **Data Quality Metrics**
-- **Cloud Cover**: <20% for optimal analysis
-- **Spatial Resolution**: 10-30m depending on provider
-- **Temporal Coverage**: Dry season preference (June-September)
-- **Spectral Bands**: Minimum 6 bands (Blue, Green, Red, NIR, SWIR1, SWIR2)
-
-### **Detection Accuracy**
-- **Terra Preta Detection**: 75%+ precision, 68%+ recall
-- **Geometric Patterns**: 82%+ precision for features >100m diameter
-- **Overall Pipeline**: 85%+ success rate on validation sites
-
-### **Validation Workflow**
-```bash
-# Run validation suite
-python -m src.checkpoints.validator --checkpoint all
-
-# Check against known sites
-python scripts/validate_against_known_sites.py
-
-# Generate accuracy metrics
-python scripts/calculate_detection_metrics.py
-```
-
----
-
-## 📚 Research Applications
-
-### **Academic Publications**
-Results suitable for publication in:
-- Journal of Archaeological Science
-- Remote Sensing of Environment
-- Archaeological Prospection
-- Latin American Antiquity
-
-### **Collaboration Opportunities**
+### **Academic Collaboration**
+Welcome collaboration with:
 - Archaeological institutions
 - Remote sensing researchers
 - Amazon indigenous communities
 - Conservation organizations
 
-### **Data Sharing**
-```python
-# Export results for academic use
-from src.core.visualizers import ArchaeologicalVisualizer
-
-visualizer = ArchaeologicalVisualizer()
-visualizer.export_research_data(
-    analysis_results, 
-    format=['geojson', 'shapefile', 'csv'],
-    output_dir='research_exports'
-)
-```
-
 ---
 
-## 🤝 Contributing
+## 📚 Scientific Context
 
-### **Development Setup**
-```bash
-# Fork and clone repository
-git clone https://github.com/yourusername/amazon-discovery.git
+### **Methodological Innovation**
+- **Convergent Analysis**: Addresses individual technique limitations through multi-modal integration
+- **Historical Guidance**: Systematic coordinate extraction from primary sources
+- **AI Enhancement**: Pattern recognition and text analysis for archaeological applications
+- **Systematic Targeting**: Geographic focus based on environmental and historical factors
 
-# Create development environment
-python -m venv venv
-source venv/bin/activate  # Linux/Mac
-venv\Scripts\activate     # Windows
-
-# Install in development mode
-pip install -e .
-pip install -r requirements-dev.txt
-
-# Run tests
-python -m pytest tests/
-```
-
-### **Contributing Guidelines**
-1. **Code Style**: Follow PEP 8, use black for formatting
-2. **Documentation**: Add docstrings for all public functions
-3. **Testing**: Write tests for new functionality
-4. **Validation**: Ensure OpenAI to Z competition compliance
-
-### **Extension Points**
-- **New Data Providers**: Inherit from `BaseProvider`
-- **Detection Algorithms**: Extend `ArchaeologicalDetector`
-- **Scoring Methods**: Modify `ConvergentAnomalyScorer`
-- **Visualization**: Add to `ArchaeologicalVisualizer`
+### **Research Impact**
+Results suitable for publication in:
+- Journal of Archaeological Science
+- Remote Sensing of Environment
+- Archaeological Prospection  
+- Latin American Antiquity
 
 ---
 
 ## 📄 License & Citation
 
 ### **License**
-MIT License - see [LICENSE](LICENSE) file for details.
+MIT License - see LICENSE file for details.
 
 ### **Citation**
 ```bibtex
-@software{amazon_archaeological_discovery,
-  title={Amazon Archaeological Discovery Pipeline: AI-Enhanced Remote Sensing},
+@software{amazon_archaeological_pipeline,
+  title={Amazon Archaeological Discovery Pipeline: Convergent Multi-Modal Analysis},
   author={[Your Name]},
   year={2025},
   url={https://github.com/stawils/amazon-discovery},
@@ -551,108 +346,73 @@ MIT License - see [LICENSE](LICENSE) file for details.
 ```
 
 ### **Data Attribution**
-- **Landsat Data**: U.S. Geological Survey
-- **Sentinel Data**: European Space Agency / Copernicus Programme
-- **Historical Context**: Multiple expedition accounts and archaeological publications
-- **Target Zones**: Based on archaeological literature and historical research
+- **Satellite Data**: ESA (Sentinel-2), USGS (Landsat)
+- **GEDI Data**: NASA Global Ecosystem Dynamics Investigation
+- **Historical Sources**: Multiple expedition accounts and archaeological publications
 
 ---
 
-## 📞 Support & Resources
+## 🏆 Competition Status
 
-### **Documentation**
-- **API Documentation**: See `docs/api/` directory
-- **Tutorial Notebooks**: Available in `notebooks/` directory
-- **Video Tutorials**: [YouTube Playlist](https://youtube.com/playlist)
-
-### **Community**
-- **GitHub Issues**: [Report bugs or request features](https://github.com/stawils/amazon-discovery/issues)
-- **Discussions**: [Community forum](https://github.com/stawils/amazon-discovery/discussions)
-- **Discord**: [Join our Discord server](https://discord.gg/amazon-discovery)
-
-### **Contact**
-- **Email**: [your-email@domain.com]
-- **Twitter**: [@YourHandle](https://twitter.com/yourhandle)
-- **LinkedIn**: [Your Profile](https://linkedin.com/in/yourprofile)
-
----
-
-## 🏆 OpenAI to Z Challenge Status
-
-### **Competition Compliance**
-✅ **All 5 checkpoints implemented and validated**  
-✅ **OpenAI integration throughout pipeline**  
-✅ **Multiple data sources processed and documented**  
-✅ **Reproducible methodology with full documentation**  
-✅ **Ready for livestream presentation**  
-
-### **Success Metrics**
-- **Archaeological Impact**: Advances understanding of Amazon prehistory
-- **Investigative Ingenuity**: Novel convergent anomaly detection method
-- **Reproducibility**: Complete pipeline automation and documentation
-- **Novelty**: First systematic application to Amazon archaeology
+### **OpenAI to Z Challenge Compliance**
+✅ **All 5 checkpoints implemented**  
+✅ **OpenAI integration documented**  
+✅ **Multiple data sources processed**  
+✅ **Reproducible methodology**  
+✅ **Competition requirements met**
 
 ### **Submission Timeline**
-- **Submission Deadline**: June 29, 2025 (11:59 PM UTC)
-- **Finalist Announcement**: ~30 days after deadline  
-- **Livestream Final**: Top 5 teams compete live
+- **Competition Period**: May 15 - June 29, 2025
+- **Current Status**: Development phase
+- **Approach**: Systematic, research-based methodology
 
 ---
 
-## 🎉 Get Started Now
+## 🎯 Competitive Advantages
 
-### **For Competition Participants**
+### **Systematic Approach**
+- **Historical Research**: Targeted zones based on expedition accounts
+- **Multi-Modal Integration**: Addresses individual data source limitations
+- **Quality Control**: Convergent evidence reduces false positives
+- **Scientific Rigor**: Reproducible methodology with validation
+
+### **Technical Innovation**
+- **Convergent Scoring**: Novel approach to archaeological site confidence
+- **AI-Enhanced Analysis**: GPT integration for pattern interpretation
+- **Modular Architecture**: Extensible framework for continued development
+
+**Note**: This system represents one approach among multiple teams working on the OpenAI to Z Challenge. Success will depend on execution quality and the strength of discoveries rather than technological claims.
+
+---
+
+## 🚀 Get Started
+
+### **Competition Participants**
 ```bash
 git clone https://github.com/stawils/amazon-discovery.git
 cd amazon-discovery
 pip install -r requirements.txt
 cp .env.template .env
-# Add your API keys to .env
-python openai_checkpoints.py --all
+# Add OpenAI API key
+python main.py --all-checkpoints
 ```
 
-### **For Researchers**
+### **Researchers**
 ```bash
-# Explore archaeological zones
+# Explore target zones and methodology
 python main.py --list-zones
-
-# Run analysis on priority areas
-python main.py --pipeline --zones negro_madeira trombetas
-
-# Generate comprehensive research outputs
-python main.py --pipeline --full --visualize --report
+python main.py --pipeline --zones negro_madeira --visualize
 ```
 
-### **For Developers**
+### **Developers**
 ```bash
 # Test individual components
 python main.py --checkpoint 1
-
-# Validate system functionality  
 python -m src.checkpoints.validator
-
-# Extend with new capabilities
-# See Contributing section for development setup
 ```
 
 ---
 
-**🌟 Ready to discover the lost civilizations of the Amazon? Let's make history! 🏛️**
+**🌟 A systematic approach to Amazon archaeological discovery through convergent evidence analysis** 🏛️
 
-*The legends were real. The civilizations existed. Now we have the tools to find them.*
-
----
-
-### **Recent Updates**
-
-- **v1.3.0**: Enhanced Sentinel-2 integration with red-edge analysis
-- **v1.2.0**: Complete OpenAI to Z Challenge checkpoint implementation
-- **v1.1.0**: Convergent anomaly detection methodology
-- **v1.0.0**: Initial release with basic pipeline functionality
-
-### **Roadmap**
-
-- **Q2 2025**: LiDAR integration for 3D analysis
-- **Q3 2025**: Machine learning model training on validated sites
-- **Q4 2025**: Multi-temporal change detection algorithms
-- **2026**: Expansion to other tropical forest regions worldwide
+*Combining historical intelligence, modern remote sensing, and AI analysis to identify potential archaeological sites in the Amazon rainforest.*
