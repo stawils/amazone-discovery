@@ -12,5 +12,7 @@ __pycache__/
 src/data/
 src/results/
 
+amazon_archaeological_discovery.egg-info/
+
 
 

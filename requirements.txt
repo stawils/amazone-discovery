@@ -57,8 +57,9 @@ openai
 # - earthpy (dependency issues)
 # - sentinelsat (Copernicus - backup only)
 
-pystac-client
-pystac
+pystac-client>=0.7.0
+pystac>=1.7.0
+h5py>=3.7.0
 
 rioxarray
 setuptools
