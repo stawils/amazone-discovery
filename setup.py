@@ -94,7 +94,9 @@ setup(
 
 # Auto-install when run directly
 if __name__ == "__main__":
-    if len(sys.argv) == 1:  # No arguments provided
-        sys.argv.append("develop")  # Use develop mode by default
-        print("No command provided. Running 'develop' command by default.")
-    # Continue with normal setup.py execution
+    # Check if no arguments are provided
+    if len(sys.argv) == 1:
+        print("No command provided. Installing package in development mode...")
+        # Force the sys.argv to be what we want
+        sys.argv = [sys.argv[0], "install"]
+        print(f"Running with arguments: {sys.argv}")
