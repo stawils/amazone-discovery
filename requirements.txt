@@ -61,3 +61,4 @@ pystac-client
 pystac
 
 rioxarray
+setuptools
