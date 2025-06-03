@@ -13,7 +13,7 @@ except ImportError:
     print("Setuptools not found. Attempting to install...")
     try:
         # Try to install setuptools using pip
-        subprocess.check_call([sys.executable, "-m", "pip", "install", "setuptools", "--user"])
+        subprocess.check_call([sys.executable, "-m", "pip", "install", "setuptools"])
         print("Setuptools installed successfully.")
         from setuptools import setup, find_packages
     except Exception as e:
