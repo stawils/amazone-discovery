@@ -91,3 +91,10 @@ setup(
         "Source": "https://github.com/your-org/amazon-archaeological-discovery",
     },
 )
+
+# Auto-install when run directly
+if __name__ == "__main__":
+    if len(sys.argv) == 1:  # No arguments provided
+        sys.argv.append("develop")  # Use develop mode by default
+        print("No command provided. Running 'develop' command by default.")
+    # Continue with normal setup.py execution
