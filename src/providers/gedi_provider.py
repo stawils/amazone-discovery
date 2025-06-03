@@ -331,9 +331,65 @@ class GEDIProvider(BaseProvider):
                     np.save(metric_file, data_array)
                     file_paths[metric_name] = metric_file
                     available_bands.append(metric_name)
+            else: # This block executes if actual download URLs ARE present.
+                logger.info(f"Granule {granule_id} has {len(urls)} download URLs. Processing them now.")
+                processed_metrics_for_granule: Dict[str, List[np.ndarray]] = {} # Store lists of arrays if merging strategies are complex
+
+                for url_idx, url in enumerate(urls):
+                    logger.debug(f"Processing URL {url_idx+1}/{len(urls)}: {url} for granule {granule_id}")
+                    hdf5_file = self.download_gedi_hdf5(url, granule_dir)
+                    logger.debug(f"Result from download_gedi_hdf5 for url {url}: {hdf5_file}") # LOG 1
+                    if hdf5_file:
+                        logger.debug(f"HDF5 file path seems valid ({hdf5_file}), attempting to extract metrics.") # LOG 2
+                        metrics = self.extract_archaeological_metrics(hdf5_file, zone)
+                        if metrics:
+                            logger.debug(f"Successfully extracted metric keys {list(metrics.keys())} from {hdf5_file.name}")
+                            # Storing metrics from potentially multiple HDF5 files per granule
+                            for key, value_array in metrics.items():
+                                if key not in processed_metrics_for_granule:
+                                    processed_metrics_for_granule[key] = []
+                                processed_metrics_for_granule[key].append(value_array)
+                        else:
+                            logger.warning(f"Could not extract metrics from {hdf5_file.name} for url {url}")
+                    else:
+                        logger.warning(f"Failed to download or validate HDF5 file from URL: {url}")
+
+                # After processing all URLs, consolidate and save the metrics
+                if processed_metrics_for_granule:
+                    final_consolidated_metrics: Dict[str, np.ndarray] = {}
+                    for key, list_of_arrays in processed_metrics_for_granule.items():
+                        if list_of_arrays:
+                            # Example consolidation: concatenate. This might need adjustment based on metric structure.
+                            # Ensure all arrays in list_of_arrays are not None and are numpy arrays.
+                            valid_arrays = [arr for arr in list_of_arrays if isinstance(arr, np.ndarray)]
+                            if valid_arrays:
+                                try:
+                                    final_consolidated_metrics[key] = np.concatenate(valid_arrays)
+                                    logger.debug(f"Consolidated metric '{key}' from {len(valid_arrays)} array(s). Resulting shape: {final_consolidated_metrics[key].shape}")
+                                except ValueError as ve:
+                                    logger.error(f"ValueError during concatenation for metric '{key}': {ve}. Arrays: {[arr.shape for arr in valid_arrays]}", exc_info=True)
+                                    # Fallback: use the first array if concatenation fails
+                                    if len(valid_arrays) > 0:
+                                        final_consolidated_metrics[key] = valid_arrays[0]
+                                        logger.warning(f"Used first array for metric '{key}' due to concatenation error.")
+                            else:
+                                logger.warning(f"No valid numpy arrays found for metric key '{key}' during consolidation.")
+                        else:
+                             logger.warning(f"No arrays found for metric key '{key}' during consolidation attempt.")
+
+
+                    for metric_name, data_array in final_consolidated_metrics.items():
+                        metric_file = granule_dir / f"{metric_name}.npy"
+                        np.save(metric_file, data_array)
+                        file_paths[metric_name] = metric_file
+                        if metric_name not in available_bands: # Ensure no duplicates
+                           available_bands.append(metric_name)
+                    logger.info(f"Saved processed metrics for granule {granule_id} from HDF5 files. Final bands: {available_bands}")
+                else:
+                    logger.warning(f"No metrics were successfully processed from any HDF5 URL for granule {granule_id}")
 
             if not available_bands:
-                logger.warning("No usable data extracted from %s", granule_id)
+                logger.warning("No usable data extracted or synthesized for %s", granule_id) # Log message changed slightly to reflect synthesis possibility
                 return None
 
             metadata = {
@@ -408,44 +464,85 @@ class GEDIProvider(BaseProvider):
         return synthetic_data
 
     def download_gedi_hdf5(self, url: str, output_dir: Path) -> Optional[Path]:
-        """Download GEDI HDF5 file from the given URL."""
-
+        logger.debug(f"Entering download_gedi_hdf5 for URL: {url}, Output Dir: {output_dir}")
         try:
             filename = url.split("/")[-1]
             output_file = output_dir / filename
+            logger.debug(f"Output file path constructed: {output_file}")
 
             if output_file.exists():
-                logger.debug("GEDI file already exists: %s", filename)
-                return output_file
+                logger.info(f"GEDI file already exists, attempting to validate: {output_file}")
+                # Validate existing file
+                try:
+                    with h5py.File(output_file, "r") as f_val:
+                        keys = list(f_val.keys())
+                        logger.debug(f"Existing HDF5 {filename} opened successfully. Keys: {keys}")
+                        if len(keys) == 0:
+                            logger.warning(f"Existing HDF5 file {filename} is empty (no keys). Will attempt re-download.")
+                            # Continue to download logic by not returning here.
+                        else:
+                            logger.info(f"Existing HDF5 file {filename} seems valid. Size: {output_file.stat().st_size} bytes. Skipping download.")
+                            logger.debug(f"Returning existing file: {output_file}")
+                            return output_file
+                except Exception as exc_val:
+                    logger.warning(f"Existing HDF5 file {filename} is not valid ({exc_val}). Will attempt re-download.", exc_info=True)
+                    # Continue to download logic
 
-            logger.info("Downloading GEDI HDF5: %s", filename)
+            logger.info(f"Attempting to download GEDI HDF5: {filename} from {url}")
+            logger.debug(f"Initiating self.session.get() for {url}")
             response = self.session.get(url, stream=True, timeout=600)
-            response.raise_for_status()
+            logger.debug(f"Response status code: {response.status_code}, Content-Length: {response.headers.get('Content-Length')}")
+            response.raise_for_status() # Will raise an HTTPError if status is 4xx/5xx
 
+            logger.debug(f"Starting file write to {output_file}")
             with open(output_file, "wb") as f:
                 for chunk in response.iter_content(chunk_size=8192):
                     if chunk:
                         f.write(chunk)
+            logger.debug(f"File writing complete for {output_file}")
 
-            try:
-                with h5py.File(output_file, "r") as f:
-                    if len(f.keys()) == 0:
-                        logger.warning(
-                            "Downloaded HDF5 file appears empty: %s", filename
-                        )
-                        output_file.unlink()
-                        return None
-            except Exception as exc:  # noqa: BLE001
-                logger.warning("Downloaded file is not valid HDF5: %s", exc)
-                if output_file.exists():
+            if output_file.exists():
+                file_size = output_file.stat().st_size
+                logger.debug(f"File {output_file} exists after download. Size: {file_size} bytes.")
+                if file_size == 0:
+                    logger.warning(f"Downloaded file {filename} is empty (0 bytes). Deleting and returning None.")
                     output_file.unlink()
+                    logger.debug(f"Returning None for empty file {filename}")
+                    return None
+            else:
+                logger.warning(f"File {output_file} does not exist after download attempt. Returning None.")
                 return None
 
-            logger.info("✅ Downloaded GEDI HDF5: %s", filename)
+            logger.debug(f"Starting HDF5 validation for {output_file}")
+            try:
+                with h5py.File(output_file, "r") as f_val:
+                    keys = list(f_val.keys())
+                    logger.debug(f"HDF5 {filename} opened successfully after download. Keys: {keys}")
+                    if len(keys) == 0:
+                        logger.warning(
+                            f"Downloaded HDF5 file {filename} is empty (no keys) after validation. Deleting."
+                        )
+                        output_file.unlink()
+                        logger.debug(f"Returning None for HDF5 file with no keys: {filename}")
+                        return None
+            except Exception as exc_h5_val:
+                logger.error(f"Downloaded file {filename} is not a valid HDF5: {exc_h5_val}", exc_info=True)
+                if output_file.exists():
+                    output_file.unlink()
+                logger.debug(f"Returning None for invalid HDF5: {filename}")
+                return None
+
+            logger.info(f"✅ Successfully downloaded and validated GEDI HDF5: {filename}")
+            logger.debug(f"Returning successfully downloaded file: {output_file}")
             return output_file
 
-        except Exception as exc:  # noqa: BLE001
-            logger.error("Error downloading GEDI HDF5 from %s: %s", url, exc)
+        except requests.exceptions.HTTPError as http_err:
+            logger.error(f"HTTPError during GEDI HDF5 download from {url}: {http_err}", exc_info=True)
+            logger.debug(f"Returning None due to HTTPError for {url}")
+            return None
+        except Exception as exc:
+            logger.error(f"Generic error downloading GEDI HDF5 from {url}: {exc}", exc_info=True)
+            logger.debug(f"Returning None due to generic error for {url}")
             return None
 
     def extract_archaeological_metrics(
@@ -454,6 +551,7 @@ class GEDIProvider(BaseProvider):
         """Extract archaeological metrics from a GEDI HDF5 file."""
 
         try:
+            logger.info(f"ENTERING extract_archaeological_metrics for {hdf5_file.name}") # New prominent log
             extracted: Dict[str, np.ndarray] = {}
             with h5py.File(hdf5_file, "r") as f:
                 logger.debug(f"Inspecting HDF5 file: {hdf5_file.name}")
