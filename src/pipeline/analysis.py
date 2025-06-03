@@ -40,6 +40,19 @@ class AnalysisStep:
                 detector = Sentinel2ArchaeologicalDetector(zone)
                 required_bands = ["B02", "B03", "B04", "B08"]  # Sentinel-2 band names
             elif scene.provider == "gedi":
+                # Make sure we have a valid zone object before creating the detector
+                if zone is None:
+                    logger.warning(f"Zone not found for ID: {zone_id}, using default zone")
+                    # Create a default zone as fallback
+                    from src.core.config import TargetZone
+                    zone = TargetZone(
+                        name=zone_id,
+                        center=(0.0, 0.0),  # Default center
+                        bbox=(-1.0, -73.0, 0.0, -72.0),  # Default bbox
+                        priority=3,
+                        expected_features="Unknown",
+                        historical_evidence="Unknown"
+                    )
                 detector = GEDIArchaeologicalDetector(zone)
                 required_bands = []
             else:  # GEE or other
