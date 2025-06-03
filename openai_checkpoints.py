@@ -24,6 +24,7 @@ logger = logging.getLogger(__name__)
 
 # Import our core modules
 from src.core.config import TARGET_ZONES, APIConfig, SATELLITE_DIR, RESULTS_DIR
+from src.core.data_objects import SceneData
 from src.providers.gee_provider import GEEProvider
 from src.providers.sentinel2_provider import Sentinel2Provider
 from src.core.detectors.gee_detectors import ArchaeologicalDetector
@@ -399,6 +400,47 @@ class CheckpointRunner:
 🔬 FOCUS ON THE DETECTOR'S NUMERICAL VALUES - these are processed through our archaeological detection algorithms."""
 
         return prompt
+
+
+def create_gedi_archaeological_prompt(gedi_data: SceneData, zone_info) -> str:
+    """Create archaeological analysis prompt for GEDI space LiDAR data."""
+    available_metrics = gedi_data.available_bands
+    metadata = gedi_data.metadata
+
+    prompt = f"""
+AMAZON ARCHAEOLOGICAL ANALYSIS - SPACE-BASED LIDAR FROM INTERNATIONAL SPACE STATION
+
+🎯 LOCATION: {zone_info.name} ({zone_info.center})
+🛰️ DATA SOURCE: NASA GEDI (Global Ecosystem Dynamics Investigation)
+📅 ACQUISITION: {metadata.get('acquisition_date', 'Recent')}
+🏛️ HISTORICAL CONTEXT: {zone_info.historical_evidence}
+
+🌲 GEDI SPACE LIDAR MEASUREMENTS:
+Available Metrics: {', '.join(available_metrics)}
+Spatial Resolution: 25m footprints from ISS
+Coverage Type: {metadata.get('coverage_type', 'Point cloud')}
+
+CANOPY STRUCTURE ANALYSIS:
+- Canopy gaps detected: [analyze for potential ancient clearings]
+- Vegetation height variations: [assess for settlement indicators]
+- Forest structure anomalies: [evaluate for hidden earthworks]
+
+GROUND ELEVATION ANALYSIS:
+- Elevation anomalies: [analyze for mounds, platforms, terraces]
+- Topographic patterns: [assess for defensive works]
+- Micro-relief variations: [evaluate for buried structures]
+
+🔬 EXPERT ARCHAEOLOGICAL INTERPRETATION REQUESTED:
+
+1. How do the GEDI space LiDAR measurements indicate potential ancient human activity?
+2. What do canopy structure anomalies suggest about subsurface archaeological features?
+3. Do ground elevation patterns indicate anthropogenic landscape modification?
+4. How do these space-based measurements align with historical evidence: "{zone_info.historical_evidence}"?
+5. What specific areas merit ground verification based on GEDI space LiDAR data?
+6. How does this 3D forest structure data enhance archaeological detection compared to traditional satellite imagery?
+"""
+
+    return prompt
 
     def checkpoint1_familiarize(
         self, provider: str = "sentinel2", zone: str = "negro_madeira", **kwargs

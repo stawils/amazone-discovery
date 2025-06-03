@@ -433,6 +433,30 @@ class GEDIProvider(BaseProvider):
                             self.detect_elevation_anomalies(all_ground)
                         )
 
+                    # Advanced detection using dedicated algorithms
+                    try:
+                        from src.core.detectors.gedi_detector import (
+                            detect_archaeological_clearings,
+                            detect_archaeological_earthworks,
+                        )
+
+                        clearing = detect_archaeological_clearings(
+                            np.array(all_rh95),
+                            np.array(all_rh100),
+                            extracted["coordinates"],
+                        )
+                        earthworks = detect_archaeological_earthworks(
+                            np.array(all_ground), extracted["coordinates"]
+                        )
+                        extracted["gap_clusters"] = clearing.get("gap_clusters", [])
+                        extracted["earthwork_clusters"] = earthworks.get(
+                            "mound_clusters", []
+                        )
+                    except Exception as exc:  # noqa: BLE001
+                        logger.debug("Optional GEDI algorithms failed: %s", exc)
+
+
+    
                 logger.info(
                     "✅ Extracted %s archaeological metrics from GEDI data",
                     len(extracted),
