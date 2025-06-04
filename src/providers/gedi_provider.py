@@ -323,6 +323,37 @@ class GEDIProvider(BaseProvider):
                     else:
                         logger.warning(f"Failed to download or validate HDF5 file from URL: {url}")
                 
+
+
+                for metric_name, data_array in synthetic_data.items():
+                    metric_file = granule_dir / f"{metric_name}.npy"
+                    np.save(metric_file, data_array)
+                    file_paths[metric_name] = metric_file
+                    available_bands.append(metric_name)
+            else: # This block executes if actual download URLs ARE present.
+                logger.info(f"Granule {granule_id} has {len(urls)} download URLs. Processing them now.")
+                processed_metrics_for_granule: Dict[str, List[np.ndarray]] = {} # Store lists of arrays if merging strategies are complex
+
+                for url_idx, url in enumerate(urls):
+                    logger.debug(f"Processing URL {url_idx+1}/{len(urls)}: {url} for granule {granule_id}")
+                    hdf5_file = self.download_gedi_hdf5(url, granule_dir)
+                    logger.debug(f"Result from download_gedi_hdf5 for url {url}: {hdf5_file}") # LOG 1
+                    if hdf5_file:
+                        logger.debug(f"HDF5 file path seems valid ({hdf5_file}), attempting to extract metrics.") # LOG 2
+                        metrics = self.extract_archaeological_metrics(hdf5_file, zone)
+                        if metrics:
+                            logger.debug(f"Successfully extracted metric keys {list(metrics.keys())} from {hdf5_file.name}")
+                            # Storing metrics from potentially multiple HDF5 files per granule
+                            for key, value_array in metrics.items():
+                                if key not in processed_metrics_for_granule:
+                                    processed_metrics_for_granule[key] = []
+                                processed_metrics_for_granule[key].append(value_array)
+                        else:
+                            logger.warning(f"Could not extract metrics from {hdf5_file.name} for url {url}")
+                    else:
+                        logger.warning(f"Failed to download or validate HDF5 file from URL: {url}")
+
+
                 # After processing all URLs, consolidate and save the metrics
                 if processed_metrics_for_granule:
                     final_consolidated_metrics: Dict[str, np.ndarray] = {}
@@ -483,6 +514,7 @@ class GEDIProvider(BaseProvider):
                 logger.error("HTTP 403 Forbidden: You are authenticated, but do not have permission "
                              "to access the requested resource. Please check your data subscriptions "
                              "or permissions on NASA Earthdata.")
+
             logger.debug(f"Returning None due to HTTPError for {url}")
             return None
         except Exception as exc:
