@@ -37,9 +37,9 @@ class GEDIProvider(BaseProvider):
         self.session = requests.Session()
         if self.username and self.password:
             self.session.auth = (self.username, self.password)
-            logger.info("🛰️ GEDI Provider: Authenticated access enabled")
+            logger.info("🛰️ GEDI Provider: Credentials explicitly provided (e.g., via environment variables). Attempting HTTP Basic Auth.")
         else:
-            logger.info("🛰️ GEDI Provider: Using public data access")
+            logger.info("🛰️ GEDI Provider: No explicit credentials provided. Will rely on .netrc file for authentication if present.")
 
         self.base_urls = {
             "earthdata_search": "https://cmr.earthdata.nasa.gov/search",
@@ -135,10 +135,10 @@ class GEDIProvider(BaseProvider):
             if broad_response.status_code == 200:
                 broad_results = broad_response.json()
                 broad_total = broad_results.get("feed", {}).get("totalResults", 0)
-                logger.info(f"✅ Broader search found {broad_total} GEDI granules globally")
+                logger.info(f"✅ GEDI API Test: Broader (global) search found {broad_total} granules.")
                 
                 if broad_total == 0:
-                    logger.warning("❌ No GEDI data found even in global search - collection may be empty")
+                    logger.info("ℹ️ GEDI API Test: Broader (global) search found 0 granules. This is an API availability check, specific search for the zone will follow.")
             else:
                 logger.error(f"❌ Broader search also failed: {broad_response.status_code}")
                 logger.error(f"Response: {broad_response.text[:300]}")
@@ -152,16 +152,8 @@ class GEDIProvider(BaseProvider):
             if response.status_code != 200:
                 logger.error(f"❌ CMR API error: {response.status_code}")
                 logger.error(f"Response text: {response.text[:500]}")
-                
-                # If no data found, create synthetic data for testing
-                logger.info("🔄 Creating synthetic GEDI data for testing...")
-                synthetic_granule = {
-                    "id": f"SYNTHETIC_GEDI_{zone.name.replace(' ', '_')}_{max_results}",
-                    "acquisition_date": "2023-01-01T00:00:00Z",
-                    "relevance_score": 10,
-                    "download_urls": [],
-                }
-                return [synthetic_granule]
+                # No longer creating synthetic data here.
+                return []
             
             response.raise_for_status()
 
@@ -172,14 +164,8 @@ class GEDIProvider(BaseProvider):
             logger.info(f"📊 CMR search results: {total_results} total, {len(granules)} returned")
             
             if not granules:
-                logger.warning("No GEDI granules found - creating synthetic data for testing")
-                synthetic_granule = {
-                    "id": f"SYNTHETIC_GEDI_{zone.name.replace(' ', '_')}_{max_results}",
-                    "acquisition_date": "2023-01-01T00:00:00Z",
-                    "relevance_score": 10,
-                    "download_urls": [],
-                }
-                return [synthetic_granule]
+                logger.warning("No GEDI granules found for %s.", zone.name)
+                return []
 
             processed: List[Dict] = []
             for granule in granules:
@@ -198,16 +184,8 @@ class GEDIProvider(BaseProvider):
             return processed
 
         except Exception as exc:  # noqa: BLE001
-            logger.error("GEDI search failed for %s: %s", zone.name, exc)
-            # Fallback to synthetic data
-            logger.info("🔄 Falling back to synthetic GEDI data...")
-            synthetic_granule = {
-                "id": f"SYNTHETIC_GEDI_{zone.name.replace(' ', '_')}_{max_results}",
-                "acquisition_date": "2023-01-01T00:00:00Z", 
-                "relevance_score": 5,
-                "download_urls": [],
-            }
-            return [synthetic_granule]
+            logger.error("GEDI search failed for %s: %s", zone.name, exc, exc_info=True)
+            return []
 
     def extract_granule_metadata(self, granule: Dict, zone: Any) -> Optional[Dict]:
         """Extract relevant metadata from a GEDI granule."""
@@ -320,20 +298,67 @@ class GEDIProvider(BaseProvider):
 
             urls = granule.get("download_urls", [])
             if not urls:
-                logger.warning("No download URLs for granule %s", granule_id)
+                logger.warning(f"No download URLs for granule {granule_id}. Will result in no data for this granule.")
+                # available_bands will remain empty, and the granule processing will yield no SceneData.
+            else: # This block executes if actual download URLs ARE present.
+                logger.info(f"Granule {granule_id} has {len(urls)} download URLs. Processing them now.")
+                processed_metrics_for_granule: Dict[str, List[np.ndarray]] = {} # Store lists of arrays if merging strategies are complex
+
+                for url_idx, url in enumerate(urls):
+                    logger.debug(f"Processing URL {url_idx+1}/{len(urls)}: {url} for granule {granule_id}")
+                    hdf5_file = self.download_gedi_hdf5(url, granule_dir)
+                    logger.debug(f"Result from download_gedi_hdf5 for url {url}: {hdf5_file}") # LOG 1
+                    if hdf5_file:
+                        logger.debug(f"HDF5 file path seems valid ({hdf5_file}), attempting to extract metrics.") # LOG 2
+                        metrics = self.extract_archaeological_metrics(hdf5_file, zone)
+                        if metrics:
+                            logger.debug(f"Successfully extracted metric keys {list(metrics.keys())} from {hdf5_file.name}")
+                            # Storing metrics from potentially multiple HDF5 files per granule
+                            for key, value_array in metrics.items():
+                                if key not in processed_metrics_for_granule:
+                                    processed_metrics_for_granule[key] = []
+                                processed_metrics_for_granule[key].append(value_array)
+                        else:
+                            logger.warning(f"Could not extract metrics from {hdf5_file.name} for url {url}")
+                    else:
+                        logger.warning(f"Failed to download or validate HDF5 file from URL: {url}")
                 
-                # Create synthetic GEDI data for testing
-                logger.info("Creating synthetic GEDI data for testing")
-                synthetic_data = self.create_synthetic_gedi_data(zone)
-                
-                for metric_name, data_array in synthetic_data.items():
-                    metric_file = granule_dir / f"{metric_name}.npy"
-                    np.save(metric_file, data_array)
-                    file_paths[metric_name] = metric_file
-                    available_bands.append(metric_name)
+                # After processing all URLs, consolidate and save the metrics
+                if processed_metrics_for_granule:
+                    final_consolidated_metrics: Dict[str, np.ndarray] = {}
+                    for key, list_of_arrays in processed_metrics_for_granule.items():
+                        if list_of_arrays:
+                            # Example consolidation: concatenate. This might need adjustment based on metric structure.
+                            # Ensure all arrays in list_of_arrays are not None and are numpy arrays.
+                            valid_arrays = [arr for arr in list_of_arrays if isinstance(arr, np.ndarray)]
+                            if valid_arrays:
+                                try:
+                                    final_consolidated_metrics[key] = np.concatenate(valid_arrays)
+                                    logger.debug(f"Consolidated metric '{key}' from {len(valid_arrays)} array(s). Resulting shape: {final_consolidated_metrics[key].shape}")
+                                except ValueError as ve:
+                                    logger.error(f"ValueError during concatenation for metric '{key}': {ve}. Arrays: {[arr.shape for arr in valid_arrays]}", exc_info=True)
+                                    # Fallback: use the first array if concatenation fails
+                                    if len(valid_arrays) > 0:
+                                        final_consolidated_metrics[key] = valid_arrays[0]
+                                        logger.warning(f"Used first array for metric '{key}' due to concatenation error.")
+                            else:
+                                logger.warning(f"No valid numpy arrays found for metric key '{key}' during consolidation.")
+                        else:
+                             logger.warning(f"No arrays found for metric key '{key}' during consolidation attempt.")
+
+
+                    for metric_name, data_array in final_consolidated_metrics.items():
+                        metric_file = granule_dir / f"{metric_name}.npy"
+                        np.save(metric_file, data_array)
+                        file_paths[metric_name] = metric_file
+                        if metric_name not in available_bands: # Ensure no duplicates
+                           available_bands.append(metric_name)
+                    logger.info(f"Saved processed metrics for granule {granule_id} from HDF5 files. Final bands: {available_bands}")
+                else:
+                    logger.warning(f"No metrics were successfully processed from any HDF5 URL for granule {granule_id}")
 
             if not available_bands:
-                logger.warning("No usable data extracted from %s", granule_id)
+                logger.warning("No usable data extracted for %s (all download/processing attempts failed or no URLs)", granule_id)
                 return None
 
             metadata = {
@@ -373,79 +398,96 @@ class GEDIProvider(BaseProvider):
             logger.error("Error processing GEDI granule %s: %s", granule["id"], exc)
             return None
 
-    def create_synthetic_gedi_data(self, zone: Any) -> Dict[str, np.ndarray]:
-        """Create synthetic GEDI data for testing archaeological detection."""
-        
-        # Generate synthetic point data for the zone
-        num_points = 1000
-        
-        # Random coordinates within the zone bbox
-        bbox = zone.bbox  # (south, west, north, east)
-        lats = np.random.uniform(bbox[0], bbox[2], num_points)
-        lons = np.random.uniform(bbox[1], bbox[3], num_points)
-        
-        # Synthetic GEDI metrics
-        synthetic_data = {
-            "coordinates": np.column_stack((lats, lons)),
-            "canopy_height_95": np.random.uniform(5, 45, num_points),  # Canopy height
-            "canopy_height_100": np.random.uniform(10, 50, num_points),
-            "ground_elevation": np.random.uniform(100, 300, num_points),  # Elevation
-            "quality_flags": np.random.randint(0, 2, num_points),  # Quality flags
-        }
-        
-        # Add some archaeological "signals"
-        # Create areas with lower canopy (potential clearings)
-        clearing_indices = np.random.choice(num_points, size=50, replace=False)
-        synthetic_data["canopy_height_95"][clearing_indices] *= 0.3
-        synthetic_data["canopy_height_100"][clearing_indices] *= 0.3
-        
-        # Create elevation anomalies (potential mounds)
-        mound_indices = np.random.choice(num_points, size=20, replace=False)
-        synthetic_data["ground_elevation"][mound_indices] += np.random.uniform(2, 8, len(mound_indices))
-        
-        logger.info(f"Created synthetic GEDI data with {num_points} points for {zone.name}")
-        
-        return synthetic_data
-
     def download_gedi_hdf5(self, url: str, output_dir: Path) -> Optional[Path]:
-        """Download GEDI HDF5 file from the given URL."""
-
+        logger.debug(f"Entering download_gedi_hdf5 for URL: {url}, Output Dir: {output_dir}")
         try:
             filename = url.split("/")[-1]
             output_file = output_dir / filename
+            logger.debug(f"Output file path constructed: {output_file}")
 
             if output_file.exists():
-                logger.debug("GEDI file already exists: %s", filename)
-                return output_file
+                logger.info(f"GEDI file already exists, attempting to validate: {output_file}")
+                # Validate existing file
+                try:
+                    with h5py.File(output_file, "r") as f_val:
+                        keys = list(f_val.keys())
+                        logger.debug(f"Existing HDF5 {filename} opened successfully. Keys: {keys}")
+                        if len(keys) == 0:
+                            logger.warning(f"Existing HDF5 file {filename} is empty (no keys). Will attempt re-download.")
+                            # Continue to download logic by not returning here.
+                        else:
+                            logger.info(f"Existing HDF5 file {filename} seems valid. Size: {output_file.stat().st_size} bytes. Skipping download.")
+                            logger.debug(f"Returning existing file: {output_file}")
+                            return output_file
+                except Exception as exc_val:
+                    logger.warning(f"Existing HDF5 file {filename} is not valid ({exc_val}). Will attempt re-download.", exc_info=True)
+                    # Continue to download logic
 
-            logger.info("Downloading GEDI HDF5: %s", filename)
+            logger.info(f"Attempting to download GEDI HDF5: {filename} from {url}")
+            logger.debug(f"Initiating self.session.get() for {url}")
             response = self.session.get(url, stream=True, timeout=600)
-            response.raise_for_status()
+            logger.debug(f"Response status code: {response.status_code}, Content-Length: {response.headers.get('Content-Length')}")
+            response.raise_for_status() # Will raise an HTTPError if status is 4xx/5xx
 
+            logger.debug(f"Starting file write to {output_file}")
             with open(output_file, "wb") as f:
                 for chunk in response.iter_content(chunk_size=8192):
                     if chunk:
                         f.write(chunk)
+            logger.debug(f"File writing complete for {output_file}")
 
-            try:
-                with h5py.File(output_file, "r") as f:
-                    if len(f.keys()) == 0:
-                        logger.warning(
-                            "Downloaded HDF5 file appears empty: %s", filename
-                        )
-                        output_file.unlink()
-                        return None
-            except Exception as exc:  # noqa: BLE001
-                logger.warning("Downloaded file is not valid HDF5: %s", exc)
-                if output_file.exists():
+            if output_file.exists():
+                file_size = output_file.stat().st_size
+                logger.debug(f"File {output_file} exists after download. Size: {file_size} bytes.")
+                if file_size == 0:
+                    logger.warning(f"Downloaded file {filename} is empty (0 bytes). Deleting and returning None.")
                     output_file.unlink()
+                    logger.debug(f"Returning None for empty file {filename}")
+                    return None
+            else:
+                logger.warning(f"File {output_file} does not exist after download attempt. Returning None.")
                 return None
 
-            logger.info("✅ Downloaded GEDI HDF5: %s", filename)
+            logger.debug(f"Starting HDF5 validation for {output_file}")
+            try:
+                with h5py.File(output_file, "r") as f_val:
+                    keys = list(f_val.keys())
+                    logger.debug(f"HDF5 {filename} opened successfully after download. Keys: {keys}")
+                    if len(keys) == 0:
+                        logger.warning(
+                            f"Downloaded HDF5 file {filename} is empty (no keys) after validation. Deleting."
+                        )
+                        output_file.unlink()
+                        logger.debug(f"Returning None for HDF5 file with no keys: {filename}")
+                        return None
+            except Exception as exc_h5_val:
+                logger.error(f"Downloaded file {filename} is not a valid HDF5: {exc_h5_val}", exc_info=True)
+                if output_file.exists():
+                    output_file.unlink()
+                logger.debug(f"Returning None for invalid HDF5: {filename}")
+                return None
+
+            logger.info(f"✅ Successfully downloaded and validated GEDI HDF5: {filename}")
+            logger.debug(f"Returning successfully downloaded file: {output_file}")
             return output_file
 
-        except Exception as exc:  # noqa: BLE001
-            logger.error("Error downloading GEDI HDF5 from %s: %s", url, exc)
+        except requests.exceptions.HTTPError as http_err:
+            logger.error(f"HTTPError during GEDI HDF5 download from {url}: {http_err}", exc_info=True)
+            if http_err.response.status_code == 401:
+                logger.error("HTTP 401 Unauthorized: This indicates an authentication failure. "
+                             "Please ensure your NASA Earthdata login credentials are correctly "
+                             "configured, either via EARTHDATA_USERNAME and EARTHDATA_PASSWORD "
+                             "environment variables or a .netrc file in your home directory. "
+                             "A .netrc file is often required for script-based access.")
+            elif http_err.response.status_code == 403:
+                logger.error("HTTP 403 Forbidden: You are authenticated, but do not have permission "
+                             "to access the requested resource. Please check your data subscriptions "
+                             "or permissions on NASA Earthdata.")
+            logger.debug(f"Returning None due to HTTPError for {url}")
+            return None
+        except Exception as exc:
+            logger.error(f"Generic error downloading GEDI HDF5 from {url}: {exc}", exc_info=True)
+            logger.debug(f"Returning None due to generic error for {url}")
             return None
 
     def extract_archaeological_metrics(
@@ -454,9 +496,12 @@ class GEDIProvider(BaseProvider):
         """Extract archaeological metrics from a GEDI HDF5 file."""
 
         try:
+            logger.info(f"ENTERING extract_archaeological_metrics for {hdf5_file.name}") # New prominent log
             extracted: Dict[str, np.ndarray] = {}
             with h5py.File(hdf5_file, "r") as f:
+                logger.debug(f"Inspecting HDF5 file: {hdf5_file.name}")
                 beam_groups = [key for key in f.keys() if key.startswith("BEAM")]
+                logger.debug(f"Found {len(beam_groups)} beam groups: {beam_groups}")
                 if not beam_groups:
                     logger.warning("No beam groups found in %s", hdf5_file)
                     return None
@@ -470,7 +515,25 @@ class GEDIProvider(BaseProvider):
 
                 for beam in beam_groups:
                     try:
+                        logger.debug(f"Processing beam: {beam}")
                         beam_group = f[beam]
+                        essential_datasets = ["lat_lowestmode", "lon_lowestmode", "rh", "elev_lowestmode", "quality_flag"]
+                        present_datasets = [ds for ds in essential_datasets if ds in beam_group]
+                        missing_datasets = [ds for ds in essential_datasets if ds not in beam_group]
+                        if "rh" in present_datasets and not isinstance(beam_group["rh"], h5py.Group):
+                            logger.warning(f"Dataset 'rh' in beam {beam} is not a group as expected.")
+                            present_datasets.remove("rh") # Treat as missing if not a group
+                            missing_datasets.append("rh (not a group)")
+                        elif "rh" in present_datasets:
+                            rh_sub_datasets = ["rh_95", "rh_100"] # Example sub-datasets under 'rh' group
+                            rh_present_sub = [sd for sd in rh_sub_datasets if sd in beam_group["rh"]]
+                            rh_missing_sub = [sd for sd in rh_sub_datasets if sd not in beam_group["rh"]]
+                            logger.debug(f"Beam {beam} 'rh' group check: Present sub-datasets: {rh_present_sub}, Missing sub-datasets: {rh_missing_sub}")
+                        logger.debug(f"Beam {beam}: Present essential datasets: {present_datasets}. Missing: {missing_datasets}.")
+
+                        if "lat_lowestmode" not in beam_group or "lon_lowestmode" not in beam_group:
+                            logger.warning(f"Beam {beam} is missing lat_lowestmode or lon_lowestmode. Skipping beam.")
+                            continue
 
                         if (
                             "lat_lowestmode" in beam_group
@@ -478,6 +541,7 @@ class GEDIProvider(BaseProvider):
                         ):
                             lats = beam_group["lat_lowestmode"][:]
                             lons = beam_group["lon_lowestmode"][:]
+                            logger.debug(f"Beam {beam}: Found {len(lats)} points before zone filtering.")
 
                             rh95 = beam_group.get("rh", {}).get("rh_95", [])
                             rh100 = beam_group.get("rh", {}).get("rh_100", [])
@@ -485,67 +549,142 @@ class GEDIProvider(BaseProvider):
                             quality = beam_group.get("quality_flag", [])
 
                             mask = self.filter_points_in_zone(lats, lons, zone)
+                            logger.debug(f"Beam {beam}: Found {np.sum(mask)} points after zone filtering.")
 
                             if np.any(mask):
-                                all_lats.extend(lats[mask])
-                                all_lons.extend(lons[mask])
-                                if len(rh95) > 0:
-                                    all_rh95.extend(rh95[mask])
-                                if len(rh100) > 0:
-                                    all_rh100.extend(rh100[mask])
-                                if len(ground) > 0:
-                                    all_ground.extend(ground[mask])
-                                if len(quality) > 0:
-                                    all_quality.extend(quality[mask])
+                                current_lats = lats[mask]
+                                current_lons = lons[mask]
+                                num_points_in_beam_after_filter = len(current_lats)
+
+                                all_lats.extend(current_lats)
+                                all_lons.extend(current_lons)
+
+                                # For optional datasets, ensure they have the same length as lats before masking
+                                rh_group = beam_group.get("rh")
+                                if rh_group and isinstance(rh_group, h5py.Group):
+                                    rh95_data = rh_group.get("rh_95")
+                                    if rh95_data is not None and len(rh95_data) == len(lats):
+                                        all_rh95.extend(rh95_data[:][mask])
+                                    else: # Pad with NaNs if missing or mismatched length for this beam
+                                        all_rh95.extend([np.nan] * num_points_in_beam_after_filter)
+                                        if rh95_data is None: logger.debug(f"Beam {beam}: rh/rh_95 not found or None.")
+                                        elif len(rh95_data) != len(lats): logger.debug(f"Beam {beam}: rh/rh_95 length mismatch (expected {len(lats)}, got {len(rh95_data)}).")
+
+                                    rh100_data = rh_group.get("rh_100")
+                                    if rh100_data is not None and len(rh100_data) == len(lats):
+                                        all_rh100.extend(rh100_data[:][mask])
+                                    else: # Pad with NaNs
+                                        all_rh100.extend([np.nan] * num_points_in_beam_after_filter)
+                                        if rh100_data is None: logger.debug(f"Beam {beam}: rh/rh_100 not found or None.")
+                                        elif len(rh100_data) != len(lats): logger.debug(f"Beam {beam}: rh/rh_100 length mismatch.")
+
+                                else: # rh group itself is missing or not a group
+                                    all_rh95.extend([np.nan] * num_points_in_beam_after_filter)
+                                    all_rh100.extend([np.nan] * num_points_in_beam_after_filter)
+                                    if not rh_group: logger.debug(f"Beam {beam}: 'rh' group not found.")
+                                    elif not isinstance(rh_group, h5py.Group): logger.debug(f"Beam {beam}: 'rh' dataset is not a group.")
+
+                                ground_data = beam_group.get("elev_lowestmode")
+                                if ground_data is not None and len(ground_data) == len(lats):
+                                    all_ground.extend(ground_data[:][mask])
+                                else: # Pad with NaNs
+                                    all_ground.extend([np.nan] * num_points_in_beam_after_filter)
+                                    if ground_data is None: logger.debug(f"Beam {beam}: elev_lowestmode not found or None.")
+                                    elif len(ground_data) != len(lats): logger.debug(f"Beam {beam}: elev_lowestmode length mismatch.")
+
+                                quality_data = beam_group.get("quality_flag")
+                                if quality_data is not None and len(quality_data) == len(lats):
+                                    all_quality.extend(quality_data[:][mask])
+                                else: # Pad with a default/NaN quality flag, e.g., -1 or np.nan
+                                    all_quality.extend([np.nan] * num_points_in_beam_after_filter) # Or use 0 or -1 if NaN is problematic for int arrays later
+                                    if quality_data is None: logger.debug(f"Beam {beam}: quality_flag not found or None.")
+                                    elif len(quality_data) != len(lats): logger.debug(f"Beam {beam}: quality_flag length mismatch.")
                     except Exception as exc:  # noqa: BLE001
-                        logger.warning("Error processing beam %s: %s", beam, exc)
+                        logger.error(f"Error processing beam {beam} in {hdf5_file.name}: {exc}", exc_info=True)
 
                 if len(all_lats) > 0:
                     extracted["coordinates"] = np.column_stack((all_lats, all_lons))
-                    if all_rh95:
-                        extracted["canopy_height_95"] = np.array(all_rh95)
-                    if all_rh100:
-                        extracted["canopy_height_100"] = np.array(all_rh100)
-                    if all_ground:
-                        extracted["ground_elevation"] = np.array(all_ground)
-                    if all_quality:
-                        extracted["quality_flags"] = np.array(all_quality)
 
-                    if all_rh95 and all_rh100:
+                    # Only add other arrays if they have meaningful data (not all NaNs)
+                    # and convert lists to numpy arrays here.
+                    if any(not np.isnan(x) for x in all_rh95): # Check if there's at least one non-NaN value
+                        extracted["canopy_height_95"] = np.array(all_rh95)
+                    else:
+                        logger.debug("No valid rh95 data collected across all beams.")
+
+                    if any(not np.isnan(x) for x in all_rh100):
+                        extracted["canopy_height_100"] = np.array(all_rh100)
+                    else:
+                        logger.debug("No valid rh100 data collected across all beams.")
+
+                    if any(not np.isnan(x) for x in all_ground):
+                        extracted["ground_elevation"] = np.array(all_ground)
+                    else:
+                        logger.debug("No valid ground_elevation data collected across all beams.")
+
+                    if any(not np.isnan(x) for x in all_quality): # Assuming quality_flags can be float due to NaNs
+                        extracted["quality_flags"] = np.array(all_quality)
+                    else:
+                        logger.debug("No valid quality_flags data collected across all beams.")
+
+                    # Keep the logic for canopy_gaps, elevation_anomalies, and detector calls,
+                    # but ensure they can handle potential NaNs in their inputs if these arrays are added.
+                    # For example, detect_canopy_gaps might need np.nanmean or np.nanstd.
+                    # The placeholder detectors don't do much yet, so this is fine for now.
+                    if "canopy_height_95" in extracted and "canopy_height_100" in extracted: # Check if keys exist after NaN filtering
                         extracted["canopy_gaps"] = self.detect_canopy_gaps(
-                            all_rh95, all_rh100
+                            extracted["canopy_height_95"], extracted["canopy_height_100"] # Pass the numpy arrays
                         )
-                    if all_ground:
+                    if "ground_elevation" in extracted: # Check if key exists
                         extracted["elevation_anomalies"] = (
-                            self.detect_elevation_anomalies(all_ground)
+                            self.detect_elevation_anomalies(extracted["ground_elevation"]) # Pass the numpy array
                         )
 
                     # Advanced detection using dedicated algorithms
-                    try:
-                        from src.core.detectors.gedi_detector import (
-                            detect_archaeological_clearings,
-                            detect_archaeological_earthworks,
-                        )
+                    if "coordinates" in extracted and extracted["coordinates"].size > 0:
+                        try:
+                            from src.detectors.gedi_detector import (
+                                detect_archaeological_clearings,
+                                detect_archaeological_earthworks,
+                            )
 
-                        clearing = detect_archaeological_clearings(
-                            np.array(all_rh95),
-                            np.array(all_rh100),
-                            extracted["coordinates"],
-                        )
-                        earthworks = detect_archaeological_earthworks(
-                            np.array(all_ground), extracted["coordinates"]
-                        )
-                        extracted["gap_clusters"] = clearing.get("gap_clusters", [])
-                        extracted["earthwork_clusters"] = earthworks.get(
-                            "mound_clusters", []
-                        )
-                    except Exception as exc:  # noqa: BLE001
-                        logger.debug("Optional GEDI algorithms failed: %s", exc)
+                            # Prepare inputs for detectors, using .get for safety, providing empty arrays if not present
+                            # The detectors themselves also handle empty/NaN inputs.
+                            rh95_input = extracted.get("canopy_height_95", np.array([]))
+                            rh100_input = extracted.get("canopy_height_100", np.array([]))
+                            ground_elev_input = extracted.get("ground_elevation", np.array([]))
+                            coords_input = extracted["coordinates"] # Already checked for presence
 
-                logger.info(
-                    "✅ Extracted %s archaeological metrics from GEDI data",
-                    len(extracted),
-                )
+                            logger.debug(f"Calling clearing detector. RH95 size: {rh95_input.size}, RH100 size: {rh100_input.size}, Coords size: {coords_input.size}")
+                            clearing_results = detect_archaeological_clearings(
+                                rh95_input,
+                                rh100_input,
+                                coords_input
+                            )
+                            # The detector returns a dict like {"potential_clearings": [...], "feature_type": "clearing"}
+                            extracted["potential_clearings"] = clearing_results.get("potential_clearings", [])
+                            logger.info(f"Found {len(extracted['potential_clearings'])} potential clearing points.")
+
+                            logger.debug(f"Calling earthwork detector. Ground elev size: {ground_elev_input.size}, Coords size: {coords_input.size}")
+                            earthwork_results = detect_archaeological_earthworks(
+                                ground_elev_input,
+                                coords_input
+                            )
+                            # The detector returns a dict like {"potential_earthworks": [...], "feature_type": "earthwork"}
+                            extracted["potential_earthworks"] = earthwork_results.get("potential_earthworks", [])
+                            logger.info(f"Found {len(extracted['potential_earthworks'])} potential earthwork points.")
+
+                        except ImportError as imp_err:
+                            logger.error(f"Could not import GEDI detectors: {imp_err}")
+                        except Exception as exc:
+                            logger.error(f"Error during GEDI advanced detection: {exc}", exc_info=True)
+                    else:
+                        logger.debug("Skipping advanced GEDI detection as no coordinate data was extracted.")
+
+                if extracted:
+                    logger.info(f"✅ Extracted {len(extracted)} types of metrics from {hdf5_file.name} (e.g., {list(extracted.keys())[:3]}) with {len(extracted.get('coordinates', []))} data points.")
+                else:
+                    logger.warning(f"No metrics extracted from {hdf5_file.name}.")
                 return extracted if extracted else None
 
         except Exception as exc:  # noqa: BLE001
