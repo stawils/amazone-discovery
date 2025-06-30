@@ -442,7 +442,7 @@ def create_enhanced_geometry(detection, coordinates):
 
 ### **Installation**
 ```bash
-git clone https://github.com/your-username/amazon-discovery.git
+git clone https://github.com/stawils/amazon-discovery.git
 cd amazon-discovery
 pip install -r requirements.txt
 ```
@@ -812,7 +812,7 @@ docs/
 
 ### **Development Setup**
 ```bash
-git clone https://github.com/your-username/amazon-discovery.git
+git clone https://github.com/stawils/amazon-discovery.git
 cd amazon-discovery
 pip install -r requirements.txt
 
