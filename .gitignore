@@ -27,8 +27,6 @@ docs/archive/
 Write-Up.md
 OpenAI-O3-formated- laste-response.md
 CLAUDE.md
-openai_checkpoints.py
-amazon-ai-scan.webp
 
 # AI-specific directories
 .claude/
