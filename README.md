@@ -270,6 +270,29 @@ src/visualization/
 - **Multi-layer Management**: Separate GEDI-only, Sentinel-2-only, convergent, and priority layers
 - **Statistics Panels**: Live feature counting and analysis metrics
 
+### **Archaeological Discovery Visualizations**
+
+<div align="center">
+
+#### **Multi-Sensor Detection Interface**
+*Real-time satellite imagery with GEDI LiDAR and Sentinel-2 archaeological feature overlays*
+
+<table>
+<tr>
+<td width="50%">
+<img src="docs/screenshots/sparse-detection.webp" alt="Archaeological features on satellite imagery - sparse detection" width="100%">
+<br><sub><b>Sparse Detection Pattern</b><br>GEDI clearing signatures with detailed tooltip metadata showing coordinates and correlation analysis</sub>
+</td>
+<td width="50%">
+<img src="docs/screenshots/dense-clustering.webp" alt="Dense archaeological feature clustering" width="100%">
+<br><sub><b>Dense Feature Clustering</b><br>High-density archaeological signatures with multi-sensor convergence and confidence scoring</sub>
+</td>
+</tr>
+</table>
+
+
+</div>
+
 ---
 
 ## 📈 **Advanced Export System**
@@ -846,11 +869,11 @@ flake8 src/
 
 ---
 
-## 📞 ** Documentation**
+## ** Documentation**
 
-- **Issues**: [GitHub Issues](https://github.com/stawils/amazon-discovery/issues)
+
 - **Documentation**: [Technical Docs](docs/)
-- **Discussions**: [Research Forum](https://github.com/stawils/amazon-discovery/discussions)
+
 
 ---
 
