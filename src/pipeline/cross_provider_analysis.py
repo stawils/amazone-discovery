@@ -212,19 +212,23 @@ class CrossProviderAnalyzer:
 
     def _create_single_provider_results(self, zone_name: str, provider_data: Dict[str, List[FeatureDict]]):
         """Creates and exports results for each provider individually for comparison."""
+        all_features = []
+        combined_export = None
+        top_export = None
+        
         for provider, features in provider_data.items():
             logger.info(f"Generating single-provider results for {provider}...")
             if not features:
                 continue
 
+            all_features.extend(features)
             self.export_manager.export_combined_features(all_detections=features, zone_name=f"{zone_name}_{provider}_only")
             
             top_5 = sorted(features, key=lambda x: x.get('confidence', 0.0), reverse=True)[:5]
             self.export_manager.export_top_candidates(top_detections=top_5, zone_name=f"{zone_name}_{provider}_top5", count=5)
-        else:
+        
+        if not all_features:
             logger.info("📍 No features available for export")
-            combined_export = None
-            top_export = None
         
         # Return minimal results structure
         return {
