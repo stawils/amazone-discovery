@@ -1,0 +1,4499 @@
+{
+  "type": "FeatureCollection",
+  "crs": {
+    "type": "name",
+    "properties": {
+      "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+    }
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.168386150928576,
+          -12.19485797602526
+        ]
+      },
+      "properties": {
+        "type": "gedi_clearing",
+        "confidence": 0.8,
+        "area_km2": 0.0,
+        "area_m2": 3436.09,
+        "count": 0,
+        "feature_type": "clearing_cluster",
+        "sensor_details": {
+          "mission": "NASA GEDI",
+          "instrument": "Global Ecosystem Dynamics Investigation LiDAR",
+          "footprint_diameter_m": 25,
+          "pulse_density": 0,
+          "beam_type": "power_beam",
+          "acquisition_date": "unknown",
+          "quality_flag": 1
+        },
+        "detection_algorithm": {
+          "method": "DBSCAN clustering of canopy height anomalies",
+          "parameters": {
+            "eps_distance_m": 50,
+            "min_samples": 3,
+            "height_threshold_m": 5.0
+          },
+          "statistical_significance": {
+            "p_value": 0.05,
+            "z_score": 2.0,
+            "cohens_d": null,
+            "effect_size": null,
+            "confidence_interval": [
+              0.7,
+              0.9
+            ],
+            "statistical_power": null,
+            "significance_level": "HIGH"
+          },
+          "enhanced_parameters": {
+            "relative_threshold_pct": 50,
+            "cluster_validation": "relative_height_50pct_local_max",
+            "gpu_acceleration": false
+          },
+          "lidar_analysis": {
+            "gap_points_detected": null,
+            "mean_elevation_m": null,
+            "elevation_std_m": null,
+            "elevation_anomaly_threshold": null,
+            "local_variance": null,
+            "footprint_area_m2": 490.87,
+            "pulse_density_per_m2": null
+          }
+        },
+        "archaeological_assessment": {
+          "interpretation": "Individual structure or clearing",
+          "evidence_type": "Canopy gap pattern analysis",
+          "cultural_context": "Pre-Columbian settlement",
+          "estimated_age_range": "500-2000 years BP",
+          "preservation_state": "good",
+          "investigation_priority": "Medium - Investigation within 1 year"
+        },
+        "spatial_context": {
+          "distance_to_water_m": null,
+          "elevation_m": null,
+          "slope_degrees": null,
+          "vegetation_type": "dense_forest",
+          "accessibility": "Remote - Helicopter or extended river journey required",
+          "terrain_ruggedness": null,
+          "canopy_density_pct": null,
+          "soil_drainage": "moderate"
+        },
+        "field_investigation": {
+          "optimal_visit_season": "June-September (general dry season recommendation)",
+          "recommended_equipment": [
+            "GPS with sub-meter accuracy",
+            "Ground-penetrating radar (GPR)",
+            "Soil auger for core sampling",
+            "Portable XRF for soil analysis",
+            "High-resolution camera with macro lens",
+            "Measuring tapes (30m, 100m)",
+            "Archaeological field forms",
+            "Sample bags and labels"
+          ],
+          "estimated_investigation_days": "3 days (preliminary survey)",
+          "logistics_complexity": "High - Remote location",
+          "safety_considerations": [
+            "Tropical disease precautions (malaria, dengue)",
+            "Emergency communication devices",
+            "First aid kit with snake bite treatment",
+            "Water purification system",
+            "Emergency evacuation plan"
+          ],
+          "permits_required": [
+            "INPC archaeological research permit",
+            "Environmental impact assessment",
+            "Local community consultation"
+          ],
+          "local_contacts": [
+            "Local INPC representative",
+            "Indigenous community leaders",
+            "Regional universities",
+            "Local government archaeological office",
+            "Tourist/guide services for logistics"
+          ]
+        },
+        "research_metadata": {
+          "publication_readiness": "Low - Requires field verification",
+          "academic_significance": "Standard - Typical archaeological interest",
+          "citation_potential": "Standard citation potential (5-10 citations expected)",
+          "collaboration_opportunities": [
+            "Local universities archaeology departments",
+            "International LiDAR research groups",
+            "Remote sensing archaeology networks",
+            "Amazon conservation organizations",
+            "Indigenous knowledge holders",
+            "Museum collections for comparative analysis"
+          ],
+          "dataset_completeness": "Incomplete - Additional data collection needed",
+          "peer_review_readiness": false
+        },
+        "data_provenance": {
+          "zone": "xingu_deep_forest",
+          "provider": "gedi",
+          "run_id": "20250629_235949_xingu_deep_forest",
+          "processing_date": "2025-06-30T00:06:15.430412",
+          "pipeline_version": "2.0",
+          "validation_status": "pending"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.16440474582587,
+          -12.189570395624585
+        ]
+      },
+      "properties": {
+        "type": "gedi_clearing",
+        "confidence": 0.8,
+        "area_km2": 0.0,
+        "area_m2": 1472.6100000000001,
+        "count": 0,
+        "feature_type": "clearing_cluster",
+        "sensor_details": {
+          "mission": "NASA GEDI",
+          "instrument": "Global Ecosystem Dynamics Investigation LiDAR",
+          "footprint_diameter_m": 25,
+          "pulse_density": 0,
+          "beam_type": "power_beam",
+          "acquisition_date": "unknown",
+          "quality_flag": 1
+        },
+        "detection_algorithm": {
+          "method": "DBSCAN clustering of canopy height anomalies",
+          "parameters": {
+            "eps_distance_m": 50,
+            "min_samples": 3,
+            "height_threshold_m": 5.0
+          },
+          "statistical_significance": {
+            "p_value": 0.05,
+            "z_score": 2.0,
+            "cohens_d": null,
+            "effect_size": null,
+            "confidence_interval": [
+              0.7,
+              0.9
+            ],
+            "statistical_power": null,
+            "significance_level": "HIGH"
+          },
+          "enhanced_parameters": {
+            "relative_threshold_pct": 50,
+            "cluster_validation": "relative_height_50pct_local_max",
+            "gpu_acceleration": false
+          },
+          "lidar_analysis": {
+            "gap_points_detected": null,
+            "mean_elevation_m": null,
+            "elevation_std_m": null,
+            "elevation_anomaly_threshold": null,
+            "local_variance": null,
+            "footprint_area_m2": 490.87,
+            "pulse_density_per_m2": null
+          }
+        },
+        "archaeological_assessment": {
+          "interpretation": "Individual structure or clearing",
+          "evidence_type": "Canopy gap pattern analysis",
+          "cultural_context": "Pre-Columbian settlement",
+          "estimated_age_range": "500-2000 years BP",
+          "preservation_state": "good",
+          "investigation_priority": "Medium - Investigation within 1 year"
+        },
+        "spatial_context": {
+          "distance_to_water_m": null,
+          "elevation_m": null,
+          "slope_degrees": null,
+          "vegetation_type": "dense_forest",
+          "accessibility": "Remote - Helicopter or extended river journey required",
+          "terrain_ruggedness": null,
+          "canopy_density_pct": null,
+          "soil_drainage": "moderate"
+        },
+        "field_investigation": {
+          "optimal_visit_season": "June-September (general dry season recommendation)",
+          "recommended_equipment": [
+            "GPS with sub-meter accuracy",
+            "Ground-penetrating radar (GPR)",
+            "Soil auger for core sampling",
+            "Portable XRF for soil analysis",
+            "High-resolution camera with macro lens",
+            "Measuring tapes (30m, 100m)",
+            "Archaeological field forms",
+            "Sample bags and labels"
+          ],
+          "estimated_investigation_days": "3 days (preliminary survey)",
+          "logistics_complexity": "High - Remote location",
+          "safety_considerations": [
+            "Tropical disease precautions (malaria, dengue)",
+            "Emergency communication devices",
+            "First aid kit with snake bite treatment",
+            "Water purification system",
+            "Emergency evacuation plan"
+          ],
+          "permits_required": [
+            "INPC archaeological research permit",
+            "Environmental impact assessment",
+            "Local community consultation"
+          ],
+          "local_contacts": [
+            "Local INPC representative",
+            "Indigenous community leaders",
+            "Regional universities",
+            "Local government archaeological office",
+            "Tourist/guide services for logistics"
+          ]
+        },
+        "research_metadata": {
+          "publication_readiness": "Low - Requires field verification",
+          "academic_significance": "Standard - Typical archaeological interest",
+          "citation_potential": "Standard citation potential (5-10 citations expected)",
+          "collaboration_opportunities": [
+            "Local universities archaeology departments",
+            "International LiDAR research groups",
+            "Remote sensing archaeology networks",
+            "Amazon conservation organizations",
+            "Indigenous knowledge holders",
+            "Museum collections for comparative analysis"
+          ],
+          "dataset_completeness": "Incomplete - Additional data collection needed",
+          "peer_review_readiness": false
+        },
+        "data_provenance": {
+          "zone": "xingu_deep_forest",
+          "provider": "gedi",
+          "run_id": "20250629_235949_xingu_deep_forest",
+          "processing_date": "2025-06-30T00:06:15.430423",
+          "pipeline_version": "2.0",
+          "validation_status": "pending"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.15000201251472,
+          -12.17043540248706
+        ]
+      },
+      "properties": {
+        "type": "gedi_clearing",
+        "confidence": 0.8,
+        "area_km2": 0.0,
+        "area_m2": 6872.18,
+        "count": 0,
+        "feature_type": "clearing_cluster",
+        "sensor_details": {
+          "mission": "NASA GEDI",
+          "instrument": "Global Ecosystem Dynamics Investigation LiDAR",
+          "footprint_diameter_m": 25,
+          "pulse_density": 0,
+          "beam_type": "power_beam",
+          "acquisition_date": "unknown",
+          "quality_flag": 1
+        },
+        "detection_algorithm": {
+          "method": "DBSCAN clustering of canopy height anomalies",
+          "parameters": {
+            "eps_distance_m": 50,
+            "min_samples": 3,
+            "height_threshold_m": 5.0
+          },
+          "statistical_significance": {
+            "p_value": 0.05,
+            "z_score": 2.0,
+            "cohens_d": null,
+            "effect_size": null,
+            "confidence_interval": [
+              0.7,
+              0.9
+            ],
+            "statistical_power": null,
+            "significance_level": "HIGH"
+          },
+          "enhanced_parameters": {
+            "relative_threshold_pct": 50,
+            "cluster_validation": "relative_height_50pct_local_max",
+            "gpu_acceleration": false
+          },
+          "lidar_analysis": {
+            "gap_points_detected": null,
+            "mean_elevation_m": null,
+            "elevation_std_m": null,
+            "elevation_anomaly_threshold": null,
+            "local_variance": null,
+            "footprint_area_m2": 490.87,
+            "pulse_density_per_m2": null
+          }
+        },
+        "archaeological_assessment": {
+          "interpretation": "Individual structure or clearing",
+          "evidence_type": "Canopy gap pattern analysis",
+          "cultural_context": "Pre-Columbian settlement",
+          "estimated_age_range": "500-2000 years BP",
+          "preservation_state": "good",
+          "investigation_priority": "Medium - Investigation within 1 year"
+        },
+        "spatial_context": {
+          "distance_to_water_m": null,
+          "elevation_m": null,
+          "slope_degrees": null,
+          "vegetation_type": "dense_forest",
+          "accessibility": "Remote - Helicopter or extended river journey required",
+          "terrain_ruggedness": null,
+          "canopy_density_pct": null,
+          "soil_drainage": "moderate"
+        },
+        "field_investigation": {
+          "optimal_visit_season": "June-September (general dry season recommendation)",
+          "recommended_equipment": [
+            "GPS with sub-meter accuracy",
+            "Ground-penetrating radar (GPR)",
+            "Soil auger for core sampling",
+            "Portable XRF for soil analysis",
+            "High-resolution camera with macro lens",
+            "Measuring tapes (30m, 100m)",
+            "Archaeological field forms",
+            "Sample bags and labels"
+          ],
+          "estimated_investigation_days": "3 days (preliminary survey)",
+          "logistics_complexity": "High - Remote location",
+          "safety_considerations": [
+            "Tropical disease precautions (malaria, dengue)",
+            "Emergency communication devices",
+            "First aid kit with snake bite treatment",
+            "Water purification system",
+            "Emergency evacuation plan"
+          ],
+          "permits_required": [
+            "INPC archaeological research permit",
+            "Environmental impact assessment",
+            "Local community consultation"
+          ],
+          "local_contacts": [
+            "Local INPC representative",
+            "Indigenous community leaders",
+            "Regional universities",
+            "Local government archaeological office",
+            "Tourist/guide services for logistics"
+          ]
+        },
+        "research_metadata": {
+          "publication_readiness": "Low - Requires field verification",
+          "academic_significance": "Standard - Typical archaeological interest",
+          "citation_potential": "Standard citation potential (5-10 citations expected)",
+          "collaboration_opportunities": [
+            "Local universities archaeology departments",
+            "International LiDAR research groups",
+            "Remote sensing archaeology networks",
+            "Amazon conservation organizations",
+            "Indigenous knowledge holders",
+            "Museum collections for comparative analysis"
+          ],
+          "dataset_completeness": "Incomplete - Additional data collection needed",
+          "peer_review_readiness": false
+        },
+        "data_provenance": {
+          "zone": "xingu_deep_forest",
+          "provider": "gedi",
+          "run_id": "20250629_235949_xingu_deep_forest",
+          "processing_date": "2025-06-30T00:06:15.430431",
+          "pipeline_version": "2.0",
+          "validation_status": "pending"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.13986495511632,
+          -12.156952843439592
+        ]
+      },
+      "properties": {
+        "type": "gedi_clearing",
+        "confidence": 0.8,
+        "area_km2": 0.0,
+        "area_m2": 3926.96,
+        "count": 0,
+        "feature_type": "clearing_cluster",
+        "sensor_details": {
+          "mission": "NASA GEDI",
+          "instrument": "Global Ecosystem Dynamics Investigation LiDAR",
+          "footprint_diameter_m": 25,
+          "pulse_density": 0,
+          "beam_type": "power_beam",
+          "acquisition_date": "unknown",
+          "quality_flag": 1
+        },
+        "detection_algorithm": {
+          "method": "DBSCAN clustering of canopy height anomalies",
+          "parameters": {
+            "eps_distance_m": 50,
+            "min_samples": 3,
+            "height_threshold_m": 5.0
+          },
+          "statistical_significance": {
+            "p_value": 0.05,
+            "z_score": 2.0,
+            "cohens_d": null,
+            "effect_size": null,
+            "confidence_interval": [
+              0.7,
+              0.9
+            ],
+            "statistical_power": null,
+            "significance_level": "HIGH"
+          },
+          "enhanced_parameters": {
+            "relative_threshold_pct": 50,
+            "cluster_validation": "relative_height_50pct_local_max",
+            "gpu_acceleration": false
+          },
+          "lidar_analysis": {
+            "gap_points_detected": null,
+            "mean_elevation_m": null,
+            "elevation_std_m": null,
+            "elevation_anomaly_threshold": null,
+            "local_variance": null,
+            "footprint_area_m2": 490.87,
+            "pulse_density_per_m2": null
+          }
+        },
+        "archaeological_assessment": {
+          "interpretation": "Individual structure or clearing",
+          "evidence_type": "Canopy gap pattern analysis",
+          "cultural_context": "Pre-Columbian settlement",
+          "estimated_age_range": "500-2000 years BP",
+          "preservation_state": "good",
+          "investigation_priority": "Medium - Investigation within 1 year"
+        },
+        "spatial_context": {
+          "distance_to_water_m": null,
+          "elevation_m": null,
+          "slope_degrees": null,
+          "vegetation_type": "dense_forest",
+          "accessibility": "Remote - Helicopter or extended river journey required",
+          "terrain_ruggedness": null,
+          "canopy_density_pct": null,
+          "soil_drainage": "moderate"
+        },
+        "field_investigation": {
+          "optimal_visit_season": "June-September (general dry season recommendation)",
+          "recommended_equipment": [
+            "GPS with sub-meter accuracy",
+            "Ground-penetrating radar (GPR)",
+            "Soil auger for core sampling",
+            "Portable XRF for soil analysis",
+            "High-resolution camera with macro lens",
+            "Measuring tapes (30m, 100m)",
+            "Archaeological field forms",
+            "Sample bags and labels"
+          ],
+          "estimated_investigation_days": "3 days (preliminary survey)",
+          "logistics_complexity": "High - Remote location",
+          "safety_considerations": [
+            "Tropical disease precautions (malaria, dengue)",
+            "Emergency communication devices",
+            "First aid kit with snake bite treatment",
+            "Water purification system",
+            "Emergency evacuation plan"
+          ],
+          "permits_required": [
+            "INPC archaeological research permit",
+            "Environmental impact assessment",
+            "Local community consultation"
+          ],
+          "local_contacts": [
+            "Local INPC representative",
+            "Indigenous community leaders",
+            "Regional universities",
+            "Local government archaeological office",
+            "Tourist/guide services for logistics"
+          ]
+        },
+        "research_metadata": {
+          "publication_readiness": "Low - Requires field verification",
+          "academic_significance": "Standard - Typical archaeological interest",
+          "citation_potential": "Standard citation potential (5-10 citations expected)",
+          "collaboration_opportunities": [
+            "Local universities archaeology departments",
+            "International LiDAR research groups",
+            "Remote sensing archaeology networks",
+            "Amazon conservation organizations",
+            "Indigenous knowledge holders",
+            "Museum collections for comparative analysis"
+          ],
+          "dataset_completeness": "Incomplete - Additional data collection needed",
+          "peer_review_readiness": false
+        },
+        "data_provenance": {
+          "zone": "xingu_deep_forest",
+          "provider": "gedi",
+          "run_id": "20250629_235949_xingu_deep_forest",
+          "processing_date": "2025-06-30T00:06:15.430438",
+          "pipeline_version": "2.0",
+          "validation_status": "pending"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.13332878286172,
+          -12.148251824537338
+        ]
+      },
+      "properties": {
+        "type": "gedi_clearing",
+        "confidence": 0.8,
+        "area_km2": 0.0,
+        "area_m2": 3436.09,
+        "count": 0,
+        "feature_type": "clearing_cluster",
+        "sensor_details": {
+          "mission": "NASA GEDI",
+          "instrument": "Global Ecosystem Dynamics Investigation LiDAR",
+          "footprint_diameter_m": 25,
+          "pulse_density": 0,
+          "beam_type": "power_beam",
+          "acquisition_date": "unknown",
+          "quality_flag": 1
+        },
+        "detection_algorithm": {
+          "method": "DBSCAN clustering of canopy height anomalies",
+          "parameters": {
+            "eps_distance_m": 50,
+            "min_samples": 3,
+            "height_threshold_m": 5.0
+          },
+          "statistical_significance": {
+            "p_value": 0.05,
+            "z_score": 2.0,
+            "cohens_d": null,
+            "effect_size": null,
+            "confidence_interval": [
+              0.7,
+              0.9
+            ],
+            "statistical_power": null,
+            "significance_level": "HIGH"
+          },
+          "enhanced_parameters": {
+            "relative_threshold_pct": 50,
+            "cluster_validation": "relative_height_50pct_local_max",
+            "gpu_acceleration": false
+          },
+          "lidar_analysis": {
+            "gap_points_detected": null,
+            "mean_elevation_m": null,
+            "elevation_std_m": null,
+            "elevation_anomaly_threshold": null,
+            "local_variance": null,
+            "footprint_area_m2": 490.87,
+            "pulse_density_per_m2": null
+          }
+        },
+        "archaeological_assessment": {
+          "interpretation": "Individual structure or clearing",
+          "evidence_type": "Canopy gap pattern analysis",
+          "cultural_context": "Pre-Columbian settlement",
+          "estimated_age_range": "500-2000 years BP",
+          "preservation_state": "good",
+          "investigation_priority": "Medium - Investigation within 1 year"
+        },
+        "spatial_context": {
+          "distance_to_water_m": null,
+          "elevation_m": null,
+          "slope_degrees": null,
+          "vegetation_type": "dense_forest",
+          "accessibility": "Remote - Helicopter or extended river journey required",
+          "terrain_ruggedness": null,
+          "canopy_density_pct": null,
+          "soil_drainage": "moderate"
+        },
+        "field_investigation": {
+          "optimal_visit_season": "June-September (general dry season recommendation)",
+          "recommended_equipment": [
+            "GPS with sub-meter accuracy",
+            "Ground-penetrating radar (GPR)",
+            "Soil auger for core sampling",
+            "Portable XRF for soil analysis",
+            "High-resolution camera with macro lens",
+            "Measuring tapes (30m, 100m)",
+            "Archaeological field forms",
+            "Sample bags and labels"
+          ],
+          "estimated_investigation_days": "3 days (preliminary survey)",
+          "logistics_complexity": "High - Remote location",
+          "safety_considerations": [
+            "Tropical disease precautions (malaria, dengue)",
+            "Emergency communication devices",
+            "First aid kit with snake bite treatment",
+            "Water purification system",
+            "Emergency evacuation plan"
+          ],
+          "permits_required": [
+            "INPC archaeological research permit",
+            "Environmental impact assessment",
+            "Local community consultation"
+          ],
+          "local_contacts": [
+            "Local INPC representative",
+            "Indigenous community leaders",
+            "Regional universities",
+            "Local government archaeological office",
+            "Tourist/guide services for logistics"
+          ]
+        },
+        "research_metadata": {
+          "publication_readiness": "Low - Requires field verification",
+          "academic_significance": "Standard - Typical archaeological interest",
+          "citation_potential": "Standard citation potential (5-10 citations expected)",
+          "collaboration_opportunities": [
+            "Local universities archaeology departments",
+            "International LiDAR research groups",
+            "Remote sensing archaeology networks",
+            "Amazon conservation organizations",
+            "Indigenous knowledge holders",
+            "Museum collections for comparative analysis"
+          ],
+          "dataset_completeness": "Incomplete - Additional data collection needed",
+          "peer_review_readiness": false
+        },
+        "data_provenance": {
+          "zone": "xingu_deep_forest",
+          "provider": "gedi",
+          "run_id": "20250629_235949_xingu_deep_forest",
+          "processing_date": "2025-06-30T00:06:15.430444",
+          "pipeline_version": "2.0",
+          "validation_status": "pending"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.139506955473415,
+          -12.165969431738052
+        ]
+      },
+      "properties": {
+        "type": "gedi_clearing",
+        "confidence": 0.8,
+        "area_km2": 0.0,
+        "area_m2": 11290.01,
+        "count": 0,
+        "feature_type": "clearing_cluster",
+        "sensor_details": {
+          "mission": "NASA GEDI",
+          "instrument": "Global Ecosystem Dynamics Investigation LiDAR",
+          "footprint_diameter_m": 25,
+          "pulse_density": 0,
+          "beam_type": "power_beam",
+          "acquisition_date": "unknown",
+          "quality_flag": 1
+        },
+        "detection_algorithm": {
+          "method": "DBSCAN clustering of canopy height anomalies",
+          "parameters": {
+            "eps_distance_m": 50,
+            "min_samples": 3,
+            "height_threshold_m": 5.0
+          },
+          "statistical_significance": {
+            "p_value": 0.05,
+            "z_score": 2.0,
+            "cohens_d": null,
+            "effect_size": null,
+            "confidence_interval": [
+              0.7,
+              0.9
+            ],
+            "statistical_power": null,
+            "significance_level": "HIGH"
+          },
+          "enhanced_parameters": {
+            "relative_threshold_pct": 50,
+            "cluster_validation": "relative_height_50pct_local_max",
+            "gpu_acceleration": false
+          },
+          "lidar_analysis": {
+            "gap_points_detected": null,
+            "mean_elevation_m": null,
+            "elevation_std_m": null,
+            "elevation_anomaly_threshold": null,
+            "local_variance": null,
+            "footprint_area_m2": 490.87,
+            "pulse_density_per_m2": null
+          }
+        },
+        "archaeological_assessment": {
+          "interpretation": "Small settlement or household cluster",
+          "evidence_type": "Canopy gap pattern analysis",
+          "cultural_context": "Pre-Columbian settlement",
+          "estimated_age_range": "500-2000 years BP",
+          "preservation_state": "good",
+          "investigation_priority": "High - Priority investigation within 6 months"
+        },
+        "spatial_context": {
+          "distance_to_water_m": null,
+          "elevation_m": null,
+          "slope_degrees": null,
+          "vegetation_type": "dense_forest",
+          "accessibility": "Remote - Helicopter or extended river journey required",
+          "terrain_ruggedness": null,
+          "canopy_density_pct": null,
+          "soil_drainage": "moderate"
+        },
+        "field_investigation": {
+          "optimal_visit_season": "June-September (general dry season recommendation)",
+          "recommended_equipment": [
+            "GPS with sub-meter accuracy",
+            "Ground-penetrating radar (GPR)",
+            "Soil auger for core sampling",
+            "Portable XRF for soil analysis",
+            "High-resolution camera with macro lens",
+            "Measuring tapes (30m, 100m)",
+            "Archaeological field forms",
+            "Sample bags and labels"
+          ],
+          "estimated_investigation_days": "6 days (comprehensive survey)",
+          "logistics_complexity": "High - Remote location",
+          "safety_considerations": [
+            "Tropical disease precautions (malaria, dengue)",
+            "Emergency communication devices",
+            "First aid kit with snake bite treatment",
+            "Water purification system",
+            "Emergency evacuation plan"
+          ],
+          "permits_required": [
+            "INPC archaeological research permit",
+            "Environmental impact assessment",
+            "Local community consultation"
+          ],
+          "local_contacts": [
+            "Local INPC representative",
+            "Indigenous community leaders",
+            "Regional universities",
+            "Local government archaeological office",
+            "Tourist/guide services for logistics"
+          ]
+        },
+        "research_metadata": {
+          "publication_readiness": "Low - Requires field verification",
+          "academic_significance": "Medium - Notable archaeological feature",
+          "citation_potential": "Moderate citation potential (10-20 citations expected)",
+          "collaboration_opportunities": [
+            "Local universities archaeology departments",
+            "International LiDAR research groups",
+            "Remote sensing archaeology networks",
+            "Amazon conservation organizations",
+            "Indigenous knowledge holders",
+            "Museum collections for comparative analysis"
+          ],
+          "dataset_completeness": "Incomplete - Additional data collection needed",
+          "peer_review_readiness": false
+        },
+        "data_provenance": {
+          "zone": "xingu_deep_forest",
+          "provider": "gedi",
+          "run_id": "20250629_235949_xingu_deep_forest",
+          "processing_date": "2025-06-30T00:06:15.430451",
+          "pipeline_version": "2.0",
+          "validation_status": "pending"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.12882775722384,
+          -12.15175978416117
+        ]
+      },
+      "properties": {
+        "type": "gedi_clearing",
+        "confidence": 0.8,
+        "area_km2": 0.0,
+        "area_m2": 1472.6100000000001,
+        "count": 0,
+        "feature_type": "clearing_cluster",
+        "sensor_details": {
+          "mission": "NASA GEDI",
+          "instrument": "Global Ecosystem Dynamics Investigation LiDAR",
+          "footprint_diameter_m": 25,
+          "pulse_density": 0,
+          "beam_type": "power_beam",
+          "acquisition_date": "unknown",
+          "quality_flag": 1
+        },
+        "detection_algorithm": {
+          "method": "DBSCAN clustering of canopy height anomalies",
+          "parameters": {
+            "eps_distance_m": 50,
+            "min_samples": 3,
+            "height_threshold_m": 5.0
+          },
+          "statistical_significance": {
+            "p_value": 0.05,
+            "z_score": 2.0,
+            "cohens_d": null,
+            "effect_size": null,
+            "confidence_interval": [
+              0.7,
+              0.9
+            ],
+            "statistical_power": null,
+            "significance_level": "HIGH"
+          },
+          "enhanced_parameters": {
+            "relative_threshold_pct": 50,
+            "cluster_validation": "relative_height_50pct_local_max",
+            "gpu_acceleration": false
+          },
+          "lidar_analysis": {
+            "gap_points_detected": null,
+            "mean_elevation_m": null,
+            "elevation_std_m": null,
+            "elevation_anomaly_threshold": null,
+            "local_variance": null,
+            "footprint_area_m2": 490.87,
+            "pulse_density_per_m2": null
+          }
+        },
+        "archaeological_assessment": {
+          "interpretation": "Individual structure or clearing",
+          "evidence_type": "Canopy gap pattern analysis",
+          "cultural_context": "Pre-Columbian settlement",
+          "estimated_age_range": "500-2000 years BP",
+          "preservation_state": "good",
+          "investigation_priority": "Medium - Investigation within 1 year"
+        },
+        "spatial_context": {
+          "distance_to_water_m": null,
+          "elevation_m": null,
+          "slope_degrees": null,
+          "vegetation_type": "dense_forest",
+          "accessibility": "Remote - Helicopter or extended river journey required",
+          "terrain_ruggedness": null,
+          "canopy_density_pct": null,
+          "soil_drainage": "moderate"
+        },
+        "field_investigation": {
+          "optimal_visit_season": "June-September (general dry season recommendation)",
+          "recommended_equipment": [
+            "GPS with sub-meter accuracy",
+            "Ground-penetrating radar (GPR)",
+            "Soil auger for core sampling",
+            "Portable XRF for soil analysis",
+            "High-resolution camera with macro lens",
+            "Measuring tapes (30m, 100m)",
+            "Archaeological field forms",
+            "Sample bags and labels"
+          ],
+          "estimated_investigation_days": "3 days (preliminary survey)",
+          "logistics_complexity": "High - Remote location",
+          "safety_considerations": [
+            "Tropical disease precautions (malaria, dengue)",
+            "Emergency communication devices",
+            "First aid kit with snake bite treatment",
+            "Water purification system",
+            "Emergency evacuation plan"
+          ],
+          "permits_required": [
+            "INPC archaeological research permit",
+            "Environmental impact assessment",
+            "Local community consultation"
+          ],
+          "local_contacts": [
+            "Local INPC representative",
+            "Indigenous community leaders",
+            "Regional universities",
+            "Local government archaeological office",
+            "Tourist/guide services for logistics"
+          ]
+        },
+        "research_metadata": {
+          "publication_readiness": "Low - Requires field verification",
+          "academic_significance": "Standard - Typical archaeological interest",
+          "citation_potential": "Standard citation potential (5-10 citations expected)",
+          "collaboration_opportunities": [
+            "Local universities archaeology departments",
+            "International LiDAR research groups",
+            "Remote sensing archaeology networks",
+            "Amazon conservation organizations",
+            "Indigenous knowledge holders",
+            "Museum collections for comparative analysis"
+          ],
+          "dataset_completeness": "Incomplete - Additional data collection needed",
+          "peer_review_readiness": false
+        },
+        "data_provenance": {
+          "zone": "xingu_deep_forest",
+          "provider": "gedi",
+          "run_id": "20250629_235949_xingu_deep_forest",
+          "processing_date": "2025-06-30T00:06:15.430457",
+          "pipeline_version": "2.0",
+          "validation_status": "pending"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.1326748998888,
+          -12.16570431279699
+        ]
+      },
+      "properties": {
+        "type": "gedi_clearing",
+        "confidence": 0.8,
+        "area_km2": 0.0,
+        "area_m2": 1472.6100000000001,
+        "count": 0,
+        "feature_type": "clearing_cluster",
+        "sensor_details": {
+          "mission": "NASA GEDI",
+          "instrument": "Global Ecosystem Dynamics Investigation LiDAR",
+          "footprint_diameter_m": 25,
+          "pulse_density": 0,
+          "beam_type": "power_beam",
+          "acquisition_date": "unknown",
+          "quality_flag": 1
+        },
+        "detection_algorithm": {
+          "method": "DBSCAN clustering of canopy height anomalies",
+          "parameters": {
+            "eps_distance_m": 50,
+            "min_samples": 3,
+            "height_threshold_m": 5.0
+          },
+          "statistical_significance": {
+            "p_value": 0.05,
+            "z_score": 2.0,
+            "cohens_d": null,
+            "effect_size": null,
+            "confidence_interval": [
+              0.7,
+              0.9
+            ],
+            "statistical_power": null,
+            "significance_level": "HIGH"
+          },
+          "enhanced_parameters": {
+            "relative_threshold_pct": 50,
+            "cluster_validation": "relative_height_50pct_local_max",
+            "gpu_acceleration": false
+          },
+          "lidar_analysis": {
+            "gap_points_detected": null,
+            "mean_elevation_m": null,
+            "elevation_std_m": null,
+            "elevation_anomaly_threshold": null,
+            "local_variance": null,
+            "footprint_area_m2": 490.87,
+            "pulse_density_per_m2": null
+          }
+        },
+        "archaeological_assessment": {
+          "interpretation": "Individual structure or clearing",
+          "evidence_type": "Canopy gap pattern analysis",
+          "cultural_context": "Pre-Columbian settlement",
+          "estimated_age_range": "500-2000 years BP",
+          "preservation_state": "good",
+          "investigation_priority": "Medium - Investigation within 1 year"
+        },
+        "spatial_context": {
+          "distance_to_water_m": null,
+          "elevation_m": null,
+          "slope_degrees": null,
+          "vegetation_type": "dense_forest",
+          "accessibility": "Remote - Helicopter or extended river journey required",
+          "terrain_ruggedness": null,
+          "canopy_density_pct": null,
+          "soil_drainage": "moderate"
+        },
+        "field_investigation": {
+          "optimal_visit_season": "June-September (general dry season recommendation)",
+          "recommended_equipment": [
+            "GPS with sub-meter accuracy",
+            "Ground-penetrating radar (GPR)",
+            "Soil auger for core sampling",
+            "Portable XRF for soil analysis",
+            "High-resolution camera with macro lens",
+            "Measuring tapes (30m, 100m)",
+            "Archaeological field forms",
+            "Sample bags and labels"
+          ],
+          "estimated_investigation_days": "3 days (preliminary survey)",
+          "logistics_complexity": "High - Remote location",
+          "safety_considerations": [
+            "Tropical disease precautions (malaria, dengue)",
+            "Emergency communication devices",
+            "First aid kit with snake bite treatment",
+            "Water purification system",
+            "Emergency evacuation plan"
+          ],
+          "permits_required": [
+            "INPC archaeological research permit",
+            "Environmental impact assessment",
+            "Local community consultation"
+          ],
+          "local_contacts": [
+            "Local INPC representative",
+            "Indigenous community leaders",
+            "Regional universities",
+            "Local government archaeological office",
+            "Tourist/guide services for logistics"
+          ]
+        },
+        "research_metadata": {
+          "publication_readiness": "Low - Requires field verification",
+          "academic_significance": "Standard - Typical archaeological interest",
+          "citation_potential": "Standard citation potential (5-10 citations expected)",
+          "collaboration_opportunities": [
+            "Local universities archaeology departments",
+            "International LiDAR research groups",
+            "Remote sensing archaeology networks",
+            "Amazon conservation organizations",
+            "Indigenous knowledge holders",
+            "Museum collections for comparative analysis"
+          ],
+          "dataset_completeness": "Incomplete - Additional data collection needed",
+          "peer_review_readiness": false
+        },
+        "data_provenance": {
+          "zone": "xingu_deep_forest",
+          "provider": "gedi",
+          "run_id": "20250629_235949_xingu_deep_forest",
+          "processing_date": "2025-06-30T00:06:15.430463",
+          "pipeline_version": "2.0",
+          "validation_status": "pending"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.12778241132688,
+          -12.159201594633034
+        ]
+      },
+      "properties": {
+        "type": "gedi_clearing",
+        "confidence": 0.8,
+        "area_km2": 0.0,
+        "area_m2": 1472.6100000000001,
+        "count": 0,
+        "feature_type": "clearing_cluster",
+        "sensor_details": {
+          "mission": "NASA GEDI",
+          "instrument": "Global Ecosystem Dynamics Investigation LiDAR",
+          "footprint_diameter_m": 25,
+          "pulse_density": 0,
+          "beam_type": "power_beam",
+          "acquisition_date": "unknown",
+          "quality_flag": 1
+        },
+        "detection_algorithm": {
+          "method": "DBSCAN clustering of canopy height anomalies",
+          "parameters": {
+            "eps_distance_m": 50,
+            "min_samples": 3,
+            "height_threshold_m": 5.0
+          },
+          "statistical_significance": {
+            "p_value": 0.05,
+            "z_score": 2.0,
+            "cohens_d": null,
+            "effect_size": null,
+            "confidence_interval": [
+              0.7,
+              0.9
+            ],
+            "statistical_power": null,
+            "significance_level": "HIGH"
+          },
+          "enhanced_parameters": {
+            "relative_threshold_pct": 50,
+            "cluster_validation": "relative_height_50pct_local_max",
+            "gpu_acceleration": false
+          },
+          "lidar_analysis": {
+            "gap_points_detected": null,
+            "mean_elevation_m": null,
+            "elevation_std_m": null,
+            "elevation_anomaly_threshold": null,
+            "local_variance": null,
+            "footprint_area_m2": 490.87,
+            "pulse_density_per_m2": null
+          }
+        },
+        "archaeological_assessment": {
+          "interpretation": "Individual structure or clearing",
+          "evidence_type": "Canopy gap pattern analysis",
+          "cultural_context": "Pre-Columbian settlement",
+          "estimated_age_range": "500-2000 years BP",
+          "preservation_state": "good",
+          "investigation_priority": "Medium - Investigation within 1 year"
+        },
+        "spatial_context": {
+          "distance_to_water_m": null,
+          "elevation_m": null,
+          "slope_degrees": null,
+          "vegetation_type": "dense_forest",
+          "accessibility": "Remote - Helicopter or extended river journey required",
+          "terrain_ruggedness": null,
+          "canopy_density_pct": null,
+          "soil_drainage": "moderate"
+        },
+        "field_investigation": {
+          "optimal_visit_season": "June-September (general dry season recommendation)",
+          "recommended_equipment": [
+            "GPS with sub-meter accuracy",
+            "Ground-penetrating radar (GPR)",
+            "Soil auger for core sampling",
+            "Portable XRF for soil analysis",
+            "High-resolution camera with macro lens",
+            "Measuring tapes (30m, 100m)",
+            "Archaeological field forms",
+            "Sample bags and labels"
+          ],
+          "estimated_investigation_days": "3 days (preliminary survey)",
+          "logistics_complexity": "High - Remote location",
+          "safety_considerations": [
+            "Tropical disease precautions (malaria, dengue)",
+            "Emergency communication devices",
+            "First aid kit with snake bite treatment",
+            "Water purification system",
+            "Emergency evacuation plan"
+          ],
+          "permits_required": [
+            "INPC archaeological research permit",
+            "Environmental impact assessment",
+            "Local community consultation"
+          ],
+          "local_contacts": [
+            "Local INPC representative",
+            "Indigenous community leaders",
+            "Regional universities",
+            "Local government archaeological office",
+            "Tourist/guide services for logistics"
+          ]
+        },
+        "research_metadata": {
+          "publication_readiness": "Low - Requires field verification",
+          "academic_significance": "Standard - Typical archaeological interest",
+          "citation_potential": "Standard citation potential (5-10 citations expected)",
+          "collaboration_opportunities": [
+            "Local universities archaeology departments",
+            "International LiDAR research groups",
+            "Remote sensing archaeology networks",
+            "Amazon conservation organizations",
+            "Indigenous knowledge holders",
+            "Museum collections for comparative analysis"
+          ],
+          "dataset_completeness": "Incomplete - Additional data collection needed",
+          "peer_review_readiness": false
+        },
+        "data_provenance": {
+          "zone": "xingu_deep_forest",
+          "provider": "gedi",
+          "run_id": "20250629_235949_xingu_deep_forest",
+          "processing_date": "2025-06-30T00:06:15.430469",
+          "pipeline_version": "2.0",
+          "validation_status": "pending"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.107296988695715,
+          -12.151264872103917
+        ]
+      },
+      "properties": {
+        "type": "gedi_clearing",
+        "confidence": 0.8,
+        "area_km2": 0.0,
+        "area_m2": 3436.09,
+        "count": 0,
+        "feature_type": "clearing_cluster",
+        "sensor_details": {
+          "mission": "NASA GEDI",
+          "instrument": "Global Ecosystem Dynamics Investigation LiDAR",
+          "footprint_diameter_m": 25,
+          "pulse_density": 0,
+          "beam_type": "power_beam",
+          "acquisition_date": "unknown",
+          "quality_flag": 1
+        },
+        "detection_algorithm": {
+          "method": "DBSCAN clustering of canopy height anomalies",
+          "parameters": {
+            "eps_distance_m": 50,
+            "min_samples": 3,
+            "height_threshold_m": 5.0
+          },
+          "statistical_significance": {
+            "p_value": 0.05,
+            "z_score": 2.0,
+            "cohens_d": null,
+            "effect_size": null,
+            "confidence_interval": [
+              0.7,
+              0.9
+            ],
+            "statistical_power": null,
+            "significance_level": "HIGH"
+          },
+          "enhanced_parameters": {
+            "relative_threshold_pct": 50,
+            "cluster_validation": "relative_height_50pct_local_max",
+            "gpu_acceleration": false
+          },
+          "lidar_analysis": {
+            "gap_points_detected": null,
+            "mean_elevation_m": null,
+            "elevation_std_m": null,
+            "elevation_anomaly_threshold": null,
+            "local_variance": null,
+            "footprint_area_m2": 490.87,
+            "pulse_density_per_m2": null
+          }
+        },
+        "archaeological_assessment": {
+          "interpretation": "Individual structure or clearing",
+          "evidence_type": "Canopy gap pattern analysis",
+          "cultural_context": "Pre-Columbian settlement",
+          "estimated_age_range": "500-2000 years BP",
+          "preservation_state": "good",
+          "investigation_priority": "Medium - Investigation within 1 year"
+        },
+        "spatial_context": {
+          "distance_to_water_m": null,
+          "elevation_m": null,
+          "slope_degrees": null,
+          "vegetation_type": "dense_forest",
+          "accessibility": "Remote - Helicopter or extended river journey required",
+          "terrain_ruggedness": null,
+          "canopy_density_pct": null,
+          "soil_drainage": "moderate"
+        },
+        "field_investigation": {
+          "optimal_visit_season": "June-September (general dry season recommendation)",
+          "recommended_equipment": [
+            "GPS with sub-meter accuracy",
+            "Ground-penetrating radar (GPR)",
+            "Soil auger for core sampling",
+            "Portable XRF for soil analysis",
+            "High-resolution camera with macro lens",
+            "Measuring tapes (30m, 100m)",
+            "Archaeological field forms",
+            "Sample bags and labels"
+          ],
+          "estimated_investigation_days": "3 days (preliminary survey)",
+          "logistics_complexity": "High - Remote location",
+          "safety_considerations": [
+            "Tropical disease precautions (malaria, dengue)",
+            "Emergency communication devices",
+            "First aid kit with snake bite treatment",
+            "Water purification system",
+            "Emergency evacuation plan"
+          ],
+          "permits_required": [
+            "INPC archaeological research permit",
+            "Environmental impact assessment",
+            "Local community consultation"
+          ],
+          "local_contacts": [
+            "Local INPC representative",
+            "Indigenous community leaders",
+            "Regional universities",
+            "Local government archaeological office",
+            "Tourist/guide services for logistics"
+          ]
+        },
+        "research_metadata": {
+          "publication_readiness": "Low - Requires field verification",
+          "academic_significance": "Standard - Typical archaeological interest",
+          "citation_potential": "Standard citation potential (5-10 citations expected)",
+          "collaboration_opportunities": [
+            "Local universities archaeology departments",
+            "International LiDAR research groups",
+            "Remote sensing archaeology networks",
+            "Amazon conservation organizations",
+            "Indigenous knowledge holders",
+            "Museum collections for comparative analysis"
+          ],
+          "dataset_completeness": "Incomplete - Additional data collection needed",
+          "peer_review_readiness": false
+        },
+        "data_provenance": {
+          "zone": "xingu_deep_forest",
+          "provider": "gedi",
+          "run_id": "20250629_235949_xingu_deep_forest",
+          "processing_date": "2025-06-30T00:06:15.430480",
+          "pipeline_version": "2.0",
+          "validation_status": "pending"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.10501121319988,
+          -12.148226119454536
+        ]
+      },
+      "properties": {
+        "type": "gedi_clearing",
+        "confidence": 0.8,
+        "area_km2": 0.0,
+        "area_m2": 1472.6100000000001,
+        "count": 0,
+        "feature_type": "clearing_cluster",
+        "sensor_details": {
+          "mission": "NASA GEDI",
+          "instrument": "Global Ecosystem Dynamics Investigation LiDAR",
+          "footprint_diameter_m": 25,
+          "pulse_density": 0,
+          "beam_type": "power_beam",
+          "acquisition_date": "unknown",
+          "quality_flag": 1
+        },
+        "detection_algorithm": {
+          "method": "DBSCAN clustering of canopy height anomalies",
+          "parameters": {
+            "eps_distance_m": 50,
+            "min_samples": 3,
+            "height_threshold_m": 5.0
+          },
+          "statistical_significance": {
+            "p_value": 0.05,
+            "z_score": 2.0,
+            "cohens_d": null,
+            "effect_size": null,
+            "confidence_interval": [
+              0.7,
+              0.9
+            ],
+            "statistical_power": null,
+            "significance_level": "HIGH"
+          },
+          "enhanced_parameters": {
+            "relative_threshold_pct": 50,
+            "cluster_validation": "relative_height_50pct_local_max",
+            "gpu_acceleration": false
+          },
+          "lidar_analysis": {
+            "gap_points_detected": null,
+            "mean_elevation_m": null,
+            "elevation_std_m": null,
+            "elevation_anomaly_threshold": null,
+            "local_variance": null,
+            "footprint_area_m2": 490.87,
+            "pulse_density_per_m2": null
+          }
+        },
+        "archaeological_assessment": {
+          "interpretation": "Individual structure or clearing",
+          "evidence_type": "Canopy gap pattern analysis",
+          "cultural_context": "Pre-Columbian settlement",
+          "estimated_age_range": "500-2000 years BP",
+          "preservation_state": "good",
+          "investigation_priority": "Medium - Investigation within 1 year"
+        },
+        "spatial_context": {
+          "distance_to_water_m": null,
+          "elevation_m": null,
+          "slope_degrees": null,
+          "vegetation_type": "dense_forest",
+          "accessibility": "Remote - Helicopter or extended river journey required",
+          "terrain_ruggedness": null,
+          "canopy_density_pct": null,
+          "soil_drainage": "moderate"
+        },
+        "field_investigation": {
+          "optimal_visit_season": "June-September (general dry season recommendation)",
+          "recommended_equipment": [
+            "GPS with sub-meter accuracy",
+            "Ground-penetrating radar (GPR)",
+            "Soil auger for core sampling",
+            "Portable XRF for soil analysis",
+            "High-resolution camera with macro lens",
+            "Measuring tapes (30m, 100m)",
+            "Archaeological field forms",
+            "Sample bags and labels"
+          ],
+          "estimated_investigation_days": "3 days (preliminary survey)",
+          "logistics_complexity": "High - Remote location",
+          "safety_considerations": [
+            "Tropical disease precautions (malaria, dengue)",
+            "Emergency communication devices",
+            "First aid kit with snake bite treatment",
+            "Water purification system",
+            "Emergency evacuation plan"
+          ],
+          "permits_required": [
+            "INPC archaeological research permit",
+            "Environmental impact assessment",
+            "Local community consultation"
+          ],
+          "local_contacts": [
+            "Local INPC representative",
+            "Indigenous community leaders",
+            "Regional universities",
+            "Local government archaeological office",
+            "Tourist/guide services for logistics"
+          ]
+        },
+        "research_metadata": {
+          "publication_readiness": "Low - Requires field verification",
+          "academic_significance": "Standard - Typical archaeological interest",
+          "citation_potential": "Standard citation potential (5-10 citations expected)",
+          "collaboration_opportunities": [
+            "Local universities archaeology departments",
+            "International LiDAR research groups",
+            "Remote sensing archaeology networks",
+            "Amazon conservation organizations",
+            "Indigenous knowledge holders",
+            "Museum collections for comparative analysis"
+          ],
+          "dataset_completeness": "Incomplete - Additional data collection needed",
+          "peer_review_readiness": false
+        },
+        "data_provenance": {
+          "zone": "xingu_deep_forest",
+          "provider": "gedi",
+          "run_id": "20250629_235949_xingu_deep_forest",
+          "processing_date": "2025-06-30T00:06:15.430486",
+          "pipeline_version": "2.0",
+          "validation_status": "pending"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.157016126948534,
+          -12.226799670947067
+        ]
+      },
+      "properties": {
+        "type": "gedi_clearing",
+        "confidence": 0.8,
+        "area_km2": 0.0,
+        "area_m2": 1963.48,
+        "count": 0,
+        "feature_type": "clearing_cluster",
+        "sensor_details": {
+          "mission": "NASA GEDI",
+          "instrument": "Global Ecosystem Dynamics Investigation LiDAR",
+          "footprint_diameter_m": 25,
+          "pulse_density": 0,
+          "beam_type": "power_beam",
+          "acquisition_date": "unknown",
+          "quality_flag": 1
+        },
+        "detection_algorithm": {
+          "method": "DBSCAN clustering of canopy height anomalies",
+          "parameters": {
+            "eps_distance_m": 50,
+            "min_samples": 3,
+            "height_threshold_m": 5.0
+          },
+          "statistical_significance": {
+            "p_value": 0.05,
+            "z_score": 2.0,
+            "cohens_d": null,
+            "effect_size": null,
+            "confidence_interval": [
+              0.7,
+              0.9
+            ],
+            "statistical_power": null,
+            "significance_level": "HIGH"
+          },
+          "enhanced_parameters": {
+            "relative_threshold_pct": 50,
+            "cluster_validation": "relative_height_50pct_local_max",
+            "gpu_acceleration": false
+          },
+          "lidar_analysis": {
+            "gap_points_detected": null,
+            "mean_elevation_m": null,
+            "elevation_std_m": null,
+            "elevation_anomaly_threshold": null,
+            "local_variance": null,
+            "footprint_area_m2": 490.87,
+            "pulse_density_per_m2": null
+          }
+        },
+        "archaeological_assessment": {
+          "interpretation": "Individual structure or clearing",
+          "evidence_type": "Canopy gap pattern analysis",
+          "cultural_context": "Pre-Columbian settlement",
+          "estimated_age_range": "500-2000 years BP",
+          "preservation_state": "good",
+          "investigation_priority": "Medium - Investigation within 1 year"
+        },
+        "spatial_context": {
+          "distance_to_water_m": null,
+          "elevation_m": null,
+          "slope_degrees": null,
+          "vegetation_type": "dense_forest",
+          "accessibility": "Remote - Helicopter or extended river journey required",
+          "terrain_ruggedness": null,
+          "canopy_density_pct": null,
+          "soil_drainage": "moderate"
+        },
+        "field_investigation": {
+          "optimal_visit_season": "June-September (general dry season recommendation)",
+          "recommended_equipment": [
+            "GPS with sub-meter accuracy",
+            "Ground-penetrating radar (GPR)",
+            "Soil auger for core sampling",
+            "Portable XRF for soil analysis",
+            "High-resolution camera with macro lens",
+            "Measuring tapes (30m, 100m)",
+            "Archaeological field forms",
+            "Sample bags and labels"
+          ],
+          "estimated_investigation_days": "3 days (preliminary survey)",
+          "logistics_complexity": "High - Remote location",
+          "safety_considerations": [
+            "Tropical disease precautions (malaria, dengue)",
+            "Emergency communication devices",
+            "First aid kit with snake bite treatment",
+            "Water purification system",
+            "Emergency evacuation plan"
+          ],
+          "permits_required": [
+            "INPC archaeological research permit",
+            "Environmental impact assessment",
+            "Local community consultation"
+          ],
+          "local_contacts": [
+            "Local INPC representative",
+            "Indigenous community leaders",
+            "Regional universities",
+            "Local government archaeological office",
+            "Tourist/guide services for logistics"
+          ]
+        },
+        "research_metadata": {
+          "publication_readiness": "Low - Requires field verification",
+          "academic_significance": "Standard - Typical archaeological interest",
+          "citation_potential": "Standard citation potential (5-10 citations expected)",
+          "collaboration_opportunities": [
+            "Local universities archaeology departments",
+            "International LiDAR research groups",
+            "Remote sensing archaeology networks",
+            "Amazon conservation organizations",
+            "Indigenous knowledge holders",
+            "Museum collections for comparative analysis"
+          ],
+          "dataset_completeness": "Incomplete - Additional data collection needed",
+          "peer_review_readiness": false
+        },
+        "data_provenance": {
+          "zone": "xingu_deep_forest",
+          "provider": "gedi",
+          "run_id": "20250629_235949_xingu_deep_forest",
+          "processing_date": "2025-06-30T00:06:15.430492",
+          "pipeline_version": "2.0",
+          "validation_status": "pending"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.13733499616754,
+          -12.20067127848759
+        ]
+      },
+      "properties": {
+        "type": "gedi_clearing",
+        "confidence": 0.8,
+        "area_km2": 0.0,
+        "area_m2": 2945.2200000000003,
+        "count": 0,
+        "feature_type": "clearing_cluster",
+        "sensor_details": {
+          "mission": "NASA GEDI",
+          "instrument": "Global Ecosystem Dynamics Investigation LiDAR",
+          "footprint_diameter_m": 25,
+          "pulse_density": 0,
+          "beam_type": "power_beam",
+          "acquisition_date": "unknown",
+          "quality_flag": 1
+        },
+        "detection_algorithm": {
+          "method": "DBSCAN clustering of canopy height anomalies",
+          "parameters": {
+            "eps_distance_m": 50,
+            "min_samples": 3,
+            "height_threshold_m": 5.0
+          },
+          "statistical_significance": {
+            "p_value": 0.05,
+            "z_score": 2.0,
+            "cohens_d": null,
+            "effect_size": null,
+            "confidence_interval": [
+              0.7,
+              0.9
+            ],
+            "statistical_power": null,
+            "significance_level": "HIGH"
+          },
+          "enhanced_parameters": {
+            "relative_threshold_pct": 50,
+            "cluster_validation": "relative_height_50pct_local_max",
+            "gpu_acceleration": false
+          },
+          "lidar_analysis": {
+            "gap_points_detected": null,
+            "mean_elevation_m": null,
+            "elevation_std_m": null,
+            "elevation_anomaly_threshold": null,
+            "local_variance": null,
+            "footprint_area_m2": 490.87,
+            "pulse_density_per_m2": null
+          }
+        },
+        "archaeological_assessment": {
+          "interpretation": "Individual structure or clearing",
+          "evidence_type": "Canopy gap pattern analysis",
+          "cultural_context": "Pre-Columbian settlement",
+          "estimated_age_range": "500-2000 years BP",
+          "preservation_state": "good",
+          "investigation_priority": "Medium - Investigation within 1 year"
+        },
+        "spatial_context": {
+          "distance_to_water_m": null,
+          "elevation_m": null,
+          "slope_degrees": null,
+          "vegetation_type": "dense_forest",
+          "accessibility": "Remote - Helicopter or extended river journey required",
+          "terrain_ruggedness": null,
+          "canopy_density_pct": null,
+          "soil_drainage": "moderate"
+        },
+        "field_investigation": {
+          "optimal_visit_season": "June-September (general dry season recommendation)",
+          "recommended_equipment": [
+            "GPS with sub-meter accuracy",
+            "Ground-penetrating radar (GPR)",
+            "Soil auger for core sampling",
+            "Portable XRF for soil analysis",
+            "High-resolution camera with macro lens",
+            "Measuring tapes (30m, 100m)",
+            "Archaeological field forms",
+            "Sample bags and labels"
+          ],
+          "estimated_investigation_days": "3 days (preliminary survey)",
+          "logistics_complexity": "High - Remote location",
+          "safety_considerations": [
+            "Tropical disease precautions (malaria, dengue)",
+            "Emergency communication devices",
+            "First aid kit with snake bite treatment",
+            "Water purification system",
+            "Emergency evacuation plan"
+          ],
+          "permits_required": [
+            "INPC archaeological research permit",
+            "Environmental impact assessment",
+            "Local community consultation"
+          ],
+          "local_contacts": [
+            "Local INPC representative",
+            "Indigenous community leaders",
+            "Regional universities",
+            "Local government archaeological office",
+            "Tourist/guide services for logistics"
+          ]
+        },
+        "research_metadata": {
+          "publication_readiness": "Low - Requires field verification",
+          "academic_significance": "Standard - Typical archaeological interest",
+          "citation_potential": "Standard citation potential (5-10 citations expected)",
+          "collaboration_opportunities": [
+            "Local universities archaeology departments",
+            "International LiDAR research groups",
+            "Remote sensing archaeology networks",
+            "Amazon conservation organizations",
+            "Indigenous knowledge holders",
+            "Museum collections for comparative analysis"
+          ],
+          "dataset_completeness": "Incomplete - Additional data collection needed",
+          "peer_review_readiness": false
+        },
+        "data_provenance": {
+          "zone": "xingu_deep_forest",
+          "provider": "gedi",
+          "run_id": "20250629_235949_xingu_deep_forest",
+          "processing_date": "2025-06-30T00:06:15.430499",
+          "pipeline_version": "2.0",
+          "validation_status": "pending"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.11118582873487,
+          -12.165903764246591
+        ]
+      },
+      "properties": {
+        "type": "gedi_clearing",
+        "confidence": 0.8,
+        "area_km2": 0.0,
+        "area_m2": 1472.6100000000001,
+        "count": 0,
+        "feature_type": "clearing_cluster",
+        "sensor_details": {
+          "mission": "NASA GEDI",
+          "instrument": "Global Ecosystem Dynamics Investigation LiDAR",
+          "footprint_diameter_m": 25,
+          "pulse_density": 0,
+          "beam_type": "power_beam",
+          "acquisition_date": "unknown",
+          "quality_flag": 1
+        },
+        "detection_algorithm": {
+          "method": "DBSCAN clustering of canopy height anomalies",
+          "parameters": {
+            "eps_distance_m": 50,
+            "min_samples": 3,
+            "height_threshold_m": 5.0
+          },
+          "statistical_significance": {
+            "p_value": 0.05,
+            "z_score": 2.0,
+            "cohens_d": null,
+            "effect_size": null,
+            "confidence_interval": [
+              0.7,
+              0.9
+            ],
+            "statistical_power": null,
+            "significance_level": "HIGH"
+          },
+          "enhanced_parameters": {
+            "relative_threshold_pct": 50,
+            "cluster_validation": "relative_height_50pct_local_max",
+            "gpu_acceleration": false
+          },
+          "lidar_analysis": {
+            "gap_points_detected": null,
+            "mean_elevation_m": null,
+            "elevation_std_m": null,
+            "elevation_anomaly_threshold": null,
+            "local_variance": null,
+            "footprint_area_m2": 490.87,
+            "pulse_density_per_m2": null
+          }
+        },
+        "archaeological_assessment": {
+          "interpretation": "Individual structure or clearing",
+          "evidence_type": "Canopy gap pattern analysis",
+          "cultural_context": "Pre-Columbian settlement",
+          "estimated_age_range": "500-2000 years BP",
+          "preservation_state": "good",
+          "investigation_priority": "Medium - Investigation within 1 year"
+        },
+        "spatial_context": {
+          "distance_to_water_m": null,
+          "elevation_m": null,
+          "slope_degrees": null,
+          "vegetation_type": "dense_forest",
+          "accessibility": "Remote - Helicopter or extended river journey required",
+          "terrain_ruggedness": null,
+          "canopy_density_pct": null,
+          "soil_drainage": "moderate"
+        },
+        "field_investigation": {
+          "optimal_visit_season": "June-September (general dry season recommendation)",
+          "recommended_equipment": [
+            "GPS with sub-meter accuracy",
+            "Ground-penetrating radar (GPR)",
+            "Soil auger for core sampling",
+            "Portable XRF for soil analysis",
+            "High-resolution camera with macro lens",
+            "Measuring tapes (30m, 100m)",
+            "Archaeological field forms",
+            "Sample bags and labels"
+          ],
+          "estimated_investigation_days": "3 days (preliminary survey)",
+          "logistics_complexity": "High - Remote location",
+          "safety_considerations": [
+            "Tropical disease precautions (malaria, dengue)",
+            "Emergency communication devices",
+            "First aid kit with snake bite treatment",
+            "Water purification system",
+            "Emergency evacuation plan"
+          ],
+          "permits_required": [
+            "INPC archaeological research permit",
+            "Environmental impact assessment",
+            "Local community consultation"
+          ],
+          "local_contacts": [
+            "Local INPC representative",
+            "Indigenous community leaders",
+            "Regional universities",
+            "Local government archaeological office",
+            "Tourist/guide services for logistics"
+          ]
+        },
+        "research_metadata": {
+          "publication_readiness": "Low - Requires field verification",
+          "academic_significance": "Standard - Typical archaeological interest",
+          "citation_potential": "Standard citation potential (5-10 citations expected)",
+          "collaboration_opportunities": [
+            "Local universities archaeology departments",
+            "International LiDAR research groups",
+            "Remote sensing archaeology networks",
+            "Amazon conservation organizations",
+            "Indigenous knowledge holders",
+            "Museum collections for comparative analysis"
+          ],
+          "dataset_completeness": "Incomplete - Additional data collection needed",
+          "peer_review_readiness": false
+        },
+        "data_provenance": {
+          "zone": "xingu_deep_forest",
+          "provider": "gedi",
+          "run_id": "20250629_235949_xingu_deep_forest",
+          "processing_date": "2025-06-30T00:06:15.430505",
+          "pipeline_version": "2.0",
+          "validation_status": "pending"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.09948873588144,
+          -12.150331623209635
+        ]
+      },
+      "properties": {
+        "type": "gedi_clearing",
+        "confidence": 0.8,
+        "area_km2": 0.0,
+        "area_m2": 1963.48,
+        "count": 0,
+        "feature_type": "clearing_cluster",
+        "sensor_details": {
+          "mission": "NASA GEDI",
+          "instrument": "Global Ecosystem Dynamics Investigation LiDAR",
+          "footprint_diameter_m": 25,
+          "pulse_density": 0,
+          "beam_type": "power_beam",
+          "acquisition_date": "unknown",
+          "quality_flag": 1
+        },
+        "detection_algorithm": {
+          "method": "DBSCAN clustering of canopy height anomalies",
+          "parameters": {
+            "eps_distance_m": 50,
+            "min_samples": 3,
+            "height_threshold_m": 5.0
+          },
+          "statistical_significance": {
+            "p_value": 0.05,
+            "z_score": 2.0,
+            "cohens_d": null,
+            "effect_size": null,
+            "confidence_interval": [
+              0.7,
+              0.9
+            ],
+            "statistical_power": null,
+            "significance_level": "HIGH"
+          },
+          "enhanced_parameters": {
+            "relative_threshold_pct": 50,
+            "cluster_validation": "relative_height_50pct_local_max",
+            "gpu_acceleration": false
+          },
+          "lidar_analysis": {
+            "gap_points_detected": null,
+            "mean_elevation_m": null,
+            "elevation_std_m": null,
+            "elevation_anomaly_threshold": null,
+            "local_variance": null,
+            "footprint_area_m2": 490.87,
+            "pulse_density_per_m2": null
+          }
+        },
+        "archaeological_assessment": {
+          "interpretation": "Individual structure or clearing",
+          "evidence_type": "Canopy gap pattern analysis",
+          "cultural_context": "Pre-Columbian settlement",
+          "estimated_age_range": "500-2000 years BP",
+          "preservation_state": "good",
+          "investigation_priority": "Medium - Investigation within 1 year"
+        },
+        "spatial_context": {
+          "distance_to_water_m": null,
+          "elevation_m": null,
+          "slope_degrees": null,
+          "vegetation_type": "dense_forest",
+          "accessibility": "Remote - Helicopter or extended river journey required",
+          "terrain_ruggedness": null,
+          "canopy_density_pct": null,
+          "soil_drainage": "moderate"
+        },
+        "field_investigation": {
+          "optimal_visit_season": "June-September (general dry season recommendation)",
+          "recommended_equipment": [
+            "GPS with sub-meter accuracy",
+            "Ground-penetrating radar (GPR)",
+            "Soil auger for core sampling",
+            "Portable XRF for soil analysis",
+            "High-resolution camera with macro lens",
+            "Measuring tapes (30m, 100m)",
+            "Archaeological field forms",
+            "Sample bags and labels"
+          ],
+          "estimated_investigation_days": "3 days (preliminary survey)",
+          "logistics_complexity": "High - Remote location",
+          "safety_considerations": [
+            "Tropical disease precautions (malaria, dengue)",
+            "Emergency communication devices",
+            "First aid kit with snake bite treatment",
+            "Water purification system",
+            "Emergency evacuation plan"
+          ],
+          "permits_required": [
+            "INPC archaeological research permit",
+            "Environmental impact assessment",
+            "Local community consultation"
+          ],
+          "local_contacts": [
+            "Local INPC representative",
+            "Indigenous community leaders",
+            "Regional universities",
+            "Local government archaeological office",
+            "Tourist/guide services for logistics"
+          ]
+        },
+        "research_metadata": {
+          "publication_readiness": "Low - Requires field verification",
+          "academic_significance": "Standard - Typical archaeological interest",
+          "citation_potential": "Standard citation potential (5-10 citations expected)",
+          "collaboration_opportunities": [
+            "Local universities archaeology departments",
+            "International LiDAR research groups",
+            "Remote sensing archaeology networks",
+            "Amazon conservation organizations",
+            "Indigenous knowledge holders",
+            "Museum collections for comparative analysis"
+          ],
+          "dataset_completeness": "Incomplete - Additional data collection needed",
+          "peer_review_readiness": false
+        },
+        "data_provenance": {
+          "zone": "xingu_deep_forest",
+          "provider": "gedi",
+          "run_id": "20250629_235949_xingu_deep_forest",
+          "processing_date": "2025-06-30T00:06:15.430511",
+          "pipeline_version": "2.0",
+          "validation_status": "pending"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.165839368278945,
+          -12.248375837589789
+        ]
+      },
+      "properties": {
+        "type": "gedi_clearing",
+        "confidence": 0.8,
+        "area_km2": 0.0,
+        "area_m2": 5399.570000000001,
+        "count": 0,
+        "feature_type": "clearing_cluster",
+        "sensor_details": {
+          "mission": "NASA GEDI",
+          "instrument": "Global Ecosystem Dynamics Investigation LiDAR",
+          "footprint_diameter_m": 25,
+          "pulse_density": 0,
+          "beam_type": "power_beam",
+          "acquisition_date": "unknown",
+          "quality_flag": 1
+        },
+        "detection_algorithm": {
+          "method": "DBSCAN clustering of canopy height anomalies",
+          "parameters": {
+            "eps_distance_m": 50,
+            "min_samples": 3,
+            "height_threshold_m": 5.0
+          },
+          "statistical_significance": {
+            "p_value": 0.05,
+            "z_score": 2.0,
+            "cohens_d": null,
+            "effect_size": null,
+            "confidence_interval": [
+              0.7,
+              0.9
+            ],
+            "statistical_power": null,
+            "significance_level": "HIGH"
+          },
+          "enhanced_parameters": {
+            "relative_threshold_pct": 50,
+            "cluster_validation": "relative_height_50pct_local_max",
+            "gpu_acceleration": false
+          },
+          "lidar_analysis": {
+            "gap_points_detected": null,
+            "mean_elevation_m": null,
+            "elevation_std_m": null,
+            "elevation_anomaly_threshold": null,
+            "local_variance": null,
+            "footprint_area_m2": 490.87,
+            "pulse_density_per_m2": null
+          }
+        },
+        "archaeological_assessment": {
+          "interpretation": "Individual structure or clearing",
+          "evidence_type": "Canopy gap pattern analysis",
+          "cultural_context": "Pre-Columbian settlement",
+          "estimated_age_range": "500-2000 years BP",
+          "preservation_state": "good",
+          "investigation_priority": "Medium - Investigation within 1 year"
+        },
+        "spatial_context": {
+          "distance_to_water_m": null,
+          "elevation_m": null,
+          "slope_degrees": null,
+          "vegetation_type": "dense_forest",
+          "accessibility": "Remote - Helicopter or extended river journey required",
+          "terrain_ruggedness": null,
+          "canopy_density_pct": null,
+          "soil_drainage": "moderate"
+        },
+        "field_investigation": {
+          "optimal_visit_season": "June-September (general dry season recommendation)",
+          "recommended_equipment": [
+            "GPS with sub-meter accuracy",
+            "Ground-penetrating radar (GPR)",
+            "Soil auger for core sampling",
+            "Portable XRF for soil analysis",
+            "High-resolution camera with macro lens",
+            "Measuring tapes (30m, 100m)",
+            "Archaeological field forms",
+            "Sample bags and labels"
+          ],
+          "estimated_investigation_days": "3 days (preliminary survey)",
+          "logistics_complexity": "High - Remote location",
+          "safety_considerations": [
+            "Tropical disease precautions (malaria, dengue)",
+            "Emergency communication devices",
+            "First aid kit with snake bite treatment",
+            "Water purification system",
+            "Emergency evacuation plan"
+          ],
+          "permits_required": [
+            "INPC archaeological research permit",
+            "Environmental impact assessment",
+            "Local community consultation"
+          ],
+          "local_contacts": [
+            "Local INPC representative",
+            "Indigenous community leaders",
+            "Regional universities",
+            "Local government archaeological office",
+            "Tourist/guide services for logistics"
+          ]
+        },
+        "research_metadata": {
+          "publication_readiness": "Low - Requires field verification",
+          "academic_significance": "Standard - Typical archaeological interest",
+          "citation_potential": "Standard citation potential (5-10 citations expected)",
+          "collaboration_opportunities": [
+            "Local universities archaeology departments",
+            "International LiDAR research groups",
+            "Remote sensing archaeology networks",
+            "Amazon conservation organizations",
+            "Indigenous knowledge holders",
+            "Museum collections for comparative analysis"
+          ],
+          "dataset_completeness": "Incomplete - Additional data collection needed",
+          "peer_review_readiness": false
+        },
+        "data_provenance": {
+          "zone": "xingu_deep_forest",
+          "provider": "gedi",
+          "run_id": "20250629_235949_xingu_deep_forest",
+          "processing_date": "2025-06-30T00:06:15.430518",
+          "pipeline_version": "2.0",
+          "validation_status": "pending"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.149249006064,
+          -12.226358185560303
+        ]
+      },
+      "properties": {
+        "type": "gedi_clearing",
+        "confidence": 0.8,
+        "area_km2": 0.0,
+        "area_m2": 5890.4400000000005,
+        "count": 0,
+        "feature_type": "clearing_cluster",
+        "sensor_details": {
+          "mission": "NASA GEDI",
+          "instrument": "Global Ecosystem Dynamics Investigation LiDAR",
+          "footprint_diameter_m": 25,
+          "pulse_density": 0,
+          "beam_type": "power_beam",
+          "acquisition_date": "unknown",
+          "quality_flag": 1
+        },
+        "detection_algorithm": {
+          "method": "DBSCAN clustering of canopy height anomalies",
+          "parameters": {
+            "eps_distance_m": 50,
+            "min_samples": 3,
+            "height_threshold_m": 5.0
+          },
+          "statistical_significance": {
+            "p_value": 0.05,
+            "z_score": 2.0,
+            "cohens_d": null,
+            "effect_size": null,
+            "confidence_interval": [
+              0.7,
+              0.9
+            ],
+            "statistical_power": null,
+            "significance_level": "HIGH"
+          },
+          "enhanced_parameters": {
+            "relative_threshold_pct": 50,
+            "cluster_validation": "relative_height_50pct_local_max",
+            "gpu_acceleration": false
+          },
+          "lidar_analysis": {
+            "gap_points_detected": null,
+            "mean_elevation_m": null,
+            "elevation_std_m": null,
+            "elevation_anomaly_threshold": null,
+            "local_variance": null,
+            "footprint_area_m2": 490.87,
+            "pulse_density_per_m2": null
+          }
+        },
+        "archaeological_assessment": {
+          "interpretation": "Individual structure or clearing",
+          "evidence_type": "Canopy gap pattern analysis",
+          "cultural_context": "Pre-Columbian settlement",
+          "estimated_age_range": "500-2000 years BP",
+          "preservation_state": "good",
+          "investigation_priority": "Medium - Investigation within 1 year"
+        },
+        "spatial_context": {
+          "distance_to_water_m": null,
+          "elevation_m": null,
+          "slope_degrees": null,
+          "vegetation_type": "dense_forest",
+          "accessibility": "Remote - Helicopter or extended river journey required",
+          "terrain_ruggedness": null,
+          "canopy_density_pct": null,
+          "soil_drainage": "moderate"
+        },
+        "field_investigation": {
+          "optimal_visit_season": "June-September (general dry season recommendation)",
+          "recommended_equipment": [
+            "GPS with sub-meter accuracy",
+            "Ground-penetrating radar (GPR)",
+            "Soil auger for core sampling",
+            "Portable XRF for soil analysis",
+            "High-resolution camera with macro lens",
+            "Measuring tapes (30m, 100m)",
+            "Archaeological field forms",
+            "Sample bags and labels"
+          ],
+          "estimated_investigation_days": "3 days (preliminary survey)",
+          "logistics_complexity": "High - Remote location",
+          "safety_considerations": [
+            "Tropical disease precautions (malaria, dengue)",
+            "Emergency communication devices",
+            "First aid kit with snake bite treatment",
+            "Water purification system",
+            "Emergency evacuation plan"
+          ],
+          "permits_required": [
+            "INPC archaeological research permit",
+            "Environmental impact assessment",
+            "Local community consultation"
+          ],
+          "local_contacts": [
+            "Local INPC representative",
+            "Indigenous community leaders",
+            "Regional universities",
+            "Local government archaeological office",
+            "Tourist/guide services for logistics"
+          ]
+        },
+        "research_metadata": {
+          "publication_readiness": "Low - Requires field verification",
+          "academic_significance": "Standard - Typical archaeological interest",
+          "citation_potential": "Standard citation potential (5-10 citations expected)",
+          "collaboration_opportunities": [
+            "Local universities archaeology departments",
+            "International LiDAR research groups",
+            "Remote sensing archaeology networks",
+            "Amazon conservation organizations",
+            "Indigenous knowledge holders",
+            "Museum collections for comparative analysis"
+          ],
+          "dataset_completeness": "Incomplete - Additional data collection needed",
+          "peer_review_readiness": false
+        },
+        "data_provenance": {
+          "zone": "xingu_deep_forest",
+          "provider": "gedi",
+          "run_id": "20250629_235949_xingu_deep_forest",
+          "processing_date": "2025-06-30T00:06:15.430525",
+          "pipeline_version": "2.0",
+          "validation_status": "pending"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.114557409826205,
+          -12.180225684125997
+        ]
+      },
+      "properties": {
+        "type": "gedi_clearing",
+        "confidence": 0.8,
+        "area_km2": 0.0,
+        "area_m2": 1963.48,
+        "count": 0,
+        "feature_type": "clearing_cluster",
+        "sensor_details": {
+          "mission": "NASA GEDI",
+          "instrument": "Global Ecosystem Dynamics Investigation LiDAR",
+          "footprint_diameter_m": 25,
+          "pulse_density": 0,
+          "beam_type": "power_beam",
+          "acquisition_date": "unknown",
+          "quality_flag": 1
+        },
+        "detection_algorithm": {
+          "method": "DBSCAN clustering of canopy height anomalies",
+          "parameters": {
+            "eps_distance_m": 50,
+            "min_samples": 3,
+            "height_threshold_m": 5.0
+          },
+          "statistical_significance": {
+            "p_value": 0.05,
+            "z_score": 2.0,
+            "cohens_d": null,
+            "effect_size": null,
+            "confidence_interval": [
+              0.7,
+              0.9
+            ],
+            "statistical_power": null,
+            "significance_level": "HIGH"
+          },
+          "enhanced_parameters": {
+            "relative_threshold_pct": 50,
+            "cluster_validation": "relative_height_50pct_local_max",
+            "gpu_acceleration": false
+          },
+          "lidar_analysis": {
+            "gap_points_detected": null,
+            "mean_elevation_m": null,
+            "elevation_std_m": null,
+            "elevation_anomaly_threshold": null,
+            "local_variance": null,
+            "footprint_area_m2": 490.87,
+            "pulse_density_per_m2": null
+          }
+        },
+        "archaeological_assessment": {
+          "interpretation": "Individual structure or clearing",
+          "evidence_type": "Canopy gap pattern analysis",
+          "cultural_context": "Pre-Columbian settlement",
+          "estimated_age_range": "500-2000 years BP",
+          "preservation_state": "good",
+          "investigation_priority": "Medium - Investigation within 1 year"
+        },
+        "spatial_context": {
+          "distance_to_water_m": null,
+          "elevation_m": null,
+          "slope_degrees": null,
+          "vegetation_type": "dense_forest",
+          "accessibility": "Remote - Helicopter or extended river journey required",
+          "terrain_ruggedness": null,
+          "canopy_density_pct": null,
+          "soil_drainage": "moderate"
+        },
+        "field_investigation": {
+          "optimal_visit_season": "June-September (general dry season recommendation)",
+          "recommended_equipment": [
+            "GPS with sub-meter accuracy",
+            "Ground-penetrating radar (GPR)",
+            "Soil auger for core sampling",
+            "Portable XRF for soil analysis",
+            "High-resolution camera with macro lens",
+            "Measuring tapes (30m, 100m)",
+            "Archaeological field forms",
+            "Sample bags and labels"
+          ],
+          "estimated_investigation_days": "3 days (preliminary survey)",
+          "logistics_complexity": "High - Remote location",
+          "safety_considerations": [
+            "Tropical disease precautions (malaria, dengue)",
+            "Emergency communication devices",
+            "First aid kit with snake bite treatment",
+            "Water purification system",
+            "Emergency evacuation plan"
+          ],
+          "permits_required": [
+            "INPC archaeological research permit",
+            "Environmental impact assessment",
+            "Local community consultation"
+          ],
+          "local_contacts": [
+            "Local INPC representative",
+            "Indigenous community leaders",
+            "Regional universities",
+            "Local government archaeological office",
+            "Tourist/guide services for logistics"
+          ]
+        },
+        "research_metadata": {
+          "publication_readiness": "Low - Requires field verification",
+          "academic_significance": "Standard - Typical archaeological interest",
+          "citation_potential": "Standard citation potential (5-10 citations expected)",
+          "collaboration_opportunities": [
+            "Local universities archaeology departments",
+            "International LiDAR research groups",
+            "Remote sensing archaeology networks",
+            "Amazon conservation organizations",
+            "Indigenous knowledge holders",
+            "Museum collections for comparative analysis"
+          ],
+          "dataset_completeness": "Incomplete - Additional data collection needed",
+          "peer_review_readiness": false
+        },
+        "data_provenance": {
+          "zone": "xingu_deep_forest",
+          "provider": "gedi",
+          "run_id": "20250629_235949_xingu_deep_forest",
+          "processing_date": "2025-06-30T00:06:15.430532",
+          "pipeline_version": "2.0",
+          "validation_status": "pending"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.11065796383235,
+          -12.17503543612161
+        ]
+      },
+      "properties": {
+        "type": "gedi_clearing",
+        "confidence": 0.8,
+        "area_km2": 0.0,
+        "area_m2": 1472.6100000000001,
+        "count": 0,
+        "feature_type": "clearing_cluster",
+        "sensor_details": {
+          "mission": "NASA GEDI",
+          "instrument": "Global Ecosystem Dynamics Investigation LiDAR",
+          "footprint_diameter_m": 25,
+          "pulse_density": 0,
+          "beam_type": "power_beam",
+          "acquisition_date": "unknown",
+          "quality_flag": 1
+        },
+        "detection_algorithm": {
+          "method": "DBSCAN clustering of canopy height anomalies",
+          "parameters": {
+            "eps_distance_m": 50,
+            "min_samples": 3,
+            "height_threshold_m": 5.0
+          },
+          "statistical_significance": {
+            "p_value": 0.05,
+            "z_score": 2.0,
+            "cohens_d": null,
+            "effect_size": null,
+            "confidence_interval": [
+              0.7,
+              0.9
+            ],
+            "statistical_power": null,
+            "significance_level": "HIGH"
+          },
+          "enhanced_parameters": {
+            "relative_threshold_pct": 50,
+            "cluster_validation": "relative_height_50pct_local_max",
+            "gpu_acceleration": false
+          },
+          "lidar_analysis": {
+            "gap_points_detected": null,
+            "mean_elevation_m": null,
+            "elevation_std_m": null,
+            "elevation_anomaly_threshold": null,
+            "local_variance": null,
+            "footprint_area_m2": 490.87,
+            "pulse_density_per_m2": null
+          }
+        },
+        "archaeological_assessment": {
+          "interpretation": "Individual structure or clearing",
+          "evidence_type": "Canopy gap pattern analysis",
+          "cultural_context": "Pre-Columbian settlement",
+          "estimated_age_range": "500-2000 years BP",
+          "preservation_state": "good",
+          "investigation_priority": "Medium - Investigation within 1 year"
+        },
+        "spatial_context": {
+          "distance_to_water_m": null,
+          "elevation_m": null,
+          "slope_degrees": null,
+          "vegetation_type": "dense_forest",
+          "accessibility": "Remote - Helicopter or extended river journey required",
+          "terrain_ruggedness": null,
+          "canopy_density_pct": null,
+          "soil_drainage": "moderate"
+        },
+        "field_investigation": {
+          "optimal_visit_season": "June-September (general dry season recommendation)",
+          "recommended_equipment": [
+            "GPS with sub-meter accuracy",
+            "Ground-penetrating radar (GPR)",
+            "Soil auger for core sampling",
+            "Portable XRF for soil analysis",
+            "High-resolution camera with macro lens",
+            "Measuring tapes (30m, 100m)",
+            "Archaeological field forms",
+            "Sample bags and labels"
+          ],
+          "estimated_investigation_days": "3 days (preliminary survey)",
+          "logistics_complexity": "High - Remote location",
+          "safety_considerations": [
+            "Tropical disease precautions (malaria, dengue)",
+            "Emergency communication devices",
+            "First aid kit with snake bite treatment",
+            "Water purification system",
+            "Emergency evacuation plan"
+          ],
+          "permits_required": [
+            "INPC archaeological research permit",
+            "Environmental impact assessment",
+            "Local community consultation"
+          ],
+          "local_contacts": [
+            "Local INPC representative",
+            "Indigenous community leaders",
+            "Regional universities",
+            "Local government archaeological office",
+            "Tourist/guide services for logistics"
+          ]
+        },
+        "research_metadata": {
+          "publication_readiness": "Low - Requires field verification",
+          "academic_significance": "Standard - Typical archaeological interest",
+          "citation_potential": "Standard citation potential (5-10 citations expected)",
+          "collaboration_opportunities": [
+            "Local universities archaeology departments",
+            "International LiDAR research groups",
+            "Remote sensing archaeology networks",
+            "Amazon conservation organizations",
+            "Indigenous knowledge holders",
+            "Museum collections for comparative analysis"
+          ],
+          "dataset_completeness": "Incomplete - Additional data collection needed",
+          "peer_review_readiness": false
+        },
+        "data_provenance": {
+          "zone": "xingu_deep_forest",
+          "provider": "gedi",
+          "run_id": "20250629_235949_xingu_deep_forest",
+          "processing_date": "2025-06-30T00:06:15.430538",
+          "pipeline_version": "2.0",
+          "validation_status": "pending"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.10847497795392,
+          -12.172133051988407
+        ]
+      },
+      "properties": {
+        "type": "gedi_clearing",
+        "confidence": 0.8,
+        "area_km2": 0.0,
+        "area_m2": 2454.35,
+        "count": 0,
+        "feature_type": "clearing_cluster",
+        "sensor_details": {
+          "mission": "NASA GEDI",
+          "instrument": "Global Ecosystem Dynamics Investigation LiDAR",
+          "footprint_diameter_m": 25,
+          "pulse_density": 0,
+          "beam_type": "power_beam",
+          "acquisition_date": "unknown",
+          "quality_flag": 1
+        },
+        "detection_algorithm": {
+          "method": "DBSCAN clustering of canopy height anomalies",
+          "parameters": {
+            "eps_distance_m": 50,
+            "min_samples": 3,
+            "height_threshold_m": 5.0
+          },
+          "statistical_significance": {
+            "p_value": 0.05,
+            "z_score": 2.0,
+            "cohens_d": null,
+            "effect_size": null,
+            "confidence_interval": [
+              0.7,
+              0.9
+            ],
+            "statistical_power": null,
+            "significance_level": "HIGH"
+          },
+          "enhanced_parameters": {
+            "relative_threshold_pct": 50,
+            "cluster_validation": "relative_height_50pct_local_max",
+            "gpu_acceleration": false
+          },
+          "lidar_analysis": {
+            "gap_points_detected": null,
+            "mean_elevation_m": null,
+            "elevation_std_m": null,
+            "elevation_anomaly_threshold": null,
+            "local_variance": null,
+            "footprint_area_m2": 490.87,
+            "pulse_density_per_m2": null
+          }
+        },
+        "archaeological_assessment": {
+          "interpretation": "Individual structure or clearing",
+          "evidence_type": "Canopy gap pattern analysis",
+          "cultural_context": "Pre-Columbian settlement",
+          "estimated_age_range": "500-2000 years BP",
+          "preservation_state": "good",
+          "investigation_priority": "Medium - Investigation within 1 year"
+        },
+        "spatial_context": {
+          "distance_to_water_m": null,
+          "elevation_m": null,
+          "slope_degrees": null,
+          "vegetation_type": "dense_forest",
+          "accessibility": "Remote - Helicopter or extended river journey required",
+          "terrain_ruggedness": null,
+          "canopy_density_pct": null,
+          "soil_drainage": "moderate"
+        },
+        "field_investigation": {
+          "optimal_visit_season": "June-September (general dry season recommendation)",
+          "recommended_equipment": [
+            "GPS with sub-meter accuracy",
+            "Ground-penetrating radar (GPR)",
+            "Soil auger for core sampling",
+            "Portable XRF for soil analysis",
+            "High-resolution camera with macro lens",
+            "Measuring tapes (30m, 100m)",
+            "Archaeological field forms",
+            "Sample bags and labels"
+          ],
+          "estimated_investigation_days": "3 days (preliminary survey)",
+          "logistics_complexity": "High - Remote location",
+          "safety_considerations": [
+            "Tropical disease precautions (malaria, dengue)",
+            "Emergency communication devices",
+            "First aid kit with snake bite treatment",
+            "Water purification system",
+            "Emergency evacuation plan"
+          ],
+          "permits_required": [
+            "INPC archaeological research permit",
+            "Environmental impact assessment",
+            "Local community consultation"
+          ],
+          "local_contacts": [
+            "Local INPC representative",
+            "Indigenous community leaders",
+            "Regional universities",
+            "Local government archaeological office",
+            "Tourist/guide services for logistics"
+          ]
+        },
+        "research_metadata": {
+          "publication_readiness": "Low - Requires field verification",
+          "academic_significance": "Standard - Typical archaeological interest",
+          "citation_potential": "Standard citation potential (5-10 citations expected)",
+          "collaboration_opportunities": [
+            "Local universities archaeology departments",
+            "International LiDAR research groups",
+            "Remote sensing archaeology networks",
+            "Amazon conservation organizations",
+            "Indigenous knowledge holders",
+            "Museum collections for comparative analysis"
+          ],
+          "dataset_completeness": "Incomplete - Additional data collection needed",
+          "peer_review_readiness": false
+        },
+        "data_provenance": {
+          "zone": "xingu_deep_forest",
+          "provider": "gedi",
+          "run_id": "20250629_235949_xingu_deep_forest",
+          "processing_date": "2025-06-30T00:06:15.430545",
+          "pipeline_version": "2.0",
+          "validation_status": "pending"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.08850650833866,
+          -12.145580078584297
+        ]
+      },
+      "properties": {
+        "type": "gedi_clearing",
+        "confidence": 0.8,
+        "area_km2": 0.0,
+        "area_m2": 1472.6100000000001,
+        "count": 0,
+        "feature_type": "clearing_cluster",
+        "sensor_details": {
+          "mission": "NASA GEDI",
+          "instrument": "Global Ecosystem Dynamics Investigation LiDAR",
+          "footprint_diameter_m": 25,
+          "pulse_density": 0,
+          "beam_type": "power_beam",
+          "acquisition_date": "unknown",
+          "quality_flag": 1
+        },
+        "detection_algorithm": {
+          "method": "DBSCAN clustering of canopy height anomalies",
+          "parameters": {
+            "eps_distance_m": 50,
+            "min_samples": 3,
+            "height_threshold_m": 5.0
+          },
+          "statistical_significance": {
+            "p_value": 0.05,
+            "z_score": 2.0,
+            "cohens_d": null,
+            "effect_size": null,
+            "confidence_interval": [
+              0.7,
+              0.9
+            ],
+            "statistical_power": null,
+            "significance_level": "HIGH"
+          },
+          "enhanced_parameters": {
+            "relative_threshold_pct": 50,
+            "cluster_validation": "relative_height_50pct_local_max",
+            "gpu_acceleration": false
+          },
+          "lidar_analysis": {
+            "gap_points_detected": null,
+            "mean_elevation_m": null,
+            "elevation_std_m": null,
+            "elevation_anomaly_threshold": null,
+            "local_variance": null,
+            "footprint_area_m2": 490.87,
+            "pulse_density_per_m2": null
+          }
+        },
+        "archaeological_assessment": {
+          "interpretation": "Individual structure or clearing",
+          "evidence_type": "Canopy gap pattern analysis",
+          "cultural_context": "Pre-Columbian settlement",
+          "estimated_age_range": "500-2000 years BP",
+          "preservation_state": "good",
+          "investigation_priority": "Medium - Investigation within 1 year"
+        },
+        "spatial_context": {
+          "distance_to_water_m": null,
+          "elevation_m": null,
+          "slope_degrees": null,
+          "vegetation_type": "dense_forest",
+          "accessibility": "Remote - Helicopter or extended river journey required",
+          "terrain_ruggedness": null,
+          "canopy_density_pct": null,
+          "soil_drainage": "moderate"
+        },
+        "field_investigation": {
+          "optimal_visit_season": "June-September (general dry season recommendation)",
+          "recommended_equipment": [
+            "GPS with sub-meter accuracy",
+            "Ground-penetrating radar (GPR)",
+            "Soil auger for core sampling",
+            "Portable XRF for soil analysis",
+            "High-resolution camera with macro lens",
+            "Measuring tapes (30m, 100m)",
+            "Archaeological field forms",
+            "Sample bags and labels"
+          ],
+          "estimated_investigation_days": "3 days (preliminary survey)",
+          "logistics_complexity": "High - Remote location",
+          "safety_considerations": [
+            "Tropical disease precautions (malaria, dengue)",
+            "Emergency communication devices",
+            "First aid kit with snake bite treatment",
+            "Water purification system",
+            "Emergency evacuation plan"
+          ],
+          "permits_required": [
+            "INPC archaeological research permit",
+            "Environmental impact assessment",
+            "Local community consultation"
+          ],
+          "local_contacts": [
+            "Local INPC representative",
+            "Indigenous community leaders",
+            "Regional universities",
+            "Local government archaeological office",
+            "Tourist/guide services for logistics"
+          ]
+        },
+        "research_metadata": {
+          "publication_readiness": "Low - Requires field verification",
+          "academic_significance": "Standard - Typical archaeological interest",
+          "citation_potential": "Standard citation potential (5-10 citations expected)",
+          "collaboration_opportunities": [
+            "Local universities archaeology departments",
+            "International LiDAR research groups",
+            "Remote sensing archaeology networks",
+            "Amazon conservation organizations",
+            "Indigenous knowledge holders",
+            "Museum collections for comparative analysis"
+          ],
+          "dataset_completeness": "Incomplete - Additional data collection needed",
+          "peer_review_readiness": false
+        },
+        "data_provenance": {
+          "zone": "xingu_deep_forest",
+          "provider": "gedi",
+          "run_id": "20250629_235949_xingu_deep_forest",
+          "processing_date": "2025-06-30T00:06:15.430551",
+          "pipeline_version": "2.0",
+          "validation_status": "pending"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.16454367824844,
+          -12.25599992018975
+        ]
+      },
+      "properties": {
+        "type": "gedi_clearing",
+        "confidence": 0.8,
+        "area_km2": 0.0,
+        "area_m2": 1472.6100000000001,
+        "count": 0,
+        "feature_type": "clearing_cluster",
+        "sensor_details": {
+          "mission": "NASA GEDI",
+          "instrument": "Global Ecosystem Dynamics Investigation LiDAR",
+          "footprint_diameter_m": 25,
+          "pulse_density": 0,
+          "beam_type": "power_beam",
+          "acquisition_date": "unknown",
+          "quality_flag": 1
+        },
+        "detection_algorithm": {
+          "method": "DBSCAN clustering of canopy height anomalies",
+          "parameters": {
+            "eps_distance_m": 50,
+            "min_samples": 3,
+            "height_threshold_m": 5.0
+          },
+          "statistical_significance": {
+            "p_value": 0.05,
+            "z_score": 2.0,
+            "cohens_d": null,
+            "effect_size": null,
+            "confidence_interval": [
+              0.7,
+              0.9
+            ],
+            "statistical_power": null,
+            "significance_level": "HIGH"
+          },
+          "enhanced_parameters": {
+            "relative_threshold_pct": 50,
+            "cluster_validation": "relative_height_50pct_local_max",
+            "gpu_acceleration": false
+          },
+          "lidar_analysis": {
+            "gap_points_detected": null,
+            "mean_elevation_m": null,
+            "elevation_std_m": null,
+            "elevation_anomaly_threshold": null,
+            "local_variance": null,
+            "footprint_area_m2": 490.87,
+            "pulse_density_per_m2": null
+          }
+        },
+        "archaeological_assessment": {
+          "interpretation": "Individual structure or clearing",
+          "evidence_type": "Canopy gap pattern analysis",
+          "cultural_context": "Pre-Columbian settlement",
+          "estimated_age_range": "500-2000 years BP",
+          "preservation_state": "good",
+          "investigation_priority": "Medium - Investigation within 1 year"
+        },
+        "spatial_context": {
+          "distance_to_water_m": null,
+          "elevation_m": null,
+          "slope_degrees": null,
+          "vegetation_type": "dense_forest",
+          "accessibility": "Remote - Helicopter or extended river journey required",
+          "terrain_ruggedness": null,
+          "canopy_density_pct": null,
+          "soil_drainage": "moderate"
+        },
+        "field_investigation": {
+          "optimal_visit_season": "June-September (general dry season recommendation)",
+          "recommended_equipment": [
+            "GPS with sub-meter accuracy",
+            "Ground-penetrating radar (GPR)",
+            "Soil auger for core sampling",
+            "Portable XRF for soil analysis",
+            "High-resolution camera with macro lens",
+            "Measuring tapes (30m, 100m)",
+            "Archaeological field forms",
+            "Sample bags and labels"
+          ],
+          "estimated_investigation_days": "3 days (preliminary survey)",
+          "logistics_complexity": "High - Remote location",
+          "safety_considerations": [
+            "Tropical disease precautions (malaria, dengue)",
+            "Emergency communication devices",
+            "First aid kit with snake bite treatment",
+            "Water purification system",
+            "Emergency evacuation plan"
+          ],
+          "permits_required": [
+            "INPC archaeological research permit",
+            "Environmental impact assessment",
+            "Local community consultation"
+          ],
+          "local_contacts": [
+            "Local INPC representative",
+            "Indigenous community leaders",
+            "Regional universities",
+            "Local government archaeological office",
+            "Tourist/guide services for logistics"
+          ]
+        },
+        "research_metadata": {
+          "publication_readiness": "Low - Requires field verification",
+          "academic_significance": "Standard - Typical archaeological interest",
+          "citation_potential": "Standard citation potential (5-10 citations expected)",
+          "collaboration_opportunities": [
+            "Local universities archaeology departments",
+            "International LiDAR research groups",
+            "Remote sensing archaeology networks",
+            "Amazon conservation organizations",
+            "Indigenous knowledge holders",
+            "Museum collections for comparative analysis"
+          ],
+          "dataset_completeness": "Incomplete - Additional data collection needed",
+          "peer_review_readiness": false
+        },
+        "data_provenance": {
+          "zone": "xingu_deep_forest",
+          "provider": "gedi",
+          "run_id": "20250629_235949_xingu_deep_forest",
+          "processing_date": "2025-06-30T00:06:15.430557",
+          "pipeline_version": "2.0",
+          "validation_status": "pending"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.160789261098465,
+          -12.251014846617435
+        ]
+      },
+      "properties": {
+        "type": "gedi_clearing",
+        "confidence": 0.8,
+        "area_km2": 0.0,
+        "area_m2": 1472.6100000000001,
+        "count": 0,
+        "feature_type": "clearing_cluster",
+        "sensor_details": {
+          "mission": "NASA GEDI",
+          "instrument": "Global Ecosystem Dynamics Investigation LiDAR",
+          "footprint_diameter_m": 25,
+          "pulse_density": 0,
+          "beam_type": "power_beam",
+          "acquisition_date": "unknown",
+          "quality_flag": 1
+        },
+        "detection_algorithm": {
+          "method": "DBSCAN clustering of canopy height anomalies",
+          "parameters": {
+            "eps_distance_m": 50,
+            "min_samples": 3,
+            "height_threshold_m": 5.0
+          },
+          "statistical_significance": {
+            "p_value": 0.05,
+            "z_score": 2.0,
+            "cohens_d": null,
+            "effect_size": null,
+            "confidence_interval": [
+              0.7,
+              0.9
+            ],
+            "statistical_power": null,
+            "significance_level": "HIGH"
+          },
+          "enhanced_parameters": {
+            "relative_threshold_pct": 50,
+            "cluster_validation": "relative_height_50pct_local_max",
+            "gpu_acceleration": false
+          },
+          "lidar_analysis": {
+            "gap_points_detected": null,
+            "mean_elevation_m": null,
+            "elevation_std_m": null,
+            "elevation_anomaly_threshold": null,
+            "local_variance": null,
+            "footprint_area_m2": 490.87,
+            "pulse_density_per_m2": null
+          }
+        },
+        "archaeological_assessment": {
+          "interpretation": "Individual structure or clearing",
+          "evidence_type": "Canopy gap pattern analysis",
+          "cultural_context": "Pre-Columbian settlement",
+          "estimated_age_range": "500-2000 years BP",
+          "preservation_state": "good",
+          "investigation_priority": "Medium - Investigation within 1 year"
+        },
+        "spatial_context": {
+          "distance_to_water_m": null,
+          "elevation_m": null,
+          "slope_degrees": null,
+          "vegetation_type": "dense_forest",
+          "accessibility": "Remote - Helicopter or extended river journey required",
+          "terrain_ruggedness": null,
+          "canopy_density_pct": null,
+          "soil_drainage": "moderate"
+        },
+        "field_investigation": {
+          "optimal_visit_season": "June-September (general dry season recommendation)",
+          "recommended_equipment": [
+            "GPS with sub-meter accuracy",
+            "Ground-penetrating radar (GPR)",
+            "Soil auger for core sampling",
+            "Portable XRF for soil analysis",
+            "High-resolution camera with macro lens",
+            "Measuring tapes (30m, 100m)",
+            "Archaeological field forms",
+            "Sample bags and labels"
+          ],
+          "estimated_investigation_days": "3 days (preliminary survey)",
+          "logistics_complexity": "High - Remote location",
+          "safety_considerations": [
+            "Tropical disease precautions (malaria, dengue)",
+            "Emergency communication devices",
+            "First aid kit with snake bite treatment",
+            "Water purification system",
+            "Emergency evacuation plan"
+          ],
+          "permits_required": [
+            "INPC archaeological research permit",
+            "Environmental impact assessment",
+            "Local community consultation"
+          ],
+          "local_contacts": [
+            "Local INPC representative",
+            "Indigenous community leaders",
+            "Regional universities",
+            "Local government archaeological office",
+            "Tourist/guide services for logistics"
+          ]
+        },
+        "research_metadata": {
+          "publication_readiness": "Low - Requires field verification",
+          "academic_significance": "Standard - Typical archaeological interest",
+          "citation_potential": "Standard citation potential (5-10 citations expected)",
+          "collaboration_opportunities": [
+            "Local universities archaeology departments",
+            "International LiDAR research groups",
+            "Remote sensing archaeology networks",
+            "Amazon conservation organizations",
+            "Indigenous knowledge holders",
+            "Museum collections for comparative analysis"
+          ],
+          "dataset_completeness": "Incomplete - Additional data collection needed",
+          "peer_review_readiness": false
+        },
+        "data_provenance": {
+          "zone": "xingu_deep_forest",
+          "provider": "gedi",
+          "run_id": "20250629_235949_xingu_deep_forest",
+          "processing_date": "2025-06-30T00:06:15.430563",
+          "pipeline_version": "2.0",
+          "validation_status": "pending"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.15922430430464,
+          -12.248936751853464
+        ]
+      },
+      "properties": {
+        "type": "gedi_clearing",
+        "confidence": 0.8,
+        "area_km2": 0.0,
+        "area_m2": 1472.6100000000001,
+        "count": 0,
+        "feature_type": "clearing_cluster",
+        "sensor_details": {
+          "mission": "NASA GEDI",
+          "instrument": "Global Ecosystem Dynamics Investigation LiDAR",
+          "footprint_diameter_m": 25,
+          "pulse_density": 0,
+          "beam_type": "power_beam",
+          "acquisition_date": "unknown",
+          "quality_flag": 1
+        },
+        "detection_algorithm": {
+          "method": "DBSCAN clustering of canopy height anomalies",
+          "parameters": {
+            "eps_distance_m": 50,
+            "min_samples": 3,
+            "height_threshold_m": 5.0
+          },
+          "statistical_significance": {
+            "p_value": 0.05,
+            "z_score": 2.0,
+            "cohens_d": null,
+            "effect_size": null,
+            "confidence_interval": [
+              0.7,
+              0.9
+            ],
+            "statistical_power": null,
+            "significance_level": "HIGH"
+          },
+          "enhanced_parameters": {
+            "relative_threshold_pct": 50,
+            "cluster_validation": "relative_height_50pct_local_max",
+            "gpu_acceleration": false
+          },
+          "lidar_analysis": {
+            "gap_points_detected": null,
+            "mean_elevation_m": null,
+            "elevation_std_m": null,
+            "elevation_anomaly_threshold": null,
+            "local_variance": null,
+            "footprint_area_m2": 490.87,
+            "pulse_density_per_m2": null
+          }
+        },
+        "archaeological_assessment": {
+          "interpretation": "Individual structure or clearing",
+          "evidence_type": "Canopy gap pattern analysis",
+          "cultural_context": "Pre-Columbian settlement",
+          "estimated_age_range": "500-2000 years BP",
+          "preservation_state": "good",
+          "investigation_priority": "Medium - Investigation within 1 year"
+        },
+        "spatial_context": {
+          "distance_to_water_m": null,
+          "elevation_m": null,
+          "slope_degrees": null,
+          "vegetation_type": "dense_forest",
+          "accessibility": "Remote - Helicopter or extended river journey required",
+          "terrain_ruggedness": null,
+          "canopy_density_pct": null,
+          "soil_drainage": "moderate"
+        },
+        "field_investigation": {
+          "optimal_visit_season": "June-September (general dry season recommendation)",
+          "recommended_equipment": [
+            "GPS with sub-meter accuracy",
+            "Ground-penetrating radar (GPR)",
+            "Soil auger for core sampling",
+            "Portable XRF for soil analysis",
+            "High-resolution camera with macro lens",
+            "Measuring tapes (30m, 100m)",
+            "Archaeological field forms",
+            "Sample bags and labels"
+          ],
+          "estimated_investigation_days": "3 days (preliminary survey)",
+          "logistics_complexity": "High - Remote location",
+          "safety_considerations": [
+            "Tropical disease precautions (malaria, dengue)",
+            "Emergency communication devices",
+            "First aid kit with snake bite treatment",
+            "Water purification system",
+            "Emergency evacuation plan"
+          ],
+          "permits_required": [
+            "INPC archaeological research permit",
+            "Environmental impact assessment",
+            "Local community consultation"
+          ],
+          "local_contacts": [
+            "Local INPC representative",
+            "Indigenous community leaders",
+            "Regional universities",
+            "Local government archaeological office",
+            "Tourist/guide services for logistics"
+          ]
+        },
+        "research_metadata": {
+          "publication_readiness": "Low - Requires field verification",
+          "academic_significance": "Standard - Typical archaeological interest",
+          "citation_potential": "Standard citation potential (5-10 citations expected)",
+          "collaboration_opportunities": [
+            "Local universities archaeology departments",
+            "International LiDAR research groups",
+            "Remote sensing archaeology networks",
+            "Amazon conservation organizations",
+            "Indigenous knowledge holders",
+            "Museum collections for comparative analysis"
+          ],
+          "dataset_completeness": "Incomplete - Additional data collection needed",
+          "peer_review_readiness": false
+        },
+        "data_provenance": {
+          "zone": "xingu_deep_forest",
+          "provider": "gedi",
+          "run_id": "20250629_235949_xingu_deep_forest",
+          "processing_date": "2025-06-30T00:06:15.430569",
+          "pipeline_version": "2.0",
+          "validation_status": "pending"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.152193985244175,
+          -12.239608466196277
+        ]
+      },
+      "properties": {
+        "type": "gedi_clearing",
+        "confidence": 0.8,
+        "area_km2": 0.0,
+        "area_m2": 3436.09,
+        "count": 0,
+        "feature_type": "clearing_cluster",
+        "sensor_details": {
+          "mission": "NASA GEDI",
+          "instrument": "Global Ecosystem Dynamics Investigation LiDAR",
+          "footprint_diameter_m": 25,
+          "pulse_density": 0,
+          "beam_type": "power_beam",
+          "acquisition_date": "unknown",
+          "quality_flag": 1
+        },
+        "detection_algorithm": {
+          "method": "DBSCAN clustering of canopy height anomalies",
+          "parameters": {
+            "eps_distance_m": 50,
+            "min_samples": 3,
+            "height_threshold_m": 5.0
+          },
+          "statistical_significance": {
+            "p_value": 0.05,
+            "z_score": 2.0,
+            "cohens_d": null,
+            "effect_size": null,
+            "confidence_interval": [
+              0.7,
+              0.9
+            ],
+            "statistical_power": null,
+            "significance_level": "HIGH"
+          },
+          "enhanced_parameters": {
+            "relative_threshold_pct": 50,
+            "cluster_validation": "relative_height_50pct_local_max",
+            "gpu_acceleration": false
+          },
+          "lidar_analysis": {
+            "gap_points_detected": null,
+            "mean_elevation_m": null,
+            "elevation_std_m": null,
+            "elevation_anomaly_threshold": null,
+            "local_variance": null,
+            "footprint_area_m2": 490.87,
+            "pulse_density_per_m2": null
+          }
+        },
+        "archaeological_assessment": {
+          "interpretation": "Individual structure or clearing",
+          "evidence_type": "Canopy gap pattern analysis",
+          "cultural_context": "Pre-Columbian settlement",
+          "estimated_age_range": "500-2000 years BP",
+          "preservation_state": "good",
+          "investigation_priority": "Medium - Investigation within 1 year"
+        },
+        "spatial_context": {
+          "distance_to_water_m": null,
+          "elevation_m": null,
+          "slope_degrees": null,
+          "vegetation_type": "dense_forest",
+          "accessibility": "Remote - Helicopter or extended river journey required",
+          "terrain_ruggedness": null,
+          "canopy_density_pct": null,
+          "soil_drainage": "moderate"
+        },
+        "field_investigation": {
+          "optimal_visit_season": "June-September (general dry season recommendation)",
+          "recommended_equipment": [
+            "GPS with sub-meter accuracy",
+            "Ground-penetrating radar (GPR)",
+            "Soil auger for core sampling",
+            "Portable XRF for soil analysis",
+            "High-resolution camera with macro lens",
+            "Measuring tapes (30m, 100m)",
+            "Archaeological field forms",
+            "Sample bags and labels"
+          ],
+          "estimated_investigation_days": "3 days (preliminary survey)",
+          "logistics_complexity": "High - Remote location",
+          "safety_considerations": [
+            "Tropical disease precautions (malaria, dengue)",
+            "Emergency communication devices",
+            "First aid kit with snake bite treatment",
+            "Water purification system",
+            "Emergency evacuation plan"
+          ],
+          "permits_required": [
+            "INPC archaeological research permit",
+            "Environmental impact assessment",
+            "Local community consultation"
+          ],
+          "local_contacts": [
+            "Local INPC representative",
+            "Indigenous community leaders",
+            "Regional universities",
+            "Local government archaeological office",
+            "Tourist/guide services for logistics"
+          ]
+        },
+        "research_metadata": {
+          "publication_readiness": "Low - Requires field verification",
+          "academic_significance": "Standard - Typical archaeological interest",
+          "citation_potential": "Standard citation potential (5-10 citations expected)",
+          "collaboration_opportunities": [
+            "Local universities archaeology departments",
+            "International LiDAR research groups",
+            "Remote sensing archaeology networks",
+            "Amazon conservation organizations",
+            "Indigenous knowledge holders",
+            "Museum collections for comparative analysis"
+          ],
+          "dataset_completeness": "Incomplete - Additional data collection needed",
+          "peer_review_readiness": false
+        },
+        "data_provenance": {
+          "zone": "xingu_deep_forest",
+          "provider": "gedi",
+          "run_id": "20250629_235949_xingu_deep_forest",
+          "processing_date": "2025-06-30T00:06:15.430575",
+          "pipeline_version": "2.0",
+          "validation_status": "pending"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.149351418043985,
+          -12.235837153569333
+        ]
+      },
+      "properties": {
+        "type": "gedi_clearing",
+        "confidence": 0.8,
+        "area_km2": 0.0,
+        "area_m2": 2945.2200000000003,
+        "count": 0,
+        "feature_type": "clearing_cluster",
+        "sensor_details": {
+          "mission": "NASA GEDI",
+          "instrument": "Global Ecosystem Dynamics Investigation LiDAR",
+          "footprint_diameter_m": 25,
+          "pulse_density": 0,
+          "beam_type": "power_beam",
+          "acquisition_date": "unknown",
+          "quality_flag": 1
+        },
+        "detection_algorithm": {
+          "method": "DBSCAN clustering of canopy height anomalies",
+          "parameters": {
+            "eps_distance_m": 50,
+            "min_samples": 3,
+            "height_threshold_m": 5.0
+          },
+          "statistical_significance": {
+            "p_value": 0.05,
+            "z_score": 2.0,
+            "cohens_d": null,
+            "effect_size": null,
+            "confidence_interval": [
+              0.7,
+              0.9
+            ],
+            "statistical_power": null,
+            "significance_level": "HIGH"
+          },
+          "enhanced_parameters": {
+            "relative_threshold_pct": 50,
+            "cluster_validation": "relative_height_50pct_local_max",
+            "gpu_acceleration": false
+          },
+          "lidar_analysis": {
+            "gap_points_detected": null,
+            "mean_elevation_m": null,
+            "elevation_std_m": null,
+            "elevation_anomaly_threshold": null,
+            "local_variance": null,
+            "footprint_area_m2": 490.87,
+            "pulse_density_per_m2": null
+          }
+        },
+        "archaeological_assessment": {
+          "interpretation": "Individual structure or clearing",
+          "evidence_type": "Canopy gap pattern analysis",
+          "cultural_context": "Pre-Columbian settlement",
+          "estimated_age_range": "500-2000 years BP",
+          "preservation_state": "good",
+          "investigation_priority": "Medium - Investigation within 1 year"
+        },
+        "spatial_context": {
+          "distance_to_water_m": null,
+          "elevation_m": null,
+          "slope_degrees": null,
+          "vegetation_type": "dense_forest",
+          "accessibility": "Remote - Helicopter or extended river journey required",
+          "terrain_ruggedness": null,
+          "canopy_density_pct": null,
+          "soil_drainage": "moderate"
+        },
+        "field_investigation": {
+          "optimal_visit_season": "June-September (general dry season recommendation)",
+          "recommended_equipment": [
+            "GPS with sub-meter accuracy",
+            "Ground-penetrating radar (GPR)",
+            "Soil auger for core sampling",
+            "Portable XRF for soil analysis",
+            "High-resolution camera with macro lens",
+            "Measuring tapes (30m, 100m)",
+            "Archaeological field forms",
+            "Sample bags and labels"
+          ],
+          "estimated_investigation_days": "3 days (preliminary survey)",
+          "logistics_complexity": "High - Remote location",
+          "safety_considerations": [
+            "Tropical disease precautions (malaria, dengue)",
+            "Emergency communication devices",
+            "First aid kit with snake bite treatment",
+            "Water purification system",
+            "Emergency evacuation plan"
+          ],
+          "permits_required": [
+            "INPC archaeological research permit",
+            "Environmental impact assessment",
+            "Local community consultation"
+          ],
+          "local_contacts": [
+            "Local INPC representative",
+            "Indigenous community leaders",
+            "Regional universities",
+            "Local government archaeological office",
+            "Tourist/guide services for logistics"
+          ]
+        },
+        "research_metadata": {
+          "publication_readiness": "Low - Requires field verification",
+          "academic_significance": "Standard - Typical archaeological interest",
+          "citation_potential": "Standard citation potential (5-10 citations expected)",
+          "collaboration_opportunities": [
+            "Local universities archaeology departments",
+            "International LiDAR research groups",
+            "Remote sensing archaeology networks",
+            "Amazon conservation organizations",
+            "Indigenous knowledge holders",
+            "Museum collections for comparative analysis"
+          ],
+          "dataset_completeness": "Incomplete - Additional data collection needed",
+          "peer_review_readiness": false
+        },
+        "data_provenance": {
+          "zone": "xingu_deep_forest",
+          "provider": "gedi",
+          "run_id": "20250629_235949_xingu_deep_forest",
+          "processing_date": "2025-06-30T00:06:15.430581",
+          "pipeline_version": "2.0",
+          "validation_status": "pending"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.14606395262499,
+          -12.2314733894258
+        ]
+      },
+      "properties": {
+        "type": "gedi_clearing",
+        "confidence": 0.8,
+        "area_km2": 0.0,
+        "area_m2": 5399.570000000001,
+        "count": 0,
+        "feature_type": "clearing_cluster",
+        "sensor_details": {
+          "mission": "NASA GEDI",
+          "instrument": "Global Ecosystem Dynamics Investigation LiDAR",
+          "footprint_diameter_m": 25,
+          "pulse_density": 0,
+          "beam_type": "power_beam",
+          "acquisition_date": "unknown",
+          "quality_flag": 1
+        },
+        "detection_algorithm": {
+          "method": "DBSCAN clustering of canopy height anomalies",
+          "parameters": {
+            "eps_distance_m": 50,
+            "min_samples": 3,
+            "height_threshold_m": 5.0
+          },
+          "statistical_significance": {
+            "p_value": 0.05,
+            "z_score": 2.0,
+            "cohens_d": null,
+            "effect_size": null,
+            "confidence_interval": [
+              0.7,
+              0.9
+            ],
+            "statistical_power": null,
+            "significance_level": "HIGH"
+          },
+          "enhanced_parameters": {
+            "relative_threshold_pct": 50,
+            "cluster_validation": "relative_height_50pct_local_max",
+            "gpu_acceleration": false
+          },
+          "lidar_analysis": {
+            "gap_points_detected": null,
+            "mean_elevation_m": null,
+            "elevation_std_m": null,
+            "elevation_anomaly_threshold": null,
+            "local_variance": null,
+            "footprint_area_m2": 490.87,
+            "pulse_density_per_m2": null
+          }
+        },
+        "archaeological_assessment": {
+          "interpretation": "Individual structure or clearing",
+          "evidence_type": "Canopy gap pattern analysis",
+          "cultural_context": "Pre-Columbian settlement",
+          "estimated_age_range": "500-2000 years BP",
+          "preservation_state": "good",
+          "investigation_priority": "Medium - Investigation within 1 year"
+        },
+        "spatial_context": {
+          "distance_to_water_m": null,
+          "elevation_m": null,
+          "slope_degrees": null,
+          "vegetation_type": "dense_forest",
+          "accessibility": "Remote - Helicopter or extended river journey required",
+          "terrain_ruggedness": null,
+          "canopy_density_pct": null,
+          "soil_drainage": "moderate"
+        },
+        "field_investigation": {
+          "optimal_visit_season": "June-September (general dry season recommendation)",
+          "recommended_equipment": [
+            "GPS with sub-meter accuracy",
+            "Ground-penetrating radar (GPR)",
+            "Soil auger for core sampling",
+            "Portable XRF for soil analysis",
+            "High-resolution camera with macro lens",
+            "Measuring tapes (30m, 100m)",
+            "Archaeological field forms",
+            "Sample bags and labels"
+          ],
+          "estimated_investigation_days": "3 days (preliminary survey)",
+          "logistics_complexity": "High - Remote location",
+          "safety_considerations": [
+            "Tropical disease precautions (malaria, dengue)",
+            "Emergency communication devices",
+            "First aid kit with snake bite treatment",
+            "Water purification system",
+            "Emergency evacuation plan"
+          ],
+          "permits_required": [
+            "INPC archaeological research permit",
+            "Environmental impact assessment",
+            "Local community consultation"
+          ],
+          "local_contacts": [
+            "Local INPC representative",
+            "Indigenous community leaders",
+            "Regional universities",
+            "Local government archaeological office",
+            "Tourist/guide services for logistics"
+          ]
+        },
+        "research_metadata": {
+          "publication_readiness": "Low - Requires field verification",
+          "academic_significance": "Standard - Typical archaeological interest",
+          "citation_potential": "Standard citation potential (5-10 citations expected)",
+          "collaboration_opportunities": [
+            "Local universities archaeology departments",
+            "International LiDAR research groups",
+            "Remote sensing archaeology networks",
+            "Amazon conservation organizations",
+            "Indigenous knowledge holders",
+            "Museum collections for comparative analysis"
+          ],
+          "dataset_completeness": "Incomplete - Additional data collection needed",
+          "peer_review_readiness": false
+        },
+        "data_provenance": {
+          "zone": "xingu_deep_forest",
+          "provider": "gedi",
+          "run_id": "20250629_235949_xingu_deep_forest",
+          "processing_date": "2025-06-30T00:06:15.430587",
+          "pipeline_version": "2.0",
+          "validation_status": "pending"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.143141930357935,
+          -12.227592818504286
+        ]
+      },
+      "properties": {
+        "type": "gedi_clearing",
+        "confidence": 0.8,
+        "area_km2": 0.0,
+        "area_m2": 1472.6100000000001,
+        "count": 0,
+        "feature_type": "clearing_cluster",
+        "sensor_details": {
+          "mission": "NASA GEDI",
+          "instrument": "Global Ecosystem Dynamics Investigation LiDAR",
+          "footprint_diameter_m": 25,
+          "pulse_density": 0,
+          "beam_type": "power_beam",
+          "acquisition_date": "unknown",
+          "quality_flag": 1
+        },
+        "detection_algorithm": {
+          "method": "DBSCAN clustering of canopy height anomalies",
+          "parameters": {
+            "eps_distance_m": 50,
+            "min_samples": 3,
+            "height_threshold_m": 5.0
+          },
+          "statistical_significance": {
+            "p_value": 0.05,
+            "z_score": 2.0,
+            "cohens_d": null,
+            "effect_size": null,
+            "confidence_interval": [
+              0.7,
+              0.9
+            ],
+            "statistical_power": null,
+            "significance_level": "HIGH"
+          },
+          "enhanced_parameters": {
+            "relative_threshold_pct": 50,
+            "cluster_validation": "relative_height_50pct_local_max",
+            "gpu_acceleration": false
+          },
+          "lidar_analysis": {
+            "gap_points_detected": null,
+            "mean_elevation_m": null,
+            "elevation_std_m": null,
+            "elevation_anomaly_threshold": null,
+            "local_variance": null,
+            "footprint_area_m2": 490.87,
+            "pulse_density_per_m2": null
+          }
+        },
+        "archaeological_assessment": {
+          "interpretation": "Individual structure or clearing",
+          "evidence_type": "Canopy gap pattern analysis",
+          "cultural_context": "Pre-Columbian settlement",
+          "estimated_age_range": "500-2000 years BP",
+          "preservation_state": "good",
+          "investigation_priority": "Medium - Investigation within 1 year"
+        },
+        "spatial_context": {
+          "distance_to_water_m": null,
+          "elevation_m": null,
+          "slope_degrees": null,
+          "vegetation_type": "dense_forest",
+          "accessibility": "Remote - Helicopter or extended river journey required",
+          "terrain_ruggedness": null,
+          "canopy_density_pct": null,
+          "soil_drainage": "moderate"
+        },
+        "field_investigation": {
+          "optimal_visit_season": "June-September (general dry season recommendation)",
+          "recommended_equipment": [
+            "GPS with sub-meter accuracy",
+            "Ground-penetrating radar (GPR)",
+            "Soil auger for core sampling",
+            "Portable XRF for soil analysis",
+            "High-resolution camera with macro lens",
+            "Measuring tapes (30m, 100m)",
+            "Archaeological field forms",
+            "Sample bags and labels"
+          ],
+          "estimated_investigation_days": "3 days (preliminary survey)",
+          "logistics_complexity": "High - Remote location",
+          "safety_considerations": [
+            "Tropical disease precautions (malaria, dengue)",
+            "Emergency communication devices",
+            "First aid kit with snake bite treatment",
+            "Water purification system",
+            "Emergency evacuation plan"
+          ],
+          "permits_required": [
+            "INPC archaeological research permit",
+            "Environmental impact assessment",
+            "Local community consultation"
+          ],
+          "local_contacts": [
+            "Local INPC representative",
+            "Indigenous community leaders",
+            "Regional universities",
+            "Local government archaeological office",
+            "Tourist/guide services for logistics"
+          ]
+        },
+        "research_metadata": {
+          "publication_readiness": "Low - Requires field verification",
+          "academic_significance": "Standard - Typical archaeological interest",
+          "citation_potential": "Standard citation potential (5-10 citations expected)",
+          "collaboration_opportunities": [
+            "Local universities archaeology departments",
+            "International LiDAR research groups",
+            "Remote sensing archaeology networks",
+            "Amazon conservation organizations",
+            "Indigenous knowledge holders",
+            "Museum collections for comparative analysis"
+          ],
+          "dataset_completeness": "Incomplete - Additional data collection needed",
+          "peer_review_readiness": false
+        },
+        "data_provenance": {
+          "zone": "xingu_deep_forest",
+          "provider": "gedi",
+          "run_id": "20250629_235949_xingu_deep_forest",
+          "processing_date": "2025-06-30T00:06:15.430593",
+          "pipeline_version": "2.0",
+          "validation_status": "pending"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.13596674437526,
+          -12.218058243172683
+        ]
+      },
+      "properties": {
+        "type": "gedi_clearing",
+        "confidence": 0.8,
+        "area_km2": 0.0,
+        "area_m2": 1963.48,
+        "count": 0,
+        "feature_type": "clearing_cluster",
+        "sensor_details": {
+          "mission": "NASA GEDI",
+          "instrument": "Global Ecosystem Dynamics Investigation LiDAR",
+          "footprint_diameter_m": 25,
+          "pulse_density": 0,
+          "beam_type": "power_beam",
+          "acquisition_date": "unknown",
+          "quality_flag": 1
+        },
+        "detection_algorithm": {
+          "method": "DBSCAN clustering of canopy height anomalies",
+          "parameters": {
+            "eps_distance_m": 50,
+            "min_samples": 3,
+            "height_threshold_m": 5.0
+          },
+          "statistical_significance": {
+            "p_value": 0.05,
+            "z_score": 2.0,
+            "cohens_d": null,
+            "effect_size": null,
+            "confidence_interval": [
+              0.7,
+              0.9
+            ],
+            "statistical_power": null,
+            "significance_level": "HIGH"
+          },
+          "enhanced_parameters": {
+            "relative_threshold_pct": 50,
+            "cluster_validation": "relative_height_50pct_local_max",
+            "gpu_acceleration": false
+          },
+          "lidar_analysis": {
+            "gap_points_detected": null,
+            "mean_elevation_m": null,
+            "elevation_std_m": null,
+            "elevation_anomaly_threshold": null,
+            "local_variance": null,
+            "footprint_area_m2": 490.87,
+            "pulse_density_per_m2": null
+          }
+        },
+        "archaeological_assessment": {
+          "interpretation": "Individual structure or clearing",
+          "evidence_type": "Canopy gap pattern analysis",
+          "cultural_context": "Pre-Columbian settlement",
+          "estimated_age_range": "500-2000 years BP",
+          "preservation_state": "good",
+          "investigation_priority": "Medium - Investigation within 1 year"
+        },
+        "spatial_context": {
+          "distance_to_water_m": null,
+          "elevation_m": null,
+          "slope_degrees": null,
+          "vegetation_type": "dense_forest",
+          "accessibility": "Remote - Helicopter or extended river journey required",
+          "terrain_ruggedness": null,
+          "canopy_density_pct": null,
+          "soil_drainage": "moderate"
+        },
+        "field_investigation": {
+          "optimal_visit_season": "June-September (general dry season recommendation)",
+          "recommended_equipment": [
+            "GPS with sub-meter accuracy",
+            "Ground-penetrating radar (GPR)",
+            "Soil auger for core sampling",
+            "Portable XRF for soil analysis",
+            "High-resolution camera with macro lens",
+            "Measuring tapes (30m, 100m)",
+            "Archaeological field forms",
+            "Sample bags and labels"
+          ],
+          "estimated_investigation_days": "3 days (preliminary survey)",
+          "logistics_complexity": "High - Remote location",
+          "safety_considerations": [
+            "Tropical disease precautions (malaria, dengue)",
+            "Emergency communication devices",
+            "First aid kit with snake bite treatment",
+            "Water purification system",
+            "Emergency evacuation plan"
+          ],
+          "permits_required": [
+            "INPC archaeological research permit",
+            "Environmental impact assessment",
+            "Local community consultation"
+          ],
+          "local_contacts": [
+            "Local INPC representative",
+            "Indigenous community leaders",
+            "Regional universities",
+            "Local government archaeological office",
+            "Tourist/guide services for logistics"
+          ]
+        },
+        "research_metadata": {
+          "publication_readiness": "Low - Requires field verification",
+          "academic_significance": "Standard - Typical archaeological interest",
+          "citation_potential": "Standard citation potential (5-10 citations expected)",
+          "collaboration_opportunities": [
+            "Local universities archaeology departments",
+            "International LiDAR research groups",
+            "Remote sensing archaeology networks",
+            "Amazon conservation organizations",
+            "Indigenous knowledge holders",
+            "Museum collections for comparative analysis"
+          ],
+          "dataset_completeness": "Incomplete - Additional data collection needed",
+          "peer_review_readiness": false
+        },
+        "data_provenance": {
+          "zone": "xingu_deep_forest",
+          "provider": "gedi",
+          "run_id": "20250629_235949_xingu_deep_forest",
+          "processing_date": "2025-06-30T00:06:15.430599",
+          "pipeline_version": "2.0",
+          "validation_status": "pending"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.10465465597278,
+          -12.176406745109976
+        ]
+      },
+      "properties": {
+        "type": "gedi_clearing",
+        "confidence": 0.8,
+        "area_km2": 0.0,
+        "area_m2": 1963.48,
+        "count": 0,
+        "feature_type": "clearing_cluster",
+        "sensor_details": {
+          "mission": "NASA GEDI",
+          "instrument": "Global Ecosystem Dynamics Investigation LiDAR",
+          "footprint_diameter_m": 25,
+          "pulse_density": 0,
+          "beam_type": "power_beam",
+          "acquisition_date": "unknown",
+          "quality_flag": 1
+        },
+        "detection_algorithm": {
+          "method": "DBSCAN clustering of canopy height anomalies",
+          "parameters": {
+            "eps_distance_m": 50,
+            "min_samples": 3,
+            "height_threshold_m": 5.0
+          },
+          "statistical_significance": {
+            "p_value": 0.05,
+            "z_score": 2.0,
+            "cohens_d": null,
+            "effect_size": null,
+            "confidence_interval": [
+              0.7,
+              0.9
+            ],
+            "statistical_power": null,
+            "significance_level": "HIGH"
+          },
+          "enhanced_parameters": {
+            "relative_threshold_pct": 50,
+            "cluster_validation": "relative_height_50pct_local_max",
+            "gpu_acceleration": false
+          },
+          "lidar_analysis": {
+            "gap_points_detected": null,
+            "mean_elevation_m": null,
+            "elevation_std_m": null,
+            "elevation_anomaly_threshold": null,
+            "local_variance": null,
+            "footprint_area_m2": 490.87,
+            "pulse_density_per_m2": null
+          }
+        },
+        "archaeological_assessment": {
+          "interpretation": "Individual structure or clearing",
+          "evidence_type": "Canopy gap pattern analysis",
+          "cultural_context": "Pre-Columbian settlement",
+          "estimated_age_range": "500-2000 years BP",
+          "preservation_state": "good",
+          "investigation_priority": "Medium - Investigation within 1 year"
+        },
+        "spatial_context": {
+          "distance_to_water_m": null,
+          "elevation_m": null,
+          "slope_degrees": null,
+          "vegetation_type": "dense_forest",
+          "accessibility": "Remote - Helicopter or extended river journey required",
+          "terrain_ruggedness": null,
+          "canopy_density_pct": null,
+          "soil_drainage": "moderate"
+        },
+        "field_investigation": {
+          "optimal_visit_season": "June-September (general dry season recommendation)",
+          "recommended_equipment": [
+            "GPS with sub-meter accuracy",
+            "Ground-penetrating radar (GPR)",
+            "Soil auger for core sampling",
+            "Portable XRF for soil analysis",
+            "High-resolution camera with macro lens",
+            "Measuring tapes (30m, 100m)",
+            "Archaeological field forms",
+            "Sample bags and labels"
+          ],
+          "estimated_investigation_days": "3 days (preliminary survey)",
+          "logistics_complexity": "High - Remote location",
+          "safety_considerations": [
+            "Tropical disease precautions (malaria, dengue)",
+            "Emergency communication devices",
+            "First aid kit with snake bite treatment",
+            "Water purification system",
+            "Emergency evacuation plan"
+          ],
+          "permits_required": [
+            "INPC archaeological research permit",
+            "Environmental impact assessment",
+            "Local community consultation"
+          ],
+          "local_contacts": [
+            "Local INPC representative",
+            "Indigenous community leaders",
+            "Regional universities",
+            "Local government archaeological office",
+            "Tourist/guide services for logistics"
+          ]
+        },
+        "research_metadata": {
+          "publication_readiness": "Low - Requires field verification",
+          "academic_significance": "Standard - Typical archaeological interest",
+          "citation_potential": "Standard citation potential (5-10 citations expected)",
+          "collaboration_opportunities": [
+            "Local universities archaeology departments",
+            "International LiDAR research groups",
+            "Remote sensing archaeology networks",
+            "Amazon conservation organizations",
+            "Indigenous knowledge holders",
+            "Museum collections for comparative analysis"
+          ],
+          "dataset_completeness": "Incomplete - Additional data collection needed",
+          "peer_review_readiness": false
+        },
+        "data_provenance": {
+          "zone": "xingu_deep_forest",
+          "provider": "gedi",
+          "run_id": "20250629_235949_xingu_deep_forest",
+          "processing_date": "2025-06-30T00:06:15.430606",
+          "pipeline_version": "2.0",
+          "validation_status": "pending"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.07985161765719,
+          -12.143422909486924
+        ]
+      },
+      "properties": {
+        "type": "gedi_clearing",
+        "confidence": 0.8,
+        "area_km2": 0.0,
+        "area_m2": 1472.6100000000001,
+        "count": 0,
+        "feature_type": "clearing_cluster",
+        "sensor_details": {
+          "mission": "NASA GEDI",
+          "instrument": "Global Ecosystem Dynamics Investigation LiDAR",
+          "footprint_diameter_m": 25,
+          "pulse_density": 0,
+          "beam_type": "power_beam",
+          "acquisition_date": "unknown",
+          "quality_flag": 1
+        },
+        "detection_algorithm": {
+          "method": "DBSCAN clustering of canopy height anomalies",
+          "parameters": {
+            "eps_distance_m": 50,
+            "min_samples": 3,
+            "height_threshold_m": 5.0
+          },
+          "statistical_significance": {
+            "p_value": 0.05,
+            "z_score": 2.0,
+            "cohens_d": null,
+            "effect_size": null,
+            "confidence_interval": [
+              0.7,
+              0.9
+            ],
+            "statistical_power": null,
+            "significance_level": "HIGH"
+          },
+          "enhanced_parameters": {
+            "relative_threshold_pct": 50,
+            "cluster_validation": "relative_height_50pct_local_max",
+            "gpu_acceleration": false
+          },
+          "lidar_analysis": {
+            "gap_points_detected": null,
+            "mean_elevation_m": null,
+            "elevation_std_m": null,
+            "elevation_anomaly_threshold": null,
+            "local_variance": null,
+            "footprint_area_m2": 490.87,
+            "pulse_density_per_m2": null
+          }
+        },
+        "archaeological_assessment": {
+          "interpretation": "Individual structure or clearing",
+          "evidence_type": "Canopy gap pattern analysis",
+          "cultural_context": "Pre-Columbian settlement",
+          "estimated_age_range": "500-2000 years BP",
+          "preservation_state": "good",
+          "investigation_priority": "Medium - Investigation within 1 year"
+        },
+        "spatial_context": {
+          "distance_to_water_m": null,
+          "elevation_m": null,
+          "slope_degrees": null,
+          "vegetation_type": "dense_forest",
+          "accessibility": "Remote - Helicopter or extended river journey required",
+          "terrain_ruggedness": null,
+          "canopy_density_pct": null,
+          "soil_drainage": "moderate"
+        },
+        "field_investigation": {
+          "optimal_visit_season": "June-September (general dry season recommendation)",
+          "recommended_equipment": [
+            "GPS with sub-meter accuracy",
+            "Ground-penetrating radar (GPR)",
+            "Soil auger for core sampling",
+            "Portable XRF for soil analysis",
+            "High-resolution camera with macro lens",
+            "Measuring tapes (30m, 100m)",
+            "Archaeological field forms",
+            "Sample bags and labels"
+          ],
+          "estimated_investigation_days": "3 days (preliminary survey)",
+          "logistics_complexity": "High - Remote location",
+          "safety_considerations": [
+            "Tropical disease precautions (malaria, dengue)",
+            "Emergency communication devices",
+            "First aid kit with snake bite treatment",
+            "Water purification system",
+            "Emergency evacuation plan"
+          ],
+          "permits_required": [
+            "INPC archaeological research permit",
+            "Environmental impact assessment",
+            "Local community consultation"
+          ],
+          "local_contacts": [
+            "Local INPC representative",
+            "Indigenous community leaders",
+            "Regional universities",
+            "Local government archaeological office",
+            "Tourist/guide services for logistics"
+          ]
+        },
+        "research_metadata": {
+          "publication_readiness": "Low - Requires field verification",
+          "academic_significance": "Standard - Typical archaeological interest",
+          "citation_potential": "Standard citation potential (5-10 citations expected)",
+          "collaboration_opportunities": [
+            "Local universities archaeology departments",
+            "International LiDAR research groups",
+            "Remote sensing archaeology networks",
+            "Amazon conservation organizations",
+            "Indigenous knowledge holders",
+            "Museum collections for comparative analysis"
+          ],
+          "dataset_completeness": "Incomplete - Additional data collection needed",
+          "peer_review_readiness": false
+        },
+        "data_provenance": {
+          "zone": "xingu_deep_forest",
+          "provider": "gedi",
+          "run_id": "20250629_235949_xingu_deep_forest",
+          "processing_date": "2025-06-30T00:06:15.430612",
+          "pipeline_version": "2.0",
+          "validation_status": "pending"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.14074945199922,
+          -12.204918355954668
+        ]
+      },
+      "properties": {
+        "type": "gedi_clearing",
+        "confidence": 0.75,
+        "area_km2": 0.0,
+        "area_m2": 5399.570000000001,
+        "count": 0,
+        "feature_type": "clearing_cluster",
+        "sensor_details": {
+          "mission": "NASA GEDI",
+          "instrument": "Global Ecosystem Dynamics Investigation LiDAR",
+          "footprint_diameter_m": 25,
+          "pulse_density": 0,
+          "beam_type": "power_beam",
+          "acquisition_date": "unknown",
+          "quality_flag": 1
+        },
+        "detection_algorithm": {
+          "method": "DBSCAN clustering of canopy height anomalies",
+          "parameters": {
+            "eps_distance_m": 50,
+            "min_samples": 3,
+            "height_threshold_m": 5.0
+          },
+          "statistical_significance": {
+            "p_value": 0.05,
+            "z_score": 2.0,
+            "cohens_d": null,
+            "effect_size": null,
+            "confidence_interval": [
+              0.7,
+              0.9
+            ],
+            "statistical_power": null,
+            "significance_level": "HIGH"
+          },
+          "enhanced_parameters": {
+            "relative_threshold_pct": 50,
+            "cluster_validation": "relative_height_50pct_local_max",
+            "gpu_acceleration": false
+          },
+          "lidar_analysis": {
+            "gap_points_detected": null,
+            "mean_elevation_m": null,
+            "elevation_std_m": null,
+            "elevation_anomaly_threshold": null,
+            "local_variance": null,
+            "footprint_area_m2": 490.87,
+            "pulse_density_per_m2": null
+          }
+        },
+        "archaeological_assessment": {
+          "interpretation": "Individual structure or clearing",
+          "evidence_type": "Canopy gap pattern analysis",
+          "cultural_context": "Pre-Columbian settlement",
+          "estimated_age_range": "500-2000 years BP",
+          "preservation_state": "good",
+          "investigation_priority": "Medium - Investigation within 1 year"
+        },
+        "spatial_context": {
+          "distance_to_water_m": null,
+          "elevation_m": null,
+          "slope_degrees": null,
+          "vegetation_type": "dense_forest",
+          "accessibility": "Remote - Helicopter or extended river journey required",
+          "terrain_ruggedness": null,
+          "canopy_density_pct": null,
+          "soil_drainage": "moderate"
+        },
+        "field_investigation": {
+          "optimal_visit_season": "June-September (general dry season recommendation)",
+          "recommended_equipment": [
+            "GPS with sub-meter accuracy",
+            "Ground-penetrating radar (GPR)",
+            "Soil auger for core sampling",
+            "Portable XRF for soil analysis",
+            "High-resolution camera with macro lens",
+            "Measuring tapes (30m, 100m)",
+            "Archaeological field forms",
+            "Sample bags and labels"
+          ],
+          "estimated_investigation_days": "3 days (preliminary survey)",
+          "logistics_complexity": "High - Remote location",
+          "safety_considerations": [
+            "Tropical disease precautions (malaria, dengue)",
+            "Emergency communication devices",
+            "First aid kit with snake bite treatment",
+            "Water purification system",
+            "Emergency evacuation plan"
+          ],
+          "permits_required": [
+            "INPC archaeological research permit",
+            "Environmental impact assessment",
+            "Local community consultation"
+          ],
+          "local_contacts": [
+            "Local INPC representative",
+            "Indigenous community leaders",
+            "Regional universities",
+            "Local government archaeological office",
+            "Tourist/guide services for logistics"
+          ]
+        },
+        "research_metadata": {
+          "publication_readiness": "Low - Requires field verification",
+          "academic_significance": "Standard - Typical archaeological interest",
+          "citation_potential": "Standard citation potential (5-10 citations expected)",
+          "collaboration_opportunities": [
+            "Local universities archaeology departments",
+            "International LiDAR research groups",
+            "Remote sensing archaeology networks",
+            "Amazon conservation organizations",
+            "Indigenous knowledge holders",
+            "Museum collections for comparative analysis"
+          ],
+          "dataset_completeness": "Incomplete - Additional data collection needed",
+          "peer_review_readiness": false
+        },
+        "data_provenance": {
+          "zone": "xingu_deep_forest",
+          "provider": "gedi",
+          "run_id": "20250629_235949_xingu_deep_forest",
+          "processing_date": "2025-06-30T00:06:15.430618",
+          "pipeline_version": "2.0",
+          "validation_status": "pending"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.13309289122219,
+          -12.204506613843517
+        ]
+      },
+      "properties": {
+        "type": "gedi_clearing",
+        "confidence": 0.75,
+        "area_km2": 0.0,
+        "area_m2": 981.74,
+        "count": 0,
+        "feature_type": "clearing_cluster",
+        "sensor_details": {
+          "mission": "NASA GEDI",
+          "instrument": "Global Ecosystem Dynamics Investigation LiDAR",
+          "footprint_diameter_m": 25,
+          "pulse_density": 0,
+          "beam_type": "power_beam",
+          "acquisition_date": "unknown",
+          "quality_flag": 1
+        },
+        "detection_algorithm": {
+          "method": "DBSCAN clustering of canopy height anomalies",
+          "parameters": {
+            "eps_distance_m": 50,
+            "min_samples": 3,
+            "height_threshold_m": 5.0
+          },
+          "statistical_significance": {
+            "p_value": 0.05,
+            "z_score": 2.0,
+            "cohens_d": null,
+            "effect_size": null,
+            "confidence_interval": [
+              0.7,
+              0.9
+            ],
+            "statistical_power": null,
+            "significance_level": "HIGH"
+          },
+          "enhanced_parameters": {
+            "relative_threshold_pct": 50,
+            "cluster_validation": "relative_height_50pct_local_max",
+            "gpu_acceleration": false
+          },
+          "lidar_analysis": {
+            "gap_points_detected": null,
+            "mean_elevation_m": null,
+            "elevation_std_m": null,
+            "elevation_anomaly_threshold": null,
+            "local_variance": null,
+            "footprint_area_m2": 490.87,
+            "pulse_density_per_m2": null
+          }
+        },
+        "archaeological_assessment": {
+          "interpretation": "Individual structure or clearing",
+          "evidence_type": "Canopy gap pattern analysis",
+          "cultural_context": "Pre-Columbian settlement",
+          "estimated_age_range": "500-2000 years BP",
+          "preservation_state": "good",
+          "investigation_priority": "Low - Research interest, long-term investigation"
+        },
+        "spatial_context": {
+          "distance_to_water_m": null,
+          "elevation_m": null,
+          "slope_degrees": null,
+          "vegetation_type": "dense_forest",
+          "accessibility": "Remote - Helicopter or extended river journey required",
+          "terrain_ruggedness": null,
+          "canopy_density_pct": null,
+          "soil_drainage": "moderate"
+        },
+        "field_investigation": {
+          "optimal_visit_season": "June-September (general dry season recommendation)",
+          "recommended_equipment": [
+            "GPS with sub-meter accuracy",
+            "Ground-penetrating radar (GPR)",
+            "Soil auger for core sampling",
+            "Portable XRF for soil analysis",
+            "High-resolution camera with macro lens",
+            "Measuring tapes (30m, 100m)",
+            "Archaeological field forms",
+            "Sample bags and labels"
+          ],
+          "estimated_investigation_days": "3 days (preliminary survey)",
+          "logistics_complexity": "High - Remote location",
+          "safety_considerations": [
+            "Tropical disease precautions (malaria, dengue)",
+            "Emergency communication devices",
+            "First aid kit with snake bite treatment",
+            "Water purification system",
+            "Emergency evacuation plan"
+          ],
+          "permits_required": [
+            "INPC archaeological research permit",
+            "Environmental impact assessment",
+            "Local community consultation"
+          ],
+          "local_contacts": [
+            "Local INPC representative",
+            "Indigenous community leaders",
+            "Regional universities",
+            "Local government archaeological office",
+            "Tourist/guide services for logistics"
+          ]
+        },
+        "research_metadata": {
+          "publication_readiness": "Low - Requires field verification",
+          "academic_significance": "Standard - Typical archaeological interest",
+          "citation_potential": "Standard citation potential (5-10 citations expected)",
+          "collaboration_opportunities": [
+            "Local universities archaeology departments",
+            "International LiDAR research groups",
+            "Remote sensing archaeology networks",
+            "Amazon conservation organizations",
+            "Indigenous knowledge holders",
+            "Museum collections for comparative analysis"
+          ],
+          "dataset_completeness": "Incomplete - Additional data collection needed",
+          "peer_review_readiness": false
+        },
+        "data_provenance": {
+          "zone": "xingu_deep_forest",
+          "provider": "gedi",
+          "run_id": "20250629_235949_xingu_deep_forest",
+          "processing_date": "2025-06-30T00:06:15.430624",
+          "pipeline_version": "2.0",
+          "validation_status": "pending"
+        }
+      }
+    }
+  ]
+}

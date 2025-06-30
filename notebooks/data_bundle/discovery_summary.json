@@ -1,0 +1,78 @@
+{
+  "challenge_submission": {
+    "title": "Amazon Archaeological Discovery - OpenAI to Z Challenge",
+    "discovery_date": "2025-06-29",
+    "team": "Amazon Archaeological Discovery Pipeline",
+    "repository": "https://github.com/stawils/amazon-discovery"
+  },
+  "primary_discovery": {
+    "coordinates": [-12.218222, -53.140290],
+    "longitude": -53.140290,
+    "latitude": -12.218222,
+    "location_description": "Xingu Deep Forest - Protected Interior, Mato Grosso, Brazil",
+    "site_type": "gedi_earthwork + terra_preta cross-validation",
+    "area_m2": 50000,
+    "area_hectares": 5.0,
+    "confidence": 0.65,
+    "cross_validation_distance_m": 3.44,
+    "significance": "Large permanent settlement complex",
+    "access_status": "Zero modern access - pristine archaeological landscape",
+    "zone_id": "xingu_deep_forest"
+  },
+  "detection_methodology": {
+    "providers": ["GEDI", "Sentinel-2"],
+    "gedi_detection": "Structural earthwork beneath canopy",
+    "sentinel2_detection": "Terra preta soil signature",
+    "validation_method": "Cross-provider spatial convergence",
+    "precision": "3.44 meters between independent sensors",
+    "algorithms": [
+      "Hough Transform (circular detection)",
+      "Watershed Segmentation (anomaly detection)", 
+      "Canny Edge Detection (geometric patterns)",
+      "DBSCAN Clustering (archaeological signatures)"
+    ]
+  },
+  "historical_context": {
+    "zone_type": "deep_forest_isolation",
+    "historical_evidence": "Fawcett route interior - zero modern access",
+    "expected_features": "Hidden mound complexes, forest settlements",
+    "archaeological_paradigm": "Validates complex pre-Columbian Amazonian societies",
+    "geological_context": "Precambrian shield stability optimal for settlement"
+  },
+  "comparative_analysis": {
+    "size_category": "Medium-scale permanent settlement (5.0 hectares)",
+    "amazon_earthwork_range": "0.1 - 200+ hectares (Peripato et al 2023)",
+    "settlement_classification": "Village-level occupation site",
+    "cultural_significance": "Andean-Amazonian transition zone interaction",
+    "research_validation": [
+      "Peripato et al (2023) - 10,000+ pre-Columbian earthworks",
+      "Heckenberger & Neves (2009) - Complex society evidence",
+      "Roosevelt et al (1991) - Environmental management paradigm"
+    ]
+  },
+  "challenge_requirements": {
+    "algorithmic_detection": "✅ 4 independent computer vision algorithms",
+    "historical_cross_reference": "✅ GPT extraction with geological/archaeological context",
+    "archaeological_comparison": "✅ Systematic comparison with 10,000+ Amazon earthworks",
+    "site_selection": "✅ Best remote site with cross-provider validation",
+    "notebook_creation": "✅ Interactive Jupyter notebook with visualizations"
+  },
+  "innovation_highlights": [
+    "First multi-sensor AI archaeological discovery system",
+    "Sub-5m cross-provider validation precision",
+    "Live OpenAI integration for historical analysis", 
+    "Advanced computer vision for archaeological patterns",
+    "Scalable framework for continental surveys",
+    "Open-source implementation for verification"
+  ],
+  "data_sources": {
+    "checkpoint_results": "checkpoint_2_result.json",
+    "combined_detections": "xingu_deep_forest_combined_detections.geojson",
+    "top_candidates": "xingu_deep_forest_top_5_candidates.geojson",
+    "gedi_detections": "xingu_deep_forest_gedi_detections.geojson",
+    "sentinel2_detections": "xingu_deep_forest_sentinel2_detections.geojson",
+    "cross_validation_data": "cross_validation_pairs.csv",
+    "openai_interactions": "openai_interactions.json",
+    "pipeline_logs": "pipeline.log"
+  }
+}

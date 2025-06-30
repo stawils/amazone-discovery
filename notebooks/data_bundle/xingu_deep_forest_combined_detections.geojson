@@ -1,0 +1,3019 @@
+{
+  "type": "FeatureCollection",
+  "crs": {
+    "type": "name",
+    "properties": {
+      "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+    }
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.07770777894136,
+          -12.288876394420024
+        ]
+      },
+      "properties": {
+        "type": "terra_preta_s2",
+        "confidence": 0.955,
+        "area_m2": 19100.0,
+        "zone": "xingu_deep_forest",
+        "provider": "sentinel2",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "sentinel2_only",
+        "selection_reason": "High confidence (95.5%); Terra preta archaeological significance",
+        "quality_indicators": {
+          "confidence_level": "high",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "large",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.168386150928576,
+          -12.19485797602526
+        ]
+      },
+      "properties": {
+        "type": "gedi_clearing",
+        "confidence": 0.8,
+        "area_m2": 3436.09,
+        "zone": "xingu_deep_forest",
+        "provider": "gedi",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "gedi_only",
+        "selection_reason": "High confidence (80.0%)",
+        "quality_indicators": {
+          "confidence_level": "high",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.16440474582587,
+          -12.189570395624585
+        ]
+      },
+      "properties": {
+        "type": "gedi_clearing",
+        "confidence": 0.8,
+        "area_m2": 1472.6100000000001,
+        "zone": "xingu_deep_forest",
+        "provider": "gedi",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "gedi_only",
+        "selection_reason": "High confidence (80.0%)",
+        "quality_indicators": {
+          "confidence_level": "high",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.15000201251472,
+          -12.17043540248706
+        ]
+      },
+      "properties": {
+        "type": "gedi_clearing",
+        "confidence": 0.8,
+        "area_m2": 6872.18,
+        "zone": "xingu_deep_forest",
+        "provider": "gedi",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "gedi_only",
+        "selection_reason": "High confidence (80.0%)",
+        "quality_indicators": {
+          "confidence_level": "high",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.13986495511632,
+          -12.156952843439592
+        ]
+      },
+      "properties": {
+        "type": "gedi_clearing",
+        "confidence": 0.8,
+        "area_m2": 3926.96,
+        "zone": "xingu_deep_forest",
+        "provider": "gedi",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "gedi_only",
+        "selection_reason": "High confidence (80.0%)",
+        "quality_indicators": {
+          "confidence_level": "high",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.13332878286172,
+          -12.148251824537338
+        ]
+      },
+      "properties": {
+        "type": "gedi_clearing",
+        "confidence": 0.8,
+        "area_m2": 3436.09,
+        "zone": "xingu_deep_forest",
+        "provider": "gedi",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "gedi_only",
+        "selection_reason": "High confidence (80.0%)",
+        "quality_indicators": {
+          "confidence_level": "high",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.139506955473415,
+          -12.165969431738052
+        ]
+      },
+      "properties": {
+        "type": "gedi_clearing",
+        "confidence": 0.8,
+        "area_m2": 11290.01,
+        "zone": "xingu_deep_forest",
+        "provider": "gedi",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "gedi_only",
+        "selection_reason": "High confidence (80.0%)",
+        "quality_indicators": {
+          "confidence_level": "high",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "large",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.12882775722384,
+          -12.15175978416117
+        ]
+      },
+      "properties": {
+        "type": "gedi_clearing",
+        "confidence": 0.8,
+        "area_m2": 1472.6100000000001,
+        "zone": "xingu_deep_forest",
+        "provider": "gedi",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "gedi_only",
+        "selection_reason": "High confidence (80.0%)",
+        "quality_indicators": {
+          "confidence_level": "high",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.1326748998888,
+          -12.16570431279699
+        ]
+      },
+      "properties": {
+        "type": "gedi_clearing",
+        "confidence": 0.8,
+        "area_m2": 1472.6100000000001,
+        "zone": "xingu_deep_forest",
+        "provider": "gedi",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "gedi_only",
+        "selection_reason": "High confidence (80.0%)",
+        "quality_indicators": {
+          "confidence_level": "high",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.12778241132688,
+          -12.159201594633034
+        ]
+      },
+      "properties": {
+        "type": "gedi_clearing",
+        "confidence": 0.8,
+        "area_m2": 1472.6100000000001,
+        "zone": "xingu_deep_forest",
+        "provider": "gedi",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "gedi_only",
+        "selection_reason": "High confidence (80.0%)",
+        "quality_indicators": {
+          "confidence_level": "high",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.107296988695715,
+          -12.151264872103917
+        ]
+      },
+      "properties": {
+        "type": "gedi_clearing",
+        "confidence": 0.8,
+        "area_m2": 3436.09,
+        "zone": "xingu_deep_forest",
+        "provider": "gedi",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "gedi_only",
+        "selection_reason": "High confidence (80.0%)",
+        "quality_indicators": {
+          "confidence_level": "high",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.10501121319988,
+          -12.148226119454536
+        ]
+      },
+      "properties": {
+        "type": "gedi_clearing",
+        "confidence": 0.8,
+        "area_m2": 1472.6100000000001,
+        "zone": "xingu_deep_forest",
+        "provider": "gedi",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "gedi_only",
+        "selection_reason": "High confidence (80.0%)",
+        "quality_indicators": {
+          "confidence_level": "high",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.157016126948534,
+          -12.226799670947067
+        ]
+      },
+      "properties": {
+        "type": "gedi_clearing",
+        "confidence": 0.8,
+        "area_m2": 1963.48,
+        "zone": "xingu_deep_forest",
+        "provider": "gedi",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "gedi_only",
+        "selection_reason": "High confidence (80.0%)",
+        "quality_indicators": {
+          "confidence_level": "high",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.13733499616754,
+          -12.20067127848759
+        ]
+      },
+      "properties": {
+        "type": "gedi_clearing",
+        "confidence": 0.8,
+        "area_m2": 2945.2200000000003,
+        "zone": "xingu_deep_forest",
+        "provider": "gedi",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "gedi_only",
+        "selection_reason": "High confidence (80.0%)",
+        "quality_indicators": {
+          "confidence_level": "high",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.11118582873487,
+          -12.165903764246591
+        ]
+      },
+      "properties": {
+        "type": "gedi_clearing",
+        "confidence": 0.8,
+        "area_m2": 1472.6100000000001,
+        "zone": "xingu_deep_forest",
+        "provider": "gedi",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "gedi_only",
+        "selection_reason": "High confidence (80.0%)",
+        "quality_indicators": {
+          "confidence_level": "high",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.09948873588144,
+          -12.150331623209635
+        ]
+      },
+      "properties": {
+        "type": "gedi_clearing",
+        "confidence": 0.8,
+        "area_m2": 1963.48,
+        "zone": "xingu_deep_forest",
+        "provider": "gedi",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "gedi_only",
+        "selection_reason": "High confidence (80.0%)",
+        "quality_indicators": {
+          "confidence_level": "high",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.165839368278945,
+          -12.248375837589789
+        ]
+      },
+      "properties": {
+        "type": "gedi_clearing",
+        "confidence": 0.8,
+        "area_m2": 5399.570000000001,
+        "zone": "xingu_deep_forest",
+        "provider": "gedi",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "gedi_only",
+        "selection_reason": "High confidence (80.0%)",
+        "quality_indicators": {
+          "confidence_level": "high",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.149249006064,
+          -12.226358185560303
+        ]
+      },
+      "properties": {
+        "type": "gedi_clearing",
+        "confidence": 0.8,
+        "area_m2": 5890.4400000000005,
+        "zone": "xingu_deep_forest",
+        "provider": "gedi",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "gedi_only",
+        "selection_reason": "High confidence (80.0%)",
+        "quality_indicators": {
+          "confidence_level": "high",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.114557409826205,
+          -12.180225684125997
+        ]
+      },
+      "properties": {
+        "type": "gedi_clearing",
+        "confidence": 0.8,
+        "area_m2": 1963.48,
+        "zone": "xingu_deep_forest",
+        "provider": "gedi",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "gedi_only",
+        "selection_reason": "High confidence (80.0%)",
+        "quality_indicators": {
+          "confidence_level": "high",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.11065796383235,
+          -12.17503543612161
+        ]
+      },
+      "properties": {
+        "type": "gedi_clearing",
+        "confidence": 0.8,
+        "area_m2": 1472.6100000000001,
+        "zone": "xingu_deep_forest",
+        "provider": "gedi",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "gedi_only",
+        "selection_reason": "High confidence (80.0%)",
+        "quality_indicators": {
+          "confidence_level": "high",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.10847497795392,
+          -12.172133051988407
+        ]
+      },
+      "properties": {
+        "type": "gedi_clearing",
+        "confidence": 0.8,
+        "area_m2": 2454.35,
+        "zone": "xingu_deep_forest",
+        "provider": "gedi",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "gedi_only",
+        "selection_reason": "High confidence (80.0%)",
+        "quality_indicators": {
+          "confidence_level": "high",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.08850650833866,
+          -12.145580078584297
+        ]
+      },
+      "properties": {
+        "type": "gedi_clearing",
+        "confidence": 0.8,
+        "area_m2": 1472.6100000000001,
+        "zone": "xingu_deep_forest",
+        "provider": "gedi",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "gedi_only",
+        "selection_reason": "High confidence (80.0%)",
+        "quality_indicators": {
+          "confidence_level": "high",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.16454367824844,
+          -12.25599992018975
+        ]
+      },
+      "properties": {
+        "type": "gedi_clearing",
+        "confidence": 0.8,
+        "area_m2": 1472.6100000000001,
+        "zone": "xingu_deep_forest",
+        "provider": "gedi",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "gedi_only",
+        "selection_reason": "High confidence (80.0%)",
+        "quality_indicators": {
+          "confidence_level": "high",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.160789261098465,
+          -12.251014846617435
+        ]
+      },
+      "properties": {
+        "type": "gedi_clearing",
+        "confidence": 0.8,
+        "area_m2": 1472.6100000000001,
+        "zone": "xingu_deep_forest",
+        "provider": "gedi",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "gedi_only",
+        "selection_reason": "High confidence (80.0%)",
+        "quality_indicators": {
+          "confidence_level": "high",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.15922430430464,
+          -12.248936751853464
+        ]
+      },
+      "properties": {
+        "type": "gedi_clearing",
+        "confidence": 0.8,
+        "area_m2": 1472.6100000000001,
+        "zone": "xingu_deep_forest",
+        "provider": "gedi",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "gedi_only",
+        "selection_reason": "High confidence (80.0%)",
+        "quality_indicators": {
+          "confidence_level": "high",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.152193985244175,
+          -12.239608466196277
+        ]
+      },
+      "properties": {
+        "type": "gedi_clearing",
+        "confidence": 0.8,
+        "area_m2": 3436.09,
+        "zone": "xingu_deep_forest",
+        "provider": "gedi",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "gedi_only",
+        "selection_reason": "High confidence (80.0%)",
+        "quality_indicators": {
+          "confidence_level": "high",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.149351418043985,
+          -12.235837153569333
+        ]
+      },
+      "properties": {
+        "type": "gedi_clearing",
+        "confidence": 0.8,
+        "area_m2": 2945.2200000000003,
+        "zone": "xingu_deep_forest",
+        "provider": "gedi",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "gedi_only",
+        "selection_reason": "High confidence (80.0%)",
+        "quality_indicators": {
+          "confidence_level": "high",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.14606395262499,
+          -12.2314733894258
+        ]
+      },
+      "properties": {
+        "type": "gedi_clearing",
+        "confidence": 0.8,
+        "area_m2": 5399.570000000001,
+        "zone": "xingu_deep_forest",
+        "provider": "gedi",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "gedi_only",
+        "selection_reason": "High confidence (80.0%)",
+        "quality_indicators": {
+          "confidence_level": "high",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.143141930357935,
+          -12.227592818504286
+        ]
+      },
+      "properties": {
+        "type": "gedi_clearing",
+        "confidence": 0.8,
+        "area_m2": 1472.6100000000001,
+        "zone": "xingu_deep_forest",
+        "provider": "gedi",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "gedi_only",
+        "selection_reason": "High confidence (80.0%)",
+        "quality_indicators": {
+          "confidence_level": "high",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.13596674437526,
+          -12.218058243172683
+        ]
+      },
+      "properties": {
+        "type": "gedi_clearing",
+        "confidence": 0.8,
+        "area_m2": 1963.48,
+        "zone": "xingu_deep_forest",
+        "provider": "gedi",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "gedi_only",
+        "selection_reason": "High confidence (80.0%)",
+        "quality_indicators": {
+          "confidence_level": "high",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.10465465597278,
+          -12.176406745109976
+        ]
+      },
+      "properties": {
+        "type": "gedi_clearing",
+        "confidence": 0.8,
+        "area_m2": 1963.48,
+        "zone": "xingu_deep_forest",
+        "provider": "gedi",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "gedi_only",
+        "selection_reason": "High confidence (80.0%)",
+        "quality_indicators": {
+          "confidence_level": "high",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.07985161765719,
+          -12.143422909486924
+        ]
+      },
+      "properties": {
+        "type": "gedi_clearing",
+        "confidence": 0.8,
+        "area_m2": 1472.6100000000001,
+        "zone": "xingu_deep_forest",
+        "provider": "gedi",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "gedi_only",
+        "selection_reason": "High confidence (80.0%)",
+        "quality_indicators": {
+          "confidence_level": "high",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.03516820847522,
+          -12.188467809761242
+        ]
+      },
+      "properties": {
+        "type": "terra_preta_s2",
+        "confidence": 0.775,
+        "area_m2": 15500.0,
+        "zone": "xingu_deep_forest",
+        "provider": "sentinel2",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "sentinel2_only",
+        "selection_reason": "High confidence (77.5%); Terra preta archaeological significance",
+        "quality_indicators": {
+          "confidence_level": "moderate",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "large",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.14074945199922,
+          -12.204918355954668
+        ]
+      },
+      "properties": {
+        "type": "gedi_clearing",
+        "confidence": 0.75,
+        "area_m2": 5399.570000000001,
+        "zone": "xingu_deep_forest",
+        "provider": "gedi",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "gedi_only",
+        "selection_reason": "High confidence (75.0%)",
+        "quality_indicators": {
+          "confidence_level": "moderate",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.13309289122219,
+          -12.204506613843517
+        ]
+      },
+      "properties": {
+        "type": "gedi_clearing",
+        "confidence": 0.75,
+        "area_m2": 981.74,
+        "zone": "xingu_deep_forest",
+        "provider": "gedi",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "gedi_only",
+        "selection_reason": "High confidence (75.0%)",
+        "quality_indicators": {
+          "confidence_level": "moderate",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "small",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.143860249615265,
+          -12.27611541834991
+        ]
+      },
+      "properties": {
+        "type": "terra_preta_s2",
+        "confidence": 0.715,
+        "area_m2": 14300.0,
+        "zone": "xingu_deep_forest",
+        "provider": "sentinel2",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "sentinel2_only",
+        "selection_reason": "High confidence (71.5%); Terra preta archaeological significance",
+        "quality_indicators": {
+          "confidence_level": "moderate",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "large",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.05584015491824,
+          -12.17732279838843
+        ]
+      },
+      "properties": {
+        "type": "crop_mark_s2",
+        "confidence": 0.7,
+        "area_m2": 2800,
+        "zone": "xingu_deep_forest",
+        "provider": "sentinel2",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "sentinel2_only",
+        "selection_reason": "High confidence (70.0%); Subsurface archaeological indicators",
+        "quality_indicators": {
+          "confidence_level": "moderate",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.064679871722056,
+          -12.178263885982751
+        ]
+      },
+      "properties": {
+        "type": "crop_mark_s2",
+        "confidence": 0.7,
+        "area_m2": 2000,
+        "zone": "xingu_deep_forest",
+        "provider": "sentinel2",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "sentinel2_only",
+        "selection_reason": "High confidence (70.0%); Subsurface archaeological indicators",
+        "quality_indicators": {
+          "confidence_level": "moderate",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.04902829918498,
+          -12.17982662060131
+        ]
+      },
+      "properties": {
+        "type": "crop_mark_s2",
+        "confidence": 0.7,
+        "area_m2": 1600,
+        "zone": "xingu_deep_forest",
+        "provider": "sentinel2",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "sentinel2_only",
+        "selection_reason": "High confidence (70.0%); Subsurface archaeological indicators",
+        "quality_indicators": {
+          "confidence_level": "moderate",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.067449491701325,
+          -12.181007232415798
+        ]
+      },
+      "properties": {
+        "type": "crop_mark_s2",
+        "confidence": 0.7,
+        "area_m2": 2400,
+        "zone": "xingu_deep_forest",
+        "provider": "sentinel2",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "sentinel2_only",
+        "selection_reason": "High confidence (70.0%); Subsurface archaeological indicators",
+        "quality_indicators": {
+          "confidence_level": "moderate",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.06529969402148,
+          -12.181196559687894
+        ]
+      },
+      "properties": {
+        "type": "crop_mark_s2",
+        "confidence": 0.7,
+        "area_m2": 2000,
+        "zone": "xingu_deep_forest",
+        "provider": "sentinel2",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "sentinel2_only",
+        "selection_reason": "High confidence (70.0%); Subsurface archaeological indicators",
+        "quality_indicators": {
+          "confidence_level": "moderate",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.042197928443755,
+          -12.182331721645689
+        ]
+      },
+      "properties": {
+        "type": "crop_mark_s2",
+        "confidence": 0.7,
+        "area_m2": 3500,
+        "zone": "xingu_deep_forest",
+        "provider": "sentinel2",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "sentinel2_only",
+        "selection_reason": "High confidence (70.0%); Subsurface archaeological indicators",
+        "quality_indicators": {
+          "confidence_level": "moderate",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.06839732190135,
+          -12.182792638127172
+        ]
+      },
+      "properties": {
+        "type": "crop_mark_s2",
+        "confidence": 0.7,
+        "area_m2": 2400,
+        "zone": "xingu_deep_forest",
+        "provider": "sentinel2",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "sentinel2_only",
+        "selection_reason": "High confidence (70.0%); Subsurface archaeological indicators",
+        "quality_indicators": {
+          "confidence_level": "moderate",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.04395335338056,
+          -12.182937178072756
+        ]
+      },
+      "properties": {
+        "type": "crop_mark_s2",
+        "confidence": 0.7,
+        "area_m2": 2000,
+        "zone": "xingu_deep_forest",
+        "provider": "sentinel2",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "sentinel2_only",
+        "selection_reason": "High confidence (70.0%); Subsurface archaeological indicators",
+        "quality_indicators": {
+          "confidence_level": "moderate",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.06921825194763,
+          -12.183019959630773
+        ]
+      },
+      "properties": {
+        "type": "crop_mark_s2",
+        "confidence": 0.7,
+        "area_m2": 2600,
+        "zone": "xingu_deep_forest",
+        "provider": "sentinel2",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "sentinel2_only",
+        "selection_reason": "High confidence (70.0%); Subsurface archaeological indicators",
+        "quality_indicators": {
+          "confidence_level": "moderate",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.0427069304671,
+          -12.183166127345487
+        ]
+      },
+      "properties": {
+        "type": "crop_mark_s2",
+        "confidence": 0.7,
+        "area_m2": 2900,
+        "zone": "xingu_deep_forest",
+        "provider": "sentinel2",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "sentinel2_only",
+        "selection_reason": "High confidence (70.0%); Subsurface archaeological indicators",
+        "quality_indicators": {
+          "confidence_level": "moderate",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.07082818095638,
+          -12.183963547801683
+        ]
+      },
+      "properties": {
+        "type": "crop_mark_s2",
+        "confidence": 0.7,
+        "area_m2": 2700,
+        "zone": "xingu_deep_forest",
+        "provider": "sentinel2",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "sentinel2_only",
+        "selection_reason": "High confidence (70.0%); Subsurface archaeological indicators",
+        "quality_indicators": {
+          "confidence_level": "moderate",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.07171980955503,
+          -12.185272755006483
+        ]
+      },
+      "properties": {
+        "type": "crop_mark_s2",
+        "confidence": 0.7,
+        "area_m2": 15300,
+        "zone": "xingu_deep_forest",
+        "provider": "sentinel2",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "sentinel2_only",
+        "selection_reason": "High confidence (70.0%); Subsurface archaeological indicators",
+        "quality_indicators": {
+          "confidence_level": "moderate",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "large",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.07159878883664,
+          -12.187298999338514
+        ]
+      },
+      "properties": {
+        "type": "crop_mark_s2",
+        "confidence": 0.7,
+        "area_m2": 6900,
+        "zone": "xingu_deep_forest",
+        "provider": "sentinel2",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "sentinel2_only",
+        "selection_reason": "High confidence (70.0%); Subsurface archaeological indicators",
+        "quality_indicators": {
+          "confidence_level": "moderate",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.030202879526705,
+          -12.190199326793975
+        ]
+      },
+      "properties": {
+        "type": "crop_mark_s2",
+        "confidence": 0.7,
+        "area_m2": 5500,
+        "zone": "xingu_deep_forest",
+        "provider": "sentinel2",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "sentinel2_only",
+        "selection_reason": "High confidence (70.0%); Subsurface archaeological indicators",
+        "quality_indicators": {
+          "confidence_level": "moderate",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.031103283229015,
+          -12.19053367619692
+        ]
+      },
+      "properties": {
+        "type": "crop_mark_s2",
+        "confidence": 0.7,
+        "area_m2": 1600,
+        "zone": "xingu_deep_forest",
+        "provider": "sentinel2",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "sentinel2_only",
+        "selection_reason": "High confidence (70.0%); Subsurface archaeological indicators",
+        "quality_indicators": {
+          "confidence_level": "moderate",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.03013828694359,
+          -12.192293762238737
+        ]
+      },
+      "properties": {
+        "type": "crop_mark_s2",
+        "confidence": 0.7,
+        "area_m2": 6700,
+        "zone": "xingu_deep_forest",
+        "provider": "sentinel2",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "sentinel2_only",
+        "selection_reason": "High confidence (70.0%); Subsurface archaeological indicators",
+        "quality_indicators": {
+          "confidence_level": "moderate",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.0705327394605,
+          -12.192590218125195
+        ]
+      },
+      "properties": {
+        "type": "crop_mark_s2",
+        "confidence": 0.7,
+        "area_m2": 1600,
+        "zone": "xingu_deep_forest",
+        "provider": "sentinel2",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "sentinel2_only",
+        "selection_reason": "High confidence (70.0%); Subsurface archaeological indicators",
+        "quality_indicators": {
+          "confidence_level": "moderate",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.07053835132664,
+          -12.193313203791517
+        ]
+      },
+      "properties": {
+        "type": "crop_mark_s2",
+        "confidence": 0.7,
+        "area_m2": 1600,
+        "zone": "xingu_deep_forest",
+        "provider": "sentinel2",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "sentinel2_only",
+        "selection_reason": "High confidence (70.0%); Subsurface archaeological indicators",
+        "quality_indicators": {
+          "confidence_level": "moderate",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.050339041755024,
+          -12.212625672953148
+        ]
+      },
+      "properties": {
+        "type": "crop_mark_s2",
+        "confidence": 0.7,
+        "area_m2": 8800,
+        "zone": "xingu_deep_forest",
+        "provider": "sentinel2",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "sentinel2_only",
+        "selection_reason": "High confidence (70.0%); Subsurface archaeological indicators",
+        "quality_indicators": {
+          "confidence_level": "moderate",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.04496847515683,
+          -12.213478019093452
+        ]
+      },
+      "properties": {
+        "type": "crop_mark_s2",
+        "confidence": 0.7,
+        "area_m2": 1600,
+        "zone": "xingu_deep_forest",
+        "provider": "sentinel2",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "sentinel2_only",
+        "selection_reason": "High confidence (70.0%); Subsurface archaeological indicators",
+        "quality_indicators": {
+          "confidence_level": "moderate",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.03598627335102,
+          -12.213920514194795
+        ]
+      },
+      "properties": {
+        "type": "crop_mark_s2",
+        "confidence": 0.7,
+        "area_m2": 4400,
+        "zone": "xingu_deep_forest",
+        "provider": "sentinel2",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "sentinel2_only",
+        "selection_reason": "High confidence (70.0%); Subsurface archaeological indicators",
+        "quality_indicators": {
+          "confidence_level": "moderate",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.03588171279725,
+          -12.214720330432796
+        ]
+      },
+      "properties": {
+        "type": "crop_mark_s2",
+        "confidence": 0.7,
+        "area_m2": 1600,
+        "zone": "xingu_deep_forest",
+        "provider": "sentinel2",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "sentinel2_only",
+        "selection_reason": "High confidence (70.0%); Subsurface archaeological indicators",
+        "quality_indicators": {
+          "confidence_level": "moderate",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.03802220690998,
+          -12.215546663984405
+        ]
+      },
+      "properties": {
+        "type": "crop_mark_s2",
+        "confidence": 0.7,
+        "area_m2": 4400,
+        "zone": "xingu_deep_forest",
+        "provider": "sentinel2",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "sentinel2_only",
+        "selection_reason": "High confidence (70.0%); Subsurface archaeological indicators",
+        "quality_indicators": {
+          "confidence_level": "moderate",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.03955500680961,
+          -12.216460174266912
+        ]
+      },
+      "properties": {
+        "type": "crop_mark_s2",
+        "confidence": 0.7,
+        "area_m2": 3900,
+        "zone": "xingu_deep_forest",
+        "provider": "sentinel2",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "sentinel2_only",
+        "selection_reason": "High confidence (70.0%); Subsurface archaeological indicators",
+        "quality_indicators": {
+          "confidence_level": "moderate",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.03406011601496,
+          -12.216504143632532
+        ]
+      },
+      "properties": {
+        "type": "crop_mark_s2",
+        "confidence": 0.7,
+        "area_m2": 5700,
+        "zone": "xingu_deep_forest",
+        "provider": "sentinel2",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "sentinel2_only",
+        "selection_reason": "High confidence (70.0%); Subsurface archaeological indicators",
+        "quality_indicators": {
+          "confidence_level": "moderate",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.036775284867105,
+          -12.217425121066018
+        ]
+      },
+      "properties": {
+        "type": "crop_mark_s2",
+        "confidence": 0.7,
+        "area_m2": 2800,
+        "zone": "xingu_deep_forest",
+        "provider": "sentinel2",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "sentinel2_only",
+        "selection_reason": "High confidence (70.0%); Subsurface archaeological indicators",
+        "quality_indicators": {
+          "confidence_level": "moderate",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.04445469484882,
+          -12.218362340143345
+        ]
+      },
+      "properties": {
+        "type": "crop_mark_s2",
+        "confidence": 0.7,
+        "area_m2": 1600,
+        "zone": "xingu_deep_forest",
+        "provider": "sentinel2",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "sentinel2_only",
+        "selection_reason": "High confidence (70.0%); Subsurface archaeological indicators",
+        "quality_indicators": {
+          "confidence_level": "moderate",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.0382456213708,
+          -12.218813258925977
+        ]
+      },
+      "properties": {
+        "type": "crop_mark_s2",
+        "confidence": 0.7,
+        "area_m2": 9700,
+        "zone": "xingu_deep_forest",
+        "provider": "sentinel2",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "sentinel2_only",
+        "selection_reason": "High confidence (70.0%); Subsurface archaeological indicators",
+        "quality_indicators": {
+          "confidence_level": "moderate",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.041744994860814,
+          -12.2184728435809
+        ]
+      },
+      "properties": {
+        "type": "crop_mark_s2",
+        "confidence": 0.7,
+        "area_m2": 2000,
+        "zone": "xingu_deep_forest",
+        "provider": "sentinel2",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "sentinel2_only",
+        "selection_reason": "High confidence (70.0%); Subsurface archaeological indicators",
+        "quality_indicators": {
+          "confidence_level": "moderate",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.04013054760386,
+          -12.218518472780621
+        ]
+      },
+      "properties": {
+        "type": "crop_mark_s2",
+        "confidence": 0.7,
+        "area_m2": 4700,
+        "zone": "xingu_deep_forest",
+        "provider": "sentinel2",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "sentinel2_only",
+        "selection_reason": "High confidence (70.0%); Subsurface archaeological indicators",
+        "quality_indicators": {
+          "confidence_level": "moderate",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.04581107197459,
+          -12.220431992260451
+        ]
+      },
+      "properties": {
+        "type": "crop_mark_s2",
+        "confidence": 0.7,
+        "area_m2": 4500,
+        "zone": "xingu_deep_forest",
+        "provider": "sentinel2",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "sentinel2_only",
+        "selection_reason": "High confidence (70.0%); Subsurface archaeological indicators",
+        "quality_indicators": {
+          "confidence_level": "moderate",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.047750573331406,
+          -12.220449957194765
+        ]
+      },
+      "properties": {
+        "type": "crop_mark_s2",
+        "confidence": 0.7,
+        "area_m2": 4600,
+        "zone": "xingu_deep_forest",
+        "provider": "sentinel2",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "sentinel2_only",
+        "selection_reason": "High confidence (70.0%); Subsurface archaeological indicators",
+        "quality_indicators": {
+          "confidence_level": "moderate",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.03924249695779,
+          -12.220609100542607
+        ]
+      },
+      "properties": {
+        "type": "crop_mark_s2",
+        "confidence": 0.7,
+        "area_m2": 2900,
+        "zone": "xingu_deep_forest",
+        "provider": "sentinel2",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "sentinel2_only",
+        "selection_reason": "High confidence (70.0%); Subsurface archaeological indicators",
+        "quality_indicators": {
+          "confidence_level": "moderate",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.04419586294111,
+          -12.220921116201078
+        ]
+      },
+      "properties": {
+        "type": "crop_mark_s2",
+        "confidence": 0.7,
+        "area_m2": 8100,
+        "zone": "xingu_deep_forest",
+        "provider": "sentinel2",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "sentinel2_only",
+        "selection_reason": "High confidence (70.0%); Subsurface archaeological indicators",
+        "quality_indicators": {
+          "confidence_level": "moderate",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.043561940436035,
+          -12.221758212782223
+        ]
+      },
+      "properties": {
+        "type": "crop_mark_s2",
+        "confidence": 0.7,
+        "area_m2": 2000,
+        "zone": "xingu_deep_forest",
+        "provider": "sentinel2",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "sentinel2_only",
+        "selection_reason": "High confidence (70.0%); Subsurface archaeological indicators",
+        "quality_indicators": {
+          "confidence_level": "moderate",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.03212815374463,
+          -12.222520781855764
+        ]
+      },
+      "properties": {
+        "type": "crop_mark_s2",
+        "confidence": 0.7,
+        "area_m2": 2000,
+        "zone": "xingu_deep_forest",
+        "provider": "sentinel2",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "sentinel2_only",
+        "selection_reason": "High confidence (70.0%); Subsurface archaeological indicators",
+        "quality_indicators": {
+          "confidence_level": "moderate",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.033529574717164,
+          -12.227838551878254
+        ]
+      },
+      "properties": {
+        "type": "crop_mark_s2",
+        "confidence": 0.7,
+        "area_m2": 4200,
+        "zone": "xingu_deep_forest",
+        "provider": "sentinel2",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "sentinel2_only",
+        "selection_reason": "High confidence (70.0%); Subsurface archaeological indicators",
+        "quality_indicators": {
+          "confidence_level": "moderate",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.03452187492731,
+          -12.228562928169687
+        ]
+      },
+      "properties": {
+        "type": "crop_mark_s2",
+        "confidence": 0.7,
+        "area_m2": 3100,
+        "zone": "xingu_deep_forest",
+        "provider": "sentinel2",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "sentinel2_only",
+        "selection_reason": "High confidence (70.0%); Subsurface archaeological indicators",
+        "quality_indicators": {
+          "confidence_level": "moderate",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.03401836482934,
+          -12.22921689161605
+        ]
+      },
+      "properties": {
+        "type": "crop_mark_s2",
+        "confidence": 0.7,
+        "area_m2": 7000,
+        "zone": "xingu_deep_forest",
+        "provider": "sentinel2",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "sentinel2_only",
+        "selection_reason": "High confidence (70.0%); Subsurface archaeological indicators",
+        "quality_indicators": {
+          "confidence_level": "moderate",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.145058744440526,
+          -12.229164234454121
+        ]
+      },
+      "properties": {
+        "type": "crop_mark_s2",
+        "confidence": 0.7,
+        "area_m2": 1600,
+        "zone": "xingu_deep_forest",
+        "provider": "sentinel2",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "sentinel2_only",
+        "selection_reason": "High confidence (70.0%); Subsurface archaeological indicators",
+        "quality_indicators": {
+          "confidence_level": "moderate",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.03407250329625,
+          -12.230459863726253
+        ]
+      },
+      "properties": {
+        "type": "crop_mark_s2",
+        "confidence": 0.7,
+        "area_m2": 2400,
+        "zone": "xingu_deep_forest",
+        "provider": "sentinel2",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "sentinel2_only",
+        "selection_reason": "High confidence (70.0%); Subsurface archaeological indicators",
+        "quality_indicators": {
+          "confidence_level": "moderate",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.03592255695407,
+          -12.234691203891403
+        ]
+      },
+      "properties": {
+        "type": "crop_mark_s2",
+        "confidence": 0.7,
+        "area_m2": 6400,
+        "zone": "xingu_deep_forest",
+        "provider": "sentinel2",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "sentinel2_only",
+        "selection_reason": "High confidence (70.0%); Subsurface archaeological indicators",
+        "quality_indicators": {
+          "confidence_level": "moderate",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.03815031272011,
+          -12.234993842018639
+        ]
+      },
+      "properties": {
+        "type": "crop_mark_s2",
+        "confidence": 0.7,
+        "area_m2": 3600,
+        "zone": "xingu_deep_forest",
+        "provider": "sentinel2",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "sentinel2_only",
+        "selection_reason": "High confidence (70.0%); Subsurface archaeological indicators",
+        "quality_indicators": {
+          "confidence_level": "moderate",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.078883635981406,
+          -12.244313898704311
+        ]
+      },
+      "properties": {
+        "type": "crop_mark_s2",
+        "confidence": 0.7,
+        "area_m2": 2800,
+        "zone": "xingu_deep_forest",
+        "provider": "sentinel2",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "sentinel2_only",
+        "selection_reason": "High confidence (70.0%); Subsurface archaeological indicators",
+        "quality_indicators": {
+          "confidence_level": "moderate",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.06864057778084,
+          -12.244662400334292
+        ]
+      },
+      "properties": {
+        "type": "crop_mark_s2",
+        "confidence": 0.7,
+        "area_m2": 1600,
+        "zone": "xingu_deep_forest",
+        "provider": "sentinel2",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "sentinel2_only",
+        "selection_reason": "High confidence (70.0%); Subsurface archaeological indicators",
+        "quality_indicators": {
+          "confidence_level": "moderate",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.0804979874089,
+          -12.2451150694566
+        ]
+      },
+      "properties": {
+        "type": "crop_mark_s2",
+        "confidence": 0.7,
+        "area_m2": 1600,
+        "zone": "xingu_deep_forest",
+        "provider": "sentinel2",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "sentinel2_only",
+        "selection_reason": "High confidence (70.0%); Subsurface archaeological indicators",
+        "quality_indicators": {
+          "confidence_level": "moderate",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.16522388415101,
+          -12.27701632242065
+        ]
+      },
+      "properties": {
+        "type": "crop_mark_s2",
+        "confidence": 0.7,
+        "area_m2": 9000,
+        "zone": "xingu_deep_forest",
+        "provider": "sentinel2",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "sentinel2_only",
+        "selection_reason": "High confidence (70.0%); Subsurface archaeological indicators",
+        "quality_indicators": {
+          "confidence_level": "moderate",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.16389350403976,
+          -12.277032299085805
+        ]
+      },
+      "properties": {
+        "type": "crop_mark_s2",
+        "confidence": 0.7,
+        "area_m2": 4100,
+        "zone": "xingu_deep_forest",
+        "provider": "sentinel2",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "sentinel2_only",
+        "selection_reason": "High confidence (70.0%); Subsurface archaeological indicators",
+        "quality_indicators": {
+          "confidence_level": "moderate",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.16002692325269,
+          -12.278933108005626
+        ]
+      },
+      "properties": {
+        "type": "crop_mark_s2",
+        "confidence": 0.7,
+        "area_m2": 2800,
+        "zone": "xingu_deep_forest",
+        "provider": "sentinel2",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "sentinel2_only",
+        "selection_reason": "High confidence (70.0%); Subsurface archaeological indicators",
+        "quality_indicators": {
+          "confidence_level": "moderate",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "medium",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.169207071204234,
+          -12.279665015835299
+        ]
+      },
+      "properties": {
+        "type": "crop_mark_s2",
+        "confidence": 0.7,
+        "area_m2": 11200,
+        "zone": "xingu_deep_forest",
+        "provider": "sentinel2",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "sentinel2_only",
+        "selection_reason": "High confidence (70.0%); Subsurface archaeological indicators",
+        "quality_indicators": {
+          "confidence_level": "moderate",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "large",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.047517118847786,
+          -12.280691731404852
+        ]
+      },
+      "properties": {
+        "type": "terra_preta_s2",
+        "confidence": 0.66,
+        "area_m2": 13200.0,
+        "zone": "xingu_deep_forest",
+        "provider": "sentinel2",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "sentinel2_only",
+        "selection_reason": "High confidence (66.0%); Terra preta archaeological significance",
+        "quality_indicators": {
+          "confidence_level": "moderate",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "large",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.16318996433162,
+          -12.284554994808724
+        ]
+      },
+      "properties": {
+        "type": "terra_preta_s2",
+        "confidence": 0.62,
+        "area_m2": 12400.0,
+        "zone": "xingu_deep_forest",
+        "provider": "sentinel2",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "sentinel2_only",
+        "selection_reason": "High confidence (62.0%); Terra preta archaeological significance",
+        "quality_indicators": {
+          "confidence_level": "moderate",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "large",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.045593644736094,
+          -12.205048584367345
+        ]
+      },
+      "properties": {
+        "type": "terra_preta_s2",
+        "confidence": 0.58,
+        "area_m2": 11600.0,
+        "zone": "xingu_deep_forest",
+        "provider": "sentinel2",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "sentinel2_only",
+        "selection_reason": "High confidence (58.0%); Terra preta archaeological significance",
+        "quality_indicators": {
+          "confidence_level": "moderate",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "large",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.12142891739288,
+          -12.275820198750864
+        ]
+      },
+      "properties": {
+        "type": "terra_preta_s2",
+        "confidence": 0.565,
+        "area_m2": 11300.0,
+        "zone": "xingu_deep_forest",
+        "provider": "sentinel2",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "sentinel2_only",
+        "selection_reason": "High confidence (56.5%); Terra preta archaeological significance",
+        "quality_indicators": {
+          "confidence_level": "moderate",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "large",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.147487596279866,
+          -12.231937830933095
+        ]
+      },
+      "properties": {
+        "type": "terra_preta_s2",
+        "confidence": 0.55,
+        "area_m2": 11000.0,
+        "zone": "xingu_deep_forest",
+        "provider": "sentinel2",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "sentinel2_only",
+        "selection_reason": "High confidence (55.0%); Terra preta archaeological significance",
+        "quality_indicators": {
+          "confidence_level": "moderate",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "large",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.137897250950054,
+          -12.287902085700045
+        ]
+      },
+      "properties": {
+        "type": "terra_preta_s2",
+        "confidence": 0.53,
+        "area_m2": 10600.0,
+        "zone": "xingu_deep_forest",
+        "provider": "sentinel2",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "sentinel2_only",
+        "selection_reason": "High confidence (53.0%); Terra preta archaeological significance",
+        "quality_indicators": {
+          "confidence_level": "moderate",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "large",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.12966791918957,
+          -12.271450877594253
+        ]
+      },
+      "properties": {
+        "type": "terra_preta_s2",
+        "confidence": 0.515,
+        "area_m2": 10300.0,
+        "zone": "xingu_deep_forest",
+        "provider": "sentinel2",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "sentinel2_only",
+        "selection_reason": "High confidence (51.5%); Terra preta archaeological significance",
+        "quality_indicators": {
+          "confidence_level": "moderate",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "large",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -53.05671507972833,
+          -12.286307628150647
+        ]
+      },
+      "properties": {
+        "type": "terra_preta_s2",
+        "confidence": 0.51,
+        "area_m2": 10200.0,
+        "zone": "xingu_deep_forest",
+        "provider": "sentinel2",
+        "run_id": "20250629_235949_xingu_deep_forest",
+        "convergent_score": 0.0,
+        "convergence_distance_m": null,
+        "combined_confidence": null,
+        "gedi_support": false,
+        "convergence_type": "sentinel2_only",
+        "selection_reason": "High confidence (51.0%); Terra preta archaeological significance",
+        "quality_indicators": {
+          "confidence_level": "moderate",
+          "multi_sensor": false,
+          "gedi_correlation": false,
+          "area_significance": "large",
+          "convergence_strength": "none"
+        },
+        "archaeological_grade": "high"
+      }
+    }
+  ]
+}

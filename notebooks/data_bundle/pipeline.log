@@ -1,0 +1,433 @@
+2025-06-29 23:59:49 - __main__ - INFO - 🚀 Starting Amazon Archaeological Discovery Pipeline
+2025-06-29 23:59:49 - __main__ - INFO - Run ID: 20250629_235949_xingu_deep_forest
+2025-06-29 23:59:49 - __main__ - INFO - Log file: /home/tsuser/AI/amazon-discovery/results/run_20250629_235949_xingu_deep_forest/logs/pipeline.log
+2025-06-29 23:59:49 - __main__ - INFO - Arguments: Namespace(list_zones=False, checkpoint=2, all_checkpoints=False, enhanced_checkpoints=False, pipeline=False, competition_ready=False, zones=None, zone='xingu_deep_forest', provider=None, max_scenes=1, full=False, verbose=False, model='o1', temperature=1.0, no_openai=False, stage='full', input_scene_data=None, input_analysis_results=None, input_scoring_results=None, checkpoint_num=None, validate_checkpoint_num=None, results_dir=None)
+2025-06-29 23:59:49 - openai_checkpoints - INFO - 🎯 OpenAI to Z Challenge - Checkpoint Runner initialized
+2025-06-29 23:59:49 - openai_checkpoints - INFO - Run ID: 20250629_235949_xingu_deep_forest
+2025-06-29 23:59:49 - openai_checkpoints - INFO - Results directory: /home/tsuser/AI/amazon-discovery/results/run_20250629_235949_xingu_deep_forest
+2025-06-29 23:59:49 - openai_checkpoints - INFO - 
+🚀 Running Checkpoint 2
+2025-06-29 23:59:49 - src.checkpoints.base_checkpoint - INFO - 🎯 Starting Checkpoint 2
+2025-06-29 23:59:49 - src.checkpoints.checkpoint2 - INFO - 🎯 Using zone from command argument: xingu_deep_forest
+2025-06-29 23:59:49 - src.checkpoints.checkpoint2 - INFO - 🗺️ Checkpoint 2: Early Explorer - Xingu Deep Forest Region
+2025-06-29 23:59:49 - src.checkpoints.checkpoint2 - INFO - 🔄 Running modular pipeline for sentinel2...
+2025-06-29 23:59:49 - src.providers.sentinel2_provider - INFO - 🛰️ Sentinel-2 Provider initialized
+2025-06-29 23:59:49 - src.providers.sentinel2_provider - INFO - Cache directory: /home/tsuser/AI/amazon-discovery/data/satellite/sentinel2
+2025-06-29 23:59:49 - src.checkpoints.checkpoint2 - INFO - 🛰️ Sentinel-2: Using 1 scene(s)
+2025-06-29 23:59:49 - src.core.gpu_optimization - INFO - 🚀 GPU processor initialized on <CUDA Device 0>
+2025-06-29 23:59:49 - src.core.gpu_optimization - INFO - ⚡ Archaeological computations will use GPU acceleration
+2025-06-29 23:59:49 - src.core.gpu_optimization - INFO - 🚀 GPU processor initialized on <CUDA Device 0>
+2025-06-29 23:59:49 - src.core.scoring - INFO - 🏛️ Enhanced Archaeological Scorer initialized:
+2025-06-29 23:59:49 - src.core.scoring - INFO -   📊 Academic validation: enabled
+2025-06-29 23:59:49 - src.core.scoring - INFO -   ⚡ GPU acceleration: enabled
+2025-06-29 23:59:49 - src.pipeline.report - INFO - ReportStep initialized for Run ID: 20250629_235949_xingu_deep_forest
+2025-06-29 23:59:49 - src.visualization.core - INFO - 🗺️ Archaeological Map Generator initialized
+2025-06-29 23:59:49 - src.pipeline.export_manager - INFO - 📁 Unified Export Manager initialized for run 20250629_235949_xingu_deep_forest
+2025-06-29 23:59:49 - src.pipeline.export_manager - INFO -    📂 Exports will be saved to: /home/tsuser/AI/amazon-discovery/results/run_20250629_235949_xingu_deep_forest/exports
+2025-06-29 23:59:49 - src.pipeline.modular_pipeline - INFO - ModularPipeline initialized for provider: sentinel2, Run ID: 20250629_235949_xingu_deep_forest. Base dir: /home/tsuser/AI/amazon-discovery/results/run_20250629_235949_xingu_deep_forest/sentinel2
+2025-06-29 23:59:49 - src.pipeline.modular_pipeline - INFO - 🚀 Starting Full Modular Pipeline Run for provider: sentinel2, Run ID: 20250629_235949_xingu_deep_forest
+2025-06-29 23:59:49 - src.pipeline.modular_pipeline - INFO - Zones: ['xingu_deep_forest'], Max Scenes: 1
+2025-06-29 23:59:49 - src.pipeline.modular_pipeline - INFO - [Stage 1: Acquire Data] Provider: sentinel2, Zones: ['xingu_deep_forest'], Max Scenes: 1
+2025-06-29 23:59:49 - src.providers.sentinel2_provider - INFO - 🎯 Processing Xingu Deep Forest - Protected Interior
+2025-06-29 23:59:49 - src.providers.sentinel2_provider - INFO - 🔍 Searching scenes for Xingu Deep Forest - Protected Interior
+2025-06-29 23:59:49 - src.providers.sentinel2_provider - INFO - 🌥️ Trying cloud cover threshold: 10%
+2025-06-29 23:59:53 - src.providers.sentinel2_provider - INFO - Found 50 candidate scenes
+2025-06-29 23:59:53 - src.providers.sentinel2_provider - INFO - ✓ 50 scenes passed filters at 10% threshold
+2025-06-29 23:59:53 - src.providers.sentinel2_provider - INFO - 🎯 Success with 10% threshold!
+2025-06-29 23:59:53 - src.providers.sentinel2_provider - INFO - Best: S2A_22LBM_20240914_0_L2A (score: 95.0, overlap: 100.0%, clouds: 0.1%)
+2025-06-29 23:59:53 - src.providers.sentinel2_provider - INFO - CACHE HIT: S2A_22LBM_20240914_0_L2A
+2025-06-29 23:59:53 - src.providers.sentinel2_provider - INFO - ✓ Scene 1/1: S2A_22LBM_20240914_0_L2A
+2025-06-29 23:59:53 - src.providers.sentinel2_provider - INFO - ✓ Completed Xingu Deep Forest - Protected Interior: 1 scenes
+2025-06-29 23:59:53 - src.providers.sentinel2_provider - INFO - 🎯 Total scenes processed: 1
+2025-06-29 23:59:53 - src.pipeline.modular_pipeline - INFO - [Stage 1: Acquire Data] Downloaded 1 scenes/items.
+2025-06-29 23:59:53 - src.pipeline.modular_pipeline - INFO - [Stage 1: Acquire Data] Saved acquired scene data to /home/tsuser/AI/amazon-discovery/results/run_20250629_235949_xingu_deep_forest/sentinel2/acquired_scene_data.json
+2025-06-29 23:59:53 - src.pipeline.modular_pipeline - INFO - [Stage 2: Analyze Scenes] Provider: sentinel2
+2025-06-29 23:59:53 - src.pipeline.modular_pipeline - INFO - [Stage 2: Analyze Scenes] Using 1 scenes passed in memory.
+2025-06-29 23:59:53 - src.core.detectors.sentinel2_detector - INFO - Loading zone config for zone_type 'deep_forest_isolation': {'detection_weights': {'terra_preta_weight': 3.0, 'crop_mark_weight': 2.0, 'geometric_weight': 1.0}, 'thresholds': {'crop_mark_threshold': 0.06, 'terra_preta_threshold': 0.15, 'geometric_min_size': 10, 'density_factor': 1.0}}
+2025-06-29 23:59:53 - src.core.detectors.sentinel2_detector - INFO - Sentinel-2 detector initialized for zone xingu_deep_forest (type: deep_forest_isolation, strategy: mound_detection) with run_id: 20250629_235949_xingu_deep_forest
+2025-06-29 23:59:53 - src.core.detectors.sentinel2_detector - INFO - Zone-specific config: {'detection_weights': {'terra_preta_weight': 3.0, 'crop_mark_weight': 2.0, 'geometric_weight': 1.0}, 'thresholds': {'crop_mark_threshold': 0.06, 'terra_preta_threshold': 0.15, 'geometric_min_size': 10, 'density_factor': 1.0}}
+2025-06-29 23:59:53 - src.core.optimization - INFO - 🎯 GPU optimization enabled
+2025-06-29 23:59:53 - src.core.optimization - INFO - 🔧 Performance optimizer initialized: GPU=True, Workers=16
+2025-06-29 23:59:53 - src.core.detector_patches - INFO - 🚀 Applied performance patches to Sentinel2ArchaeologicalDetector
+2025-06-29 23:59:53 - src.core.enable_optimizations - INFO - ✅ Applied Sentinel2 performance optimizations to detector for zone: TargetZone(id='xingu_deep_forest', name='Xingu Deep Forest - Protected Interior', center=(-12.2, -53.1), bbox=(-12.29, -53.17, -12.11, -53.03), priority=1, expected_features='Hidden mound complexes, forest settlements', historical_evidence='Fawcett route interior - zero modern access', search_radius_km=7.0, min_feature_size_m=40, max_feature_size_m=300, zone_type='deep_forest_isolation', detection_strategy='mound_detection')
+2025-06-29 23:59:53 - src.pipeline.analysis - INFO -   Analyzing Sentinel-2 scene data object for: S2A_22LBM_20240914_0_L2A
+2025-06-29 23:59:53 - src.core.detectors.sentinel2_detector - INFO - Sentinel-2 detector using run-specific output dir: /home/tsuser/AI/amazon-discovery/results/run_20250629_235949_xingu_deep_forest/detector_outputs/sentinel2/xingu_deep_forest/S2A_22LBM_20240914_0_L2A
+2025-06-29 23:59:53 - src.core.detectors.sentinel2_detector - INFO - CACHE MISS: Running Sentinel-2 detection for xingu_deep_forest/S2A_22LBM_20240914_0_L2A
+2025-06-29 23:59:53 - src.core.detectors.sentinel2_detector - INFO - Using cropped composite for zone-specific analysis: /home/tsuser/AI/amazon-discovery/data/satellite/sentinel2/processed_scenes/Xingu Deep Forest - Protected Interior/S2A_22LBM_20240914_0_L2A_composite_cropped.tif
+2025-06-29 23:59:53 - src.core.detectors.sentinel2_detector - INFO - Starting analysis for scene: S2A_22LBM_20240914_0_L2A_composite_cropped.tif
+2025-06-29 23:59:53 - src.core.detector_patches - INFO - 🚀 Loading Sentinel-2 bands with parallel optimization...
+2025-06-29 23:59:53 - src.core.detector_patches - INFO - Loading composite file: /home/tsuser/AI/amazon-discovery/data/satellite/sentinel2/processed_scenes/Xingu Deep Forest - Protected Interior/S2A_22LBM_20240914_0_L2A_composite_cropped.tif
+2025-06-29 23:59:53 - src.core.optimization - INFO - 📁 PARALLEL BAND LOADING: Processing 8 bands
+2025-06-29 23:59:53 - src.core.optimization - INFO - ⚡ Using 16 worker threads for I/O optimization
+2025-06-29 23:59:54 - src.core.optimization - INFO - ✅ PARALLEL I/O COMPLETE: 8/8 bands loaded in 1.30s
+2025-06-29 23:59:54 - src.core.optimization - INFO - 🚀 Performance gain: 49.4x faster than sequential loading
+2025-06-29 23:59:55 - src.core.detector_patches - INFO - Set CRS: EPSG:32722, Transform: | 10.00, 0.00, 199980.00|
+| 0.00,-10.00, 8700040.00|
+| 0.00, 0.00, 1.00|
+2025-06-29 23:59:55 - src.core.detector_patches - INFO - ✅ Parallel band loading completed: ['blue', 'green', 'red', 'nir', 'red_edge_1', 'red_edge_3', 'swir1', 'swir2']
+2025-06-29 23:59:55 - src.core.optimization - INFO - ⏱️ band_loading: 1.34s
+2025-06-29 23:59:55 - src.core.detectors.sentinel2_detector - INFO - Calculating archaeological indices...
+2025-06-29 23:59:55 - src.core.optimization - INFO - 🧮 SPECTRAL INDEX OPTIMIZATION: Processing 8 bands
+2025-06-29 23:59:55 - src.core.optimization - INFO - 📊 Data volume: 964,483,200 pixels across all bands
+2025-06-29 23:59:55 - src.core.optimization - INFO - ⚡ Activating GPU acceleration for spectral mathematics
+2025-06-29 23:59:55 - src.core.optimization - INFO - 🎯 Calculating archaeological indices on GPU...
+2025-06-29 23:59:56 - src.core.optimization - INFO - ✅ GPU indices calculation completed in 1.68s (12 indices)
+2025-06-29 23:59:56 - src.core.optimization - INFO - ⏱️ indices_calculation: 1.68s
+2025-06-29 23:59:56 - src.core.detectors.sentinel2_detector - INFO - Detecting Terra Preta (Enhanced)...
+2025-06-29 23:59:56 - src.core.optimization - INFO - 🧮 SPECTRAL INDEX OPTIMIZATION: Processing 8 bands
+2025-06-29 23:59:56 - src.core.optimization - INFO - 📊 Data volume: 964,483,200 pixels across all bands
+2025-06-29 23:59:56 - src.core.optimization - INFO - ⚡ Activating GPU acceleration for spectral mathematics
+2025-06-29 23:59:56 - src.core.optimization - INFO - 🎯 Calculating archaeological indices on GPU...
+2025-06-29 23:59:57 - src.core.optimization - INFO - ✅ GPU indices calculation completed in 1.26s (12 indices)
+2025-06-29 23:59:58 - src.core.optimization - INFO - 🔧 MORPHOLOGICAL OPERATIONS: Processing 2 operations on (10980, 10980) mask
+2025-06-29 23:59:58 - src.core.optimization - INFO - 📊 Operations pipeline: open → close
+2025-06-29 23:59:58 - src.core.optimization - INFO - 🗄️ Mask data: 120,560,400 pixels (uint8)
+2025-06-29 23:59:58 - src.core.optimization - INFO - ⚡ Using GPU acceleration for morphological processing
+2025-06-29 23:59:58 - src.core.optimization - INFO - 📤 Transferring mask to GPU memory...
+2025-06-29 23:59:58 - src.core.optimization - INFO - ⏱️ GPU transfer: 44.0ms
+2025-06-29 23:59:58 - src.core.optimization - INFO - 🔧 Operation 1/2: open with (2, 2) kernel
+2025-06-29 23:59:58 - src.core.optimization - INFO - ✓ open completed in 0.031s
+2025-06-29 23:59:58 - src.core.optimization - INFO - 🔧 Operation 2/2: close with (3, 3) kernel
+2025-06-29 23:59:58 - src.core.optimization - INFO - ✓ close completed in 0.004s
+2025-06-29 23:59:58 - src.core.optimization - INFO - 📥 Transferring result back to CPU...
+2025-06-29 23:59:58 - src.core.optimization - INFO - ✅ Morphological operations completed in 0.112s
+2025-06-30 00:01:11 - src.core.detector_patches - INFO - Enhanced terra preta detection (optimized): 97 features found
+2025-06-30 00:01:11 - src.core.optimization - INFO - ⏱️ terra_preta_detection: 74.96s
+2025-06-30 00:01:11 - src.core.detectors.sentinel2_detector - INFO - Detecting Standard Terra Preta...
+2025-06-30 00:03:12 - src.core.detectors.sentinel2_detector - INFO - Detecting Crop Marks...
+2025-06-30 00:03:12 - src.core.detectors.sentinel2_detector - INFO - 🌾 CROP MARK DETECTION: Hunting for vegetation stress patterns
+2025-06-30 00:03:12 - src.core.detectors.sentinel2_detector - INFO - 🔍 Searching for subsurface archaeological features via plant health
+2025-06-30 00:03:12 - src.core.optimization - INFO - 🧮 SPECTRAL INDEX OPTIMIZATION: Processing 8 bands
+2025-06-30 00:03:12 - src.core.optimization - INFO - 📊 Data volume: 964,483,200 pixels across all bands
+2025-06-30 00:03:12 - src.core.optimization - INFO - ⚡ Activating GPU acceleration for spectral mathematics
+2025-06-30 00:03:12 - src.core.optimization - INFO - 🎯 Calculating archaeological indices on GPU...
+2025-06-30 00:03:14 - src.core.optimization - INFO - ✅ GPU indices calculation completed in 1.31s (12 indices)
+2025-06-30 00:03:14 - src.core.optimization - INFO - ⏱️ indices_calculation: 1.31s
+2025-06-30 00:03:14 - src.core.detectors.sentinel2_detector - INFO - 🌱 VEGETATION STRESS ANALYSIS: Processing red-edge crop mark index
+2025-06-30 00:03:14 - src.core.detectors.sentinel2_detector - INFO - 📊 Crop mark index range: -0.125 → 0.370
+2025-06-30 00:03:14 - src.core.detectors.sentinel2_detector - INFO - 🎯 Zone-specific crop mark threshold: 0.06 (weight: 2.0)
+2025-06-30 00:03:14 - src.core.detectors.sentinel2_detector - INFO - 🔍 CROP MARK ANALYSIS (positive): Found 51 potential features
+2025-06-30 00:03:14 - src.core.detectors.sentinel2_detector - INFO - ⚡ Applying archaeological pre-filtering to 51 crop mark candidates...
+2025-06-30 00:03:30 - src.core.detectors.sentinel2_detector - INFO - ✅ Pre-filtering: 50/51 crop mark candidates pass archaeological criteria
+2025-06-30 00:03:30 - src.core.detectors.sentinel2_detector - INFO -    Processing crop mark 1/50 (2.0%)
+2025-06-30 00:03:31 - src.core.detectors.sentinel2_detector - INFO - ✓ ACCEPTED: Crop mark confidence=0.571, area=2800m²
+2025-06-30 00:03:31 - src.core.detectors.sentinel2_detector - INFO -    Processing crop mark 2/50 (4.0%)
+2025-06-30 00:03:31 - src.core.detectors.sentinel2_detector - INFO - ✓ ACCEPTED: Crop mark confidence=0.539, area=2000m²
+2025-06-30 00:03:31 - src.core.detectors.sentinel2_detector - INFO -    Processing crop mark 3/50 (6.0%)
+2025-06-30 00:03:31 - src.core.detectors.sentinel2_detector - INFO - ✓ ACCEPTED: Crop mark confidence=0.608, area=1600m²
+2025-06-30 00:03:31 - src.core.detectors.sentinel2_detector - INFO -    Processing crop mark 4/50 (8.0%)
+2025-06-30 00:03:31 - src.core.detectors.sentinel2_detector - INFO - ✓ ACCEPTED: Crop mark confidence=0.595, area=2400m²
+2025-06-30 00:03:31 - src.core.detectors.sentinel2_detector - INFO -    Processing crop mark 5/50 (10.0%)
+2025-06-30 00:03:31 - src.core.detectors.sentinel2_detector - INFO - ✓ ACCEPTED: Crop mark confidence=0.610, area=2000m²
+2025-06-30 00:03:39 - src.core.detectors.sentinel2_detector - INFO - ✅ Crop mark analysis (positive) complete: 50 features found
+2025-06-30 00:03:39 - src.core.detectors.sentinel2_detector - INFO - 🌾 CROP MARK DETECTION COMPLETE: 50 archaeological features found
+2025-06-30 00:03:39 - src.core.detectors.sentinel2_detector - INFO - ⚡ Archaeological pre-filtering applied to focus on ancient settlement crop marks
+2025-06-30 00:03:39 - src.core.detectors.sentinel2_detector - INFO - Detecting Geometric Patterns...
+2025-06-30 00:03:39 - src.core.detectors.sentinel2_detector - INFO - 🔸 GEOMETRIC PATTERN DETECTION: Scanning for engineered earthworks
+2025-06-30 00:03:39 - src.core.detectors.sentinel2_detector - INFO - 🏛️ Hunting for circles, squares, and linear archaeological features
+2025-06-30 00:03:39 - src.core.detectors.sentinel2_detector - INFO - 📡 Using NIR band (832nm) for optimal geometric contrast
+2025-06-30 00:03:39 - src.core.detectors.sentinel2_detector - INFO - 🎯 Using buried sites Canny parameters: (40, 120)
+2025-06-30 00:03:39 - src.core.detectors.sentinel2_detector - INFO - 🎯 Zone-specific geometric threshold: 0.08 (weight: 1.0)
+2025-06-30 00:03:41 - src.core.detectors.sentinel2_detector - INFO - False positive filtering: 0 → 0 features
+2025-06-30 00:03:41 - src.core.detectors.sentinel2_detector - INFO - Detected 0 geometric patterns at 10m resolution
+2025-06-30 00:03:41 - src.core.detectors.sentinel2_detector - INFO - Applying adaptive post-processing filters...
+2025-06-30 00:03:41 - src.core.detectors.sentinel2_detector - INFO - Enhanced shape filtering: 148 → 69 features
+2025-06-30 00:03:41 - src.core.detectors.sentinel2_detector - INFO - Environmental filtering: 69 → 69 features
+2025-06-30 00:03:41 - src.core.detectors.sentinel2_detector - INFO - Adaptive density filter: area=303.5km², max_expected=60
+2025-06-30 00:03:41 - src.core.detectors.sentinel2_detector - INFO - Density filtering: 69 → 29 features (archaeological density limit)
+2025-06-30 00:03:41 - src.core.detectors.sentinel2_detector - INFO - Enhanced shape filtering: 50 → 50 features
+2025-06-30 00:03:41 - src.core.detectors.sentinel2_detector - INFO - Environmental filtering: 50 → 50 features
+2025-06-30 00:03:41 - src.core.detectors.sentinel2_detector - INFO - Adaptive density filter: area=303.5km², max_expected=60
+2025-06-30 00:03:41 - src.core.detectors.sentinel2_detector - INFO - Post-processing complete for S2A_22LBM_20240914_0_L2A_composite_cropped.tif. Final feature counts: {'terra_preta_enhanced': 97, 'terra_preta_standard': 51, 'crop_marks': 50, 'terra_preta': 29, 'crop_mark': 50}
+2025-06-30 00:03:41 - src.core.detectors.sentinel2_detector - INFO - 🔍 Validating all features have proper coordinates from unified coordinate manager
+2025-06-30 00:03:41 - pyogrio._io - INFO - Created 29 records
+2025-06-30 00:03:41 - src.core.detectors.sentinel2_detector - INFO - Saved 29 features to /home/tsuser/AI/amazon-discovery/results/run_20250629_235949_xingu_deep_forest/detector_outputs/sentinel2/xingu_deep_forest/S2A_22LBM_20240914_0_L2A/terra_preta_analysis.geojson
+2025-06-30 00:03:41 - pyogrio._io - INFO - Created 50 records
+2025-06-30 00:03:41 - src.core.detectors.sentinel2_detector - INFO - Saved 50 features to /home/tsuser/AI/amazon-discovery/results/run_20250629_235949_xingu_deep_forest/detector_outputs/sentinel2/xingu_deep_forest/S2A_22LBM_20240914_0_L2A/crop_mark_analysis.geojson
+2025-06-30 00:03:41 - src.pipeline.analysis - INFO -   ✓ Found 79 features for scene S2A_22LBM_20240914_0_L2A
+2025-06-30 00:03:41 - src.pipeline.modular_pipeline - INFO - [Stage 2: Analyze Scenes] Analysis complete for 1 zones.
+2025-06-30 00:03:41 - src.pipeline.modular_pipeline - INFO - [Stage 2: Analyze Scenes] Saved analysis results to /home/tsuser/AI/amazon-discovery/results/run_20250629_235949_xingu_deep_forest/sentinel2/analysis_results.json
+2025-06-30 00:03:41 - src.pipeline.modular_pipeline - INFO - [Stage 3: Score Zones] Provider: sentinel2
+2025-06-30 00:03:41 - src.pipeline.modular_pipeline - INFO - [Stage 3: Score Zones] Using analysis results for 1 zones passed in memory.
+2025-06-30 00:03:41 - src.pipeline.modular_pipeline - INFO - [Stage 3: Score Zones] Calculating convergent anomaly scores using core scorer...
+2025-06-30 00:03:41 - src.pipeline.modular_pipeline - INFO -   [Stage 3: Score Zones] Aggregating features and scoring zone: xingu_deep_forest
+2025-06-30 00:03:41 - src.core.scoring - INFO - Calculating convergent anomaly score for Xingu Deep Forest - Protected Interior
+2025-06-30 00:03:41 - src.core.scoring - INFO - 🔍 SINGLE-SENSOR HIGH CONFIDENCE: Sentinel-2=1.86
+2025-06-30 00:03:41 - src.core.scoring - INFO - 📊 WEIGHTED INTEGRATION SCORE: 3.00 (Integration: 2.39, Diversity: 0.90)
+2025-06-30 00:03:41 - src.core.scoring - INFO - 📊 Academic validation: LOW (Cohen's d: 0.902, p-value: 0.367251)
+2025-06-30 00:03:41 - src.core.scoring - INFO - ✓ Xingu Deep Forest - Protected Interior: 7.694782608695652/13 points (PROBABLE ARCHAEOLOGICAL FEATURE)
+2025-06-30 00:03:41 - src.pipeline.modular_pipeline - INFO -     [Stage 3: Score Zones] Zone xingu_deep_forest: Core score 7.694782608695652 (PROBABLE ARCHAEOLOGICAL FEATURE)
+2025-06-30 00:03:41 - src.pipeline.modular_pipeline - INFO - [Stage 3: Score Zones] Core scoring complete for 1 zones.
+2025-06-30 00:03:41 - src.pipeline.modular_pipeline - INFO - [Stage 3: Score Zones] Saved scoring results to /home/tsuser/AI/amazon-discovery/results/run_20250629_235949_xingu_deep_forest/sentinel2/scoring_results.json
+2025-06-30 00:03:41 - src.pipeline.modular_pipeline - INFO - [Stage 4: Generate Outputs] Provider: sentinel2
+2025-06-30 00:03:41 - src.pipeline.modular_pipeline - INFO - [Stage 4: Generate Outputs] Generating report...
+2025-06-30 00:03:41 - src.pipeline.report - INFO - 📊 Generating discovery report for provider: sentinel2, Run ID: 20250629_235949_xingu_deep_forest...
+2025-06-30 00:03:41 - src.pipeline.report - INFO - Created results directory structure for Run ID '20250629_235949_xingu_deep_forest', Provider 'sentinel2': /home/tsuser/AI/amazon-discovery/results/run_20250629_235949_xingu_deep_forest/sentinel2
+2025-06-30 00:03:41 - src.pipeline.report - INFO - 📁 Saving report results to /home/tsuser/AI/amazon-discovery/results/run_20250629_235949_xingu_deep_forest/sentinel2/reports
+2025-06-30 00:03:41 - src.pipeline.report - INFO - Saved detailed JSON report: /home/tsuser/AI/amazon-discovery/results/run_20250629_235949_xingu_deep_forest/sentinel2/reports/discovery_report.json
+2025-06-30 00:03:41 - src.pipeline.report - INFO - Saved summary markdown: /home/tsuser/AI/amazon-discovery/results/run_20250629_235949_xingu_deep_forest/sentinel2/reports/discovery_summary.md
+2025-06-30 00:03:41 - src.pipeline.modular_pipeline - INFO - [Stage 4: Generate Outputs] Report generation complete. Main report: /home/tsuser/AI/amazon-discovery/results/run_20250629_235949_xingu_deep_forest/sentinel2/reports/discovery_report.json
+2025-06-30 00:03:41 - src.pipeline.modular_pipeline - INFO - 📊 [Stage 4] Generating automatic academic report...
+2025-06-30 00:03:41 - src.pipeline.modular_pipeline - INFO - 📊 Academic Report Generated: /home/tsuser/AI/amazon-discovery/results/run_20250629_235949_xingu_deep_forest/sentinel2/academic_reports/academic_analysis_report_20250629_235949_xingu_deep_forest.json
+2025-06-30 00:03:41 - src.pipeline.modular_pipeline - INFO -     📈 Sites Meeting Standards: 0/1
+2025-06-30 00:03:41 - src.pipeline.modular_pipeline - INFO -     📊 Mean Effect Size (Cohen's d): -0.333
+2025-06-30 00:03:41 - src.pipeline.modular_pipeline - INFO -     🎯 Statistical Power: 0.000
+2025-06-30 00:03:41 - src.pipeline.modular_pipeline - INFO -     📚 Publication Ready: False
+2025-06-30 00:03:41 - src.pipeline.modular_pipeline - INFO -     📝 Recommended Journals: Archaeological Prospection, Remote Sensing, ISPRS Journal of Photogrammetry and Remote Sensing
+2025-06-30 00:03:41 - src.pipeline.modular_pipeline - INFO - [Stage 4: Generate Outputs] Generating exports for sentinel2...
+2025-06-30 00:03:41 - src.pipeline.modular_pipeline - INFO - 📊 Processing 1 scene results for zone xingu_deep_forest
+2025-06-30 00:03:41 - src.pipeline.modular_pipeline - INFO - 🔍 Checking for cross-provider data in: /home/tsuser/AI/amazon-discovery/results/run_20250629_235949_xingu_deep_forest
+2025-06-30 00:03:41 - src.pipeline.modular_pipeline - INFO - 📊 Processing 1 unique scene results for zone xingu_deep_forest from all providers.
+2025-06-30 00:03:41 - src.pipeline.modular_pipeline - INFO - 🌐 Cross-provider feature totals: 0 GEDI + 79 Sentinel-2
+2025-06-30 00:03:41 - src.pipeline.modular_pipeline - INFO - 🔍 Starting convergence detection with 79 features (0 GEDI + 79 Sentinel-2)
+2025-06-30 00:03:41 - src.core.gpu_optimization - INFO - 🚀 GPU processor initialized on <CUDA Device 0>
+2025-06-30 00:03:41 - src.core.gpu_optimization - INFO - ⚡ Archaeological computations will use GPU acceleration
+2025-06-30 00:03:41 - src.core.gpu_optimization - INFO - 🚀 GPU processor initialized on <CUDA Device 0>
+2025-06-30 00:03:41 - src.core.scoring - INFO - 🏛️ Enhanced Archaeological Scorer initialized:
+2025-06-30 00:03:41 - src.core.scoring - INFO -   📊 Academic validation: enabled
+2025-06-30 00:03:41 - src.core.scoring - INFO -   ⚡ GPU acceleration: enabled
+2025-06-30 00:03:41 - src.pipeline.modular_pipeline - INFO - 🔗 Convergence detection results for xingu_deep_forest:
+2025-06-30 00:03:41 - src.pipeline.modular_pipeline - INFO -    📊 Total pairs checked: 3081
+2025-06-30 00:03:41 - src.pipeline.modular_pipeline - INFO -    🔄 Different provider pairs: 0
+2025-06-30 00:03:41 - src.pipeline.modular_pipeline - INFO -    🎯 Convergent pairs found: 0
+2025-06-30 00:03:41 - src.pipeline.export_manager - INFO - 📍 Sentinel-2 exports: 61 high-quality features (≥50% confidence) → xingu_deep_forest_sentinel2_detections.geojson
+2025-06-30 00:03:41 - src.pipeline.modular_pipeline - INFO - 📍 Exported 79 Sentinel-2 features for xingu_deep_forest
+2025-06-30 00:03:41 - src.pipeline.modular_pipeline - INFO - 📍 No cross-validated features found for xingu_deep_forest
+2025-06-30 00:03:41 - src.pipeline.modular_pipeline - INFO - 🏆 Top 5 candidate ranking:
+2025-06-30 00:03:41 - src.pipeline.modular_pipeline - INFO -   1. terra_preta_optimized (conf: 0.95, conv: 0.0, priority: 1.96)
+2025-06-30 00:03:41 - src.pipeline.modular_pipeline - INFO -   2. terra_preta_optimized (conf: 0.78, conv: 0.0, priority: 1.77)
+2025-06-30 00:03:41 - src.pipeline.modular_pipeline - INFO -   3. terra_preta_optimized (conf: 0.71, conv: 0.0, priority: 1.71)
+2025-06-30 00:03:41 - src.pipeline.modular_pipeline - INFO -   4. terra_preta_optimized (conf: 0.66, conv: 0.0, priority: 1.66)
+2025-06-30 00:03:41 - src.pipeline.modular_pipeline - INFO -   5. terra_preta_optimized (conf: 0.62, conv: 0.0, priority: 1.62)
+2025-06-30 00:03:41 - src.pipeline.export_manager - INFO - 🎯 Top candidates export: 5 sites → xingu_deep_forest_top_5_candidates.geojson
+2025-06-30 00:03:41 - src.pipeline.modular_pipeline - INFO - 🎯 Exported 5 top candidates for xingu_deep_forest
+2025-06-30 00:03:41 - src.pipeline.modular_pipeline - INFO - [Stage 4: Generate Outputs] Creating visualizations for sentinel2...
+2025-06-30 00:03:41 - src.pipeline.modular_pipeline - INFO - [Stage 4: Generate Outputs] Saving maps to: /home/tsuser/AI/amazon-discovery/results/run_20250629_235949_xingu_deep_forest/sentinel2/maps
+2025-06-30 00:03:41 - src.pipeline.modular_pipeline - INFO -   [Stage 4: Generate Outputs] Visualizing zone: xingu_deep_forest
+2025-06-30 00:03:41 - src.visualization.core - INFO - 🎯 Generating enhanced map for xingu_deep_forest
+2025-06-30 00:03:41 - src.visualization.core - INFO - 🛰️ Loaded 61 Sentinel-2 features
+2025-06-30 00:03:41 - src.visualization.core - INFO - ⭐ Loaded 5 top candidates from xingu_deep_forest_top_5_candidates.geojson
+2025-06-30 00:03:41 - src.visualization.core - INFO - 📊 Mapped data sources: ['sentinel2_only', 'top_candidates']
+2025-06-30 00:03:41 - src.visualization.utils - INFO - 📊 Calculated bounds: -12.289°S to -12.177°S, -53.169°W to -53.030°W
+2025-06-30 00:03:41 - src.visualization.components - INFO - 🔍 Processing ALL data sources to create single truth per coordinate
+2025-06-30 00:03:41 - src.visualization.components - INFO - 📊 Processing 61 features from sentinel2_only
+2025-06-30 00:03:41 - src.visualization.components - INFO - 📊 Processing 5 features from top_candidates
+2025-06-30 00:03:41 - src.visualization.components - INFO - 🎯 Found 61 unique coordinates after deduplication
+2025-06-30 00:03:41 - src.visualization.components - INFO - ✅ Created 61 single-truth features
+2025-06-30 00:03:41 - src.visualization.components - INFO - 📊 Feature distribution: {'priority': 5, 'sentinel2': 56}
+2025-06-30 00:03:41 - src.visualization.components - INFO - 📊 unified_features: 61 features
+2025-06-30 00:03:41 - src.visualization.templates - INFO - ✅ Generated complete HTML map for xingu_deep_forest
+2025-06-30 00:03:41 - src.visualization.core - INFO - ✅ Enhanced map generated: /home/tsuser/AI/amazon-discovery/results/run_20250629_235949_xingu_deep_forest/visualizations/xingu_deep_forest_enhanced_map_20250630_000341.html
+2025-06-30 00:03:41 - src.pipeline.modular_pipeline - INFO -     🎯 Enhanced map created for zone xingu_deep_forest: /home/tsuser/AI/amazon-discovery/results/run_20250629_235949_xingu_deep_forest/visualizations/xingu_deep_forest_enhanced_map_20250630_000341.html
+2025-06-30 00:03:41 - src.pipeline.modular_pipeline - INFO - [Stage 4: Generate Outputs] Visualization generation complete.
+2025-06-30 00:03:41 - src.pipeline.modular_pipeline - INFO - ✅ Full Modular Pipeline Run Completed for provider: sentinel2, Run ID: 20250629_235949_xingu_deep_forest
+2025-06-30 00:03:41 - src.checkpoints.checkpoint2 - INFO - Processing sentinel2 scene: processed_new with 0 total features
+2025-06-30 00:03:41 - src.checkpoints.checkpoint2 - INFO - Sentinel-2 feature extraction for xingu_deep_forest: 29 terra preta, 0 geometric, 50 crop marks
+2025-06-30 00:03:41 - src.checkpoints.checkpoint2 - INFO - Scene result keys: ['success', 'status', 'provider', 'zone_id', 'scene_id', 'source_composite_path', 'processing_crs', 'terra_preta_analysis', 'crop_mark_analysis', 'detection_summary']
+2025-06-30 00:03:41 - src.checkpoints.checkpoint2 - INFO - Extracted 65 Sentinel-2 anomaly footprints for zone xingu_deep_forest: 15 terra preta, 0 geometric, 50 crop marks
+2025-06-30 00:03:41 - src.checkpoints.checkpoint2 - INFO - Extracted 65 features from sentinel2 scene
+2025-06-30 00:03:41 - src.checkpoints.checkpoint2 - INFO - Successfully read export data: 61 features from xingu_deep_forest_sentinel2_detections.geojson
+2025-06-30 00:03:41 - openai_checkpoints - INFO - Sending request to OpenAI o3 - Image: No
+2025-06-30 00:05:08 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-06-30 00:05:08 - src.checkpoints.checkpoint2 - INFO - 🔄 Running modular pipeline for gedi...
+2025-06-30 00:05:08 - src.providers.gedi_provider - INFO - 🛰️ GEDI Provider: Bearer token detected. Using token-based authentication.
+2025-06-30 00:05:08 - src.providers.gedi_provider - INFO - 🛰️ GEDI Provider initialized for Amazon archaeological discovery
+2025-06-30 00:05:08 - src.checkpoints.checkpoint2 - INFO - 🛰️ GEDI: Using 1 granule(s)
+2025-06-30 00:05:08 - src.core.gpu_optimization - INFO - 🚀 GPU processor initialized on <CUDA Device 0>
+2025-06-30 00:05:08 - src.core.gpu_optimization - INFO - ⚡ Archaeological computations will use GPU acceleration
+2025-06-30 00:05:08 - src.core.gpu_optimization - INFO - 🚀 GPU processor initialized on <CUDA Device 0>
+2025-06-30 00:05:08 - src.core.scoring - INFO - 🏛️ Enhanced Archaeological Scorer initialized:
+2025-06-30 00:05:08 - src.core.scoring - INFO -   📊 Academic validation: enabled
+2025-06-30 00:05:08 - src.core.scoring - INFO -   ⚡ GPU acceleration: enabled
+2025-06-30 00:05:08 - src.pipeline.report - INFO - ReportStep initialized for Run ID: 20250629_235949_xingu_deep_forest
+2025-06-30 00:05:08 - src.visualization.core - INFO - 🗺️ Archaeological Map Generator initialized
+2025-06-30 00:05:08 - src.pipeline.export_manager - INFO - 📁 Unified Export Manager initialized for run 20250629_235949_xingu_deep_forest
+2025-06-30 00:05:08 - src.pipeline.export_manager - INFO -    📂 Exports will be saved to: /home/tsuser/AI/amazon-discovery/results/run_20250629_235949_xingu_deep_forest/exports
+2025-06-30 00:05:08 - src.pipeline.modular_pipeline - INFO - ModularPipeline initialized for provider: gedi, Run ID: 20250629_235949_xingu_deep_forest. Base dir: /home/tsuser/AI/amazon-discovery/results/run_20250629_235949_xingu_deep_forest/gedi
+2025-06-30 00:05:08 - src.pipeline.modular_pipeline - INFO - 🚀 Starting Full Modular Pipeline Run for provider: gedi, Run ID: 20250629_235949_xingu_deep_forest
+2025-06-30 00:05:08 - src.pipeline.modular_pipeline - INFO - Zones: ['xingu_deep_forest'], Max Scenes: 1
+2025-06-30 00:05:08 - src.pipeline.modular_pipeline - INFO - [Stage 1: Acquire Data] Provider: gedi, Zones: ['xingu_deep_forest'], Max Scenes: 1
+2025-06-30 00:05:08 - src.providers.gedi_provider - INFO - 🎯 Downloading GEDI data for Xingu Deep Forest - Protected Interior
+2025-06-30 00:05:08 - src.providers.gedi_provider - INFO - 🔍 Searching GEDI data with parameters: {'collection_concept_id': 'C2142771958-LPCLOUD', 'bounding_box': '-53.17,-12.29,-53.03,-12.11', 'page_size': 1, 'page_num': 1}
+2025-06-30 00:05:08 - src.providers.gedi_provider - INFO - 🌍 Bounding box: -53.17,-12.29,-53.03,-12.11 (west,south,east,north)
+2025-06-30 00:05:09 - src.providers.gedi_provider - INFO - 🔗 Full request URL: https://cmr.earthdata.nasa.gov/search/granules?collection_concept_id=C2142771958-LPCLOUD&bounding_box=-53.17%2C-12.29%2C-53.03%2C-12.11&page_size=1&page_num=1
+2025-06-30 00:05:09 - src.providers.gedi_provider - INFO - 📊 Found 1 GEDI granules for Xingu Deep Forest - Protected Interior
+2025-06-30 00:05:09 - src.providers.gedi_provider - INFO - Found 1 relevant GEDI granules for Xingu Deep Forest - Protected Interior
+2025-06-30 00:05:09 - src.providers.gedi_provider - INFO - Processing GEDI granule 1/1: GEDI02_A_2019110075658_O01995_01_T02063_02_003_01_V002
+2025-06-30 00:05:09 - src.providers.gedi_provider - INFO - CACHE HIT: Using existing GEDI HDF5 file: /home/tsuser/AI/amazon-discovery/data/satellite/gedi/raw_hdf5_cache/Xingu Deep Forest - Protected Interior/GEDI02_A_2019110075658_O01995_01_T02063_02_003_01_V002/GEDI02_A_2019110075658_O01995_01_T02063_02_003_01_V002.h5
+2025-06-30 00:05:09 - src.providers.gedi_provider - INFO - CACHE HIT: Using cached metrics for GEDI02_A_2019110075658_O01995_01_T02063_02_003_01_V002 from /home/tsuser/AI/amazon-discovery/data/satellite/gedi/processed_metrics_cache/Xingu Deep Forest - Protected Interior/GEDI02_A_2019110075658_O01995_01_T02063_02_003_01_V002_metrics.json
+2025-06-30 00:05:09 - src.providers.gedi_provider - INFO - ✅ Successfully processed GEDI02_A_2019110075658_O01995_01_T02063_02_003_01_V002
+2025-06-30 00:05:09 - src.providers.gedi_provider - INFO - 🎯 GEDI download complete: 1 granules processed
+2025-06-30 00:05:09 - src.pipeline.modular_pipeline - INFO - [Stage 1: Acquire Data] Downloaded 1 scenes/items.
+2025-06-30 00:05:09 - src.pipeline.modular_pipeline - INFO - [Stage 1: Acquire Data] Saved acquired scene data to /home/tsuser/AI/amazon-discovery/results/run_20250629_235949_xingu_deep_forest/gedi/acquired_scene_data.json
+2025-06-30 00:05:09 - src.pipeline.modular_pipeline - INFO - [Stage 2: Analyze Scenes] Provider: gedi
+2025-06-30 00:05:09 - src.pipeline.modular_pipeline - INFO - [Stage 2: Analyze Scenes] Using 1 scenes passed in memory.
+2025-06-30 00:05:09 - src.core.detectors.gedi_detector - INFO - Loading GEDI zone config for zone_type 'deep_forest_isolation': {'detection_weights': {'terra_preta_weight': 3.0, 'crop_mark_weight': 2.0, 'geometric_weight': 1.0}, 'thresholds': {'crop_mark_threshold': 0.06, 'terra_preta_threshold': 0.15, 'geometric_min_size': 10, 'density_factor': 1.0}}
+2025-06-30 00:05:09 - src.core.detectors.gedi_detector - INFO - GEDI detector initialized for zone xingu_deep_forest (type: deep_forest_isolation, strategy: mound_detection) with run_id: 20250629_235949_xingu_deep_forest
+2025-06-30 00:05:09 - src.core.detectors.gedi_detector - INFO - Zone-specific config: {'detection_weights': {'terra_preta_weight': 3.0, 'crop_mark_weight': 2.0, 'geometric_weight': 1.0}, 'thresholds': {'crop_mark_threshold': 0.06, 'terra_preta_threshold': 0.15, 'geometric_min_size': 10, 'density_factor': 1.0}}
+2025-06-30 00:05:09 - src.core.detector_patches - INFO - 🔧 Applying GPU optimizations to GEDI detector...
+2025-06-30 00:05:09 - src.core.detector_patches - INFO - ✅ GEDI detector GPU optimizations applied
+2025-06-30 00:05:09 - src.core.enable_optimizations - INFO - ✅ Applied GEDI GPU optimizations to detector for zone: TargetZone(id='xingu_deep_forest', name='Xingu Deep Forest - Protected Interior', center=(-12.2, -53.1), bbox=(-12.29, -53.17, -12.11, -53.03), priority=1, expected_features='Hidden mound complexes, forest settlements', historical_evidence='Fawcett route interior - zero modern access', search_radius_km=7.0, min_feature_size_m=40, max_feature_size_m=300, zone_type='deep_forest_isolation', detection_strategy='mound_detection')
+2025-06-30 00:05:09 - src.pipeline.analysis - INFO -   Analyzing GEDI metrics directory: /home/tsuser/AI/amazon-discovery/data/satellite/gedi/processed_metrics_cache/Xingu Deep Forest - Protected Interior for scene GEDI02_A_2019110075658_O01995_01_T02063_02_003_01_V002
+2025-06-30 00:05:09 - src.core.detector_patches - INFO - Loading GEDI metrics from JSON: /home/tsuser/AI/amazon-discovery/data/satellite/gedi/processed_metrics_cache/Xingu Deep Forest - Protected Interior/GEDI02_A_2019110075658_O01995_01_T02063_02_003_01_V002_metrics.json
+2025-06-30 00:05:09 - src.core.detector_patches - INFO - ✅ JSON GEDI metrics loading: 0.1MB, 2297 points
+2025-06-30 00:05:09 - src.core.detector_patches - INFO - 🚀 GPU-accelerated GEDI analysis: 2297 points
+2025-06-30 00:05:09 - src.core.detector_patches - INFO - ✅ GPU GEDI analysis completed: 33 features detected
+2025-06-30 00:05:09 - src.core.detector_patches - INFO - Saved GPU-accelerated GEDI detection summary to /home/tsuser/AI/amazon-discovery/results/run_20250629_235949_xingu_deep_forest/detector_outputs/gedi/xingu_deep_forest/Xingu Deep Forest - Protected Interior/gedi_detection_summary.json
+2025-06-30 00:05:09 - src.pipeline.analysis - INFO -   ✓ Found 33 features for scene GEDI02_A_2019110075658_O01995_01_T02063_02_003_01_V002
+2025-06-30 00:05:09 - src.pipeline.modular_pipeline - INFO - [Stage 2: Analyze Scenes] Analysis complete for 1 zones.
+2025-06-30 00:05:09 - src.pipeline.modular_pipeline - INFO - [Stage 2: Analyze Scenes] Saved analysis results to /home/tsuser/AI/amazon-discovery/results/run_20250629_235949_xingu_deep_forest/gedi/analysis_results.json
+2025-06-30 00:05:09 - src.pipeline.modular_pipeline - INFO - [Stage 3: Score Zones] Provider: gedi
+2025-06-30 00:05:09 - src.pipeline.modular_pipeline - INFO - [Stage 3: Score Zones] Using analysis results for 1 zones passed in memory.
+2025-06-30 00:05:09 - src.pipeline.modular_pipeline - INFO - [Stage 3: Score Zones] Calculating convergent anomaly scores using core scorer...
+2025-06-30 00:05:09 - src.pipeline.modular_pipeline - INFO -   [Stage 3: Score Zones] Aggregating features and scoring zone: xingu_deep_forest
+2025-06-30 00:05:09 - src.core.scoring - INFO - Calculating convergent anomaly score for Xingu Deep Forest - Protected Interior
+2025-06-30 00:05:09 - src.core.scoring - INFO - 📊 WEIGHTED INTEGRATION SCORE: 1.50 (Integration: 0.90, Diversity: 0.60)
+2025-06-30 00:05:09 - src.core.scoring - INFO - 📊 Academic validation: LOW (Cohen's d: -0.333, p-value: 0.738883)
+2025-06-30 00:05:09 - src.core.scoring - INFO - ✓ Xingu Deep Forest - Protected Interior: 3.5/13 points (NATURAL VARIATION)
+2025-06-30 00:05:09 - src.pipeline.modular_pipeline - INFO -     [Stage 3: Score Zones] Zone xingu_deep_forest: Core score 3.5 (NATURAL VARIATION)
+2025-06-30 00:05:09 - src.pipeline.modular_pipeline - INFO - [Stage 3: Score Zones] Core scoring complete for 1 zones.
+2025-06-30 00:05:09 - src.pipeline.modular_pipeline - INFO - [Stage 3: Score Zones] Saved scoring results to /home/tsuser/AI/amazon-discovery/results/run_20250629_235949_xingu_deep_forest/gedi/scoring_results.json
+2025-06-30 00:05:09 - src.pipeline.modular_pipeline - INFO - [Stage 4: Generate Outputs] Provider: gedi
+2025-06-30 00:05:09 - src.pipeline.modular_pipeline - INFO - [Stage 4: Generate Outputs] Generating report...
+2025-06-30 00:05:09 - src.pipeline.report - INFO - 📊 Generating discovery report for provider: gedi, Run ID: 20250629_235949_xingu_deep_forest...
+2025-06-30 00:05:09 - src.pipeline.report - INFO - Created results directory structure for Run ID '20250629_235949_xingu_deep_forest', Provider 'gedi': /home/tsuser/AI/amazon-discovery/results/run_20250629_235949_xingu_deep_forest/gedi
+2025-06-30 00:05:09 - src.pipeline.report - INFO - 📁 Saving report results to /home/tsuser/AI/amazon-discovery/results/run_20250629_235949_xingu_deep_forest/gedi/reports
+2025-06-30 00:05:09 - src.pipeline.report - INFO - Saved detailed JSON report: /home/tsuser/AI/amazon-discovery/results/run_20250629_235949_xingu_deep_forest/gedi/reports/discovery_report.json
+2025-06-30 00:05:09 - src.pipeline.report - INFO - Saved summary markdown: /home/tsuser/AI/amazon-discovery/results/run_20250629_235949_xingu_deep_forest/gedi/reports/discovery_summary.md
+2025-06-30 00:05:09 - src.pipeline.modular_pipeline - INFO - [Stage 4: Generate Outputs] Report generation complete. Main report: /home/tsuser/AI/amazon-discovery/results/run_20250629_235949_xingu_deep_forest/gedi/reports/discovery_report.json
+2025-06-30 00:05:09 - src.pipeline.modular_pipeline - INFO - 📊 [Stage 4] Generating automatic academic report...
+2025-06-30 00:05:09 - src.pipeline.modular_pipeline - INFO - 📊 Academic Report Generated: /home/tsuser/AI/amazon-discovery/results/run_20250629_235949_xingu_deep_forest/gedi/academic_reports/academic_analysis_report_20250629_235949_xingu_deep_forest.json
+2025-06-30 00:05:09 - src.pipeline.modular_pipeline - INFO -     📈 Sites Meeting Standards: 0/1
+2025-06-30 00:05:09 - src.pipeline.modular_pipeline - INFO -     📊 Mean Effect Size (Cohen's d): -0.333
+2025-06-30 00:05:09 - src.pipeline.modular_pipeline - INFO -     🎯 Statistical Power: 0.000
+2025-06-30 00:05:09 - src.pipeline.modular_pipeline - INFO -     📚 Publication Ready: False
+2025-06-30 00:05:09 - src.pipeline.modular_pipeline - INFO -     📝 Recommended Journals: Archaeological Prospection, Remote Sensing, ISPRS Journal of Photogrammetry and Remote Sensing
+2025-06-30 00:05:09 - src.pipeline.modular_pipeline - INFO - [Stage 4: Generate Outputs] Generating exports for gedi...
+2025-06-30 00:05:09 - src.pipeline.modular_pipeline - INFO - 📊 Processing 1 scene results for zone xingu_deep_forest
+2025-06-30 00:05:09 - src.pipeline.modular_pipeline - INFO - 🔍 Checking for cross-provider data in: /home/tsuser/AI/amazon-discovery/results/run_20250629_235949_xingu_deep_forest
+2025-06-30 00:05:09 - src.pipeline.modular_pipeline - INFO - 🛰️ Loading Sentinel-2 features from: /home/tsuser/AI/amazon-discovery/results/run_20250629_235949_xingu_deep_forest/sentinel2/analysis_results.json
+2025-06-30 00:05:09 - src.pipeline.modular_pipeline - INFO - 🛰️ Found 1 Sentinel-2 scene results
+2025-06-30 00:05:09 - src.pipeline.modular_pipeline - INFO - 📊 Processing 2 unique scene results for zone xingu_deep_forest from all providers.
+2025-06-30 00:05:09 - src.pipeline.modular_pipeline - INFO - 🌐 Cross-provider feature totals: 33 GEDI + 79 Sentinel-2
+2025-06-30 00:05:09 - src.pipeline.modular_pipeline - INFO - 🔍 Starting convergence detection with 112 features (33 GEDI + 79 Sentinel-2)
+2025-06-30 00:05:09 - src.core.gpu_optimization - INFO - 🚀 GPU processor initialized on <CUDA Device 0>
+2025-06-30 00:05:09 - src.core.gpu_optimization - INFO - ⚡ Archaeological computations will use GPU acceleration
+2025-06-30 00:05:09 - src.core.gpu_optimization - INFO - 🚀 GPU processor initialized on <CUDA Device 0>
+2025-06-30 00:05:09 - src.core.scoring - INFO - 🏛️ Enhanced Archaeological Scorer initialized:
+2025-06-30 00:05:09 - src.core.scoring - INFO -   📊 Academic validation: enabled
+2025-06-30 00:05:09 - src.core.scoring - INFO -   ⚡ GPU acceleration: enabled
+2025-06-30 00:05:09 - src.pipeline.modular_pipeline - INFO - 🔗 Convergence detection results for xingu_deep_forest:
+2025-06-30 00:05:09 - src.pipeline.modular_pipeline - INFO -    📊 Total pairs checked: 6216
+2025-06-30 00:05:09 - src.pipeline.modular_pipeline - INFO -    🔄 Different provider pairs: 2607
+2025-06-30 00:05:09 - src.pipeline.modular_pipeline - INFO -    🎯 Convergent pairs found: 0
+2025-06-30 00:05:09 - src.pipeline.export_manager - INFO - 📍 GEDI exports: 33 high-quality features (≥40% confidence) → xingu_deep_forest_gedi_detections.geojson
+2025-06-30 00:05:09 - src.pipeline.modular_pipeline - INFO - 📍 Exported 33 GEDI features for xingu_deep_forest
+2025-06-30 00:05:09 - src.pipeline.export_manager - INFO - 📍 Sentinel-2 exports: 61 high-quality features (≥50% confidence) → xingu_deep_forest_sentinel2_detections.geojson
+2025-06-30 00:05:09 - src.pipeline.modular_pipeline - INFO - 📍 Exported 79 Sentinel-2 features for xingu_deep_forest
+2025-06-30 00:05:09 - src.pipeline.modular_pipeline - INFO - 📍 No cross-validated features found for xingu_deep_forest
+2025-06-30 00:05:09 - src.pipeline.modular_pipeline - INFO - 🏆 Top 5 candidate ranking:
+2025-06-30 00:05:09 - src.pipeline.modular_pipeline - INFO -   1. terra_preta_optimized (conf: 0.95, conv: 0.0, priority: 1.96)
+2025-06-30 00:05:09 - src.pipeline.modular_pipeline - INFO -   2. terra_preta_optimized (conf: 0.78, conv: 0.0, priority: 1.77)
+2025-06-30 00:05:09 - src.pipeline.modular_pipeline - INFO -   3. terra_preta_optimized (conf: 0.71, conv: 0.0, priority: 1.71)
+2025-06-30 00:05:09 - src.pipeline.modular_pipeline - INFO -   4. terra_preta_optimized (conf: 0.66, conv: 0.0, priority: 1.66)
+2025-06-30 00:05:09 - src.pipeline.modular_pipeline - INFO -   5. terra_preta_optimized (conf: 0.62, conv: 0.0, priority: 1.62)
+2025-06-30 00:05:09 - src.pipeline.export_manager - INFO - 🎯 Top candidates export: 5 sites → xingu_deep_forest_top_5_candidates.geojson
+2025-06-30 00:05:09 - src.pipeline.modular_pipeline - INFO - 🎯 Exported 5 top candidates for xingu_deep_forest
+2025-06-30 00:05:09 - src.pipeline.modular_pipeline - INFO - [Stage 4: Generate Outputs] Creating visualizations for gedi...
+2025-06-30 00:05:09 - src.pipeline.modular_pipeline - INFO - [Stage 4: Generate Outputs] Saving maps to: /home/tsuser/AI/amazon-discovery/results/run_20250629_235949_xingu_deep_forest/gedi/maps
+2025-06-30 00:05:09 - src.pipeline.modular_pipeline - INFO -   [Stage 4: Generate Outputs] Visualizing zone: xingu_deep_forest
+2025-06-30 00:05:09 - src.visualization.core - INFO - 🎯 Generating enhanced map for xingu_deep_forest
+2025-06-30 00:05:09 - src.visualization.core - INFO - 📡 Loaded 33 GEDI features
+2025-06-30 00:05:09 - src.visualization.core - INFO - 🛰️ Loaded 61 Sentinel-2 features
+2025-06-30 00:05:09 - src.visualization.core - INFO - ⭐ Loaded 5 top candidates from xingu_deep_forest_top_5_candidates.geojson
+2025-06-30 00:05:09 - src.visualization.core - INFO - 📊 Mapped data sources: ['gedi_only', 'sentinel2_only', 'top_candidates']
+2025-06-30 00:05:09 - src.visualization.utils - INFO - 📊 Calculated bounds: -12.289°S to -12.143°S, -53.169°W to -53.030°W
+2025-06-30 00:05:09 - src.visualization.components - INFO - 🔍 Processing ALL data sources to create single truth per coordinate
+2025-06-30 00:05:09 - src.visualization.components - INFO - 📊 Processing 33 features from gedi_only
+2025-06-30 00:05:09 - src.visualization.components - INFO - 📊 Processing 61 features from sentinel2_only
+2025-06-30 00:05:09 - src.visualization.components - INFO - 📊 Processing 5 features from top_candidates
+2025-06-30 00:05:09 - src.visualization.components - INFO - 🎯 Found 94 unique coordinates after deduplication
+2025-06-30 00:05:09 - src.visualization.components - INFO - ✅ Created 94 single-truth features
+2025-06-30 00:05:09 - src.visualization.components - INFO - 📊 Feature distribution: {'gedi': 33, 'priority': 5, 'sentinel2': 56}
+2025-06-30 00:05:09 - src.visualization.components - INFO - 📊 unified_features: 94 features
+2025-06-30 00:05:09 - src.visualization.templates - INFO - ✅ Generated complete HTML map for xingu_deep_forest
+2025-06-30 00:05:09 - src.visualization.core - INFO - ✅ Enhanced map generated: /home/tsuser/AI/amazon-discovery/results/run_20250629_235949_xingu_deep_forest/visualizations/xingu_deep_forest_enhanced_map_20250630_000509.html
+2025-06-30 00:05:09 - src.pipeline.modular_pipeline - INFO -     🎯 Enhanced map created for zone xingu_deep_forest: /home/tsuser/AI/amazon-discovery/results/run_20250629_235949_xingu_deep_forest/visualizations/xingu_deep_forest_enhanced_map_20250630_000509.html
+2025-06-30 00:05:09 - src.pipeline.modular_pipeline - INFO - [Stage 4: Generate Outputs] Visualization generation complete.
+2025-06-30 00:05:09 - src.pipeline.modular_pipeline - INFO - ✅ Full Modular Pipeline Run Completed for provider: gedi, Run ID: 20250629_235949_xingu_deep_forest
+2025-06-30 00:05:09 - src.checkpoints.checkpoint2 - INFO - Processing gedi scene: processed_gpu_accelerated with 33 total features
+2025-06-30 00:05:09 - src.checkpoints.checkpoint2 - INFO - GEDI feature extraction for xingu_deep_forest: total_features=33
+2025-06-30 00:05:09 - src.checkpoints.checkpoint2 - INFO - Scene result keys: ['success', 'status', 'zone_name', 'scene_path', 'clearing_results', 'earthwork_results', 'total_features', 'output_summary_path', 'gpu_accelerated']
+2025-06-30 00:05:09 - src.checkpoints.checkpoint2 - INFO - Reading GEDI features from export: /home/tsuser/AI/amazon-discovery/results/run_20250629_235949_xingu_deep_forest/exports/gedi/xingu_deep_forest_gedi_detections.geojson
+2025-06-30 00:05:09 - src.checkpoints.checkpoint2 - INFO - Found 33 features in GEDI export
+2025-06-30 00:05:09 - src.checkpoints.checkpoint2 - INFO - ✅ Successfully extracted 33 GEDI features from export
+2025-06-30 00:05:09 - src.checkpoints.checkpoint2 - INFO - ✅ Extracted 33 GEDI anomaly footprints for zone xingu_deep_forest
+2025-06-30 00:05:09 - src.checkpoints.checkpoint2 - INFO - Extracted 33 features from gedi scene
+2025-06-30 00:05:09 - src.checkpoints.checkpoint2 - INFO - Successfully read export data: 33 features from xingu_deep_forest_gedi_detections.geojson
+2025-06-30 00:05:09 - openai_checkpoints - INFO - Sending request to OpenAI o3 - Image: No
+2025-06-30 00:06:15 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-06-30 00:06:15 - src.checkpoints.checkpoint2 - INFO - 🔍 Enhanced convergence analysis: 65 S2 + 33 GEDI features
+2025-06-30 00:06:15 - src.checkpoints.checkpoint2 - INFO - 📍 Valid coordinates: 65 S2, 33 GEDI
+2025-06-30 00:06:15 - src.checkpoints.checkpoint2 - INFO - 🎯 Enhanced analysis results:
+2025-06-30 00:06:15 - src.checkpoints.checkpoint2 - INFO -    📊 Cross-validated features: 0
+2025-06-30 00:06:15 - src.checkpoints.checkpoint2 - INFO -    📊 Standalone Sentinel-2 features: 61
+2025-06-30 00:06:15 - src.checkpoints.checkpoint2 - INFO -    📊 Standalone GEDI features: 33
+2025-06-30 00:06:15 - src.checkpoints.checkpoint2 - INFO -    📊 Total features returned: 94
+2025-06-30 00:06:15 - src.checkpoints.checkpoint2 - INFO - Enhanced multi-sensor analysis: 98 → 94 features
+2025-06-30 00:06:15 - src.checkpoints.checkpoint2 - INFO - ✅ Using enhanced multi-sensor analysis results (individual + cross-validated features)
+2025-06-30 00:06:15 - src.checkpoints.checkpoint2 - INFO - Found 94 real anomalies from detectors
+2025-06-30 00:06:15 - src.checkpoints.checkpoint2 - INFO - 🏛️ High-confidence archaeological sites: 94 found, using top 5
+2025-06-30 00:06:15 - src.core.validation - ERROR - Failed to save validation results: 'NoneType' object has no attribute 'get'
+2025-06-30 00:06:15 - src.checkpoints.checkpoint2 - INFO - Validation completed: 94 detections analyzed
+2025-06-30 00:06:15 - src.checkpoints.checkpoint2 - INFO - Flagged detections: 7
+2025-06-30 00:06:15 - src.checkpoints.checkpoint2 - INFO - 🔍 Export debug: 94 total features before export
+2025-06-30 00:06:15 - src.checkpoints.checkpoint2 - INFO - 🔍 Export debug: 61 Sentinel-2, 33 GEDI features
+2025-06-30 00:06:15 - src.checkpoints.checkpoint2 - INFO - 🔍 Sample S2 feature: {'type': 'terra_preta_s2', 'coordinates': [-12.288876394420024, -53.07770777894136], 'confidence': 0.955, 'area_m2': 19100.0, 'scene_id': 'S2A_22LBM_20240914_0_L2A', 'zone': 'xingu_deep_forest', 'provider': 'sentinel2', 'convergence_type': 'sentinel2_only'}
+2025-06-30 00:06:15 - src.pipeline.export_manager - INFO - 📁 Unified Export Manager initialized for run 20250629_235949_xingu_deep_forest
+2025-06-30 00:06:15 - src.pipeline.export_manager - INFO -    📂 Exports will be saved to: /home/tsuser/AI/amazon-discovery/results/run_20250629_235949_xingu_deep_forest/exports
+2025-06-30 00:06:15 - src.pipeline.export_manager - INFO - 📍 Sentinel-2 exports: 61 high-quality features (≥50% confidence) → xingu_deep_forest_sentinel2_detections.geojson
+2025-06-30 00:06:15 - src.pipeline.export_manager - INFO - 📍 GEDI exports: 33 high-quality features (≥40% confidence) → xingu_deep_forest_gedi_detections.geojson
+2025-06-30 00:06:15 - src.pipeline.export_manager - INFO - 📍 Combined exports: 94 high-quality features (≥50% confidence) → xingu_deep_forest_combined_detections.geojson
+2025-06-30 00:06:15 - src.pipeline.export_manager - INFO - 🎯 Top candidates export: 5 sites → xingu_deep_forest_top_5_candidates.geojson
+2025-06-30 00:06:15 - src.pipeline.export_manager - INFO - 📋 Export manifest created: 4 files listed
+2025-06-30 00:06:15 - src.pipeline.export_manager - INFO - ✅ Old provider export directories cleaned up
+2025-06-30 00:06:15 - src.checkpoints.checkpoint2 - INFO - 📁 Unified exports completed for xingu_deep_forest
+2025-06-30 00:06:15 - src.checkpoints.checkpoint2 - INFO - Successfully read export data: 94 features from xingu_deep_forest_combined_detections.geojson
+2025-06-30 00:06:15 - src.checkpoints.checkpoint2 - INFO - Successfully read export data: 5 features from xingu_deep_forest_top_5_candidates.geojson
+2025-06-30 00:06:15 - src.checkpoints.checkpoint2 - INFO - 🎯 Created comprehensive prompt: 31,745 characters
+2025-06-30 00:06:15 - src.checkpoints.checkpoint2 - INFO - 📊 Included 4 data sections
+2025-06-30 00:06:15 - src.checkpoints.checkpoint2 - INFO - 🔬 Processing 94 total features
+2025-06-30 00:06:15 - openai_checkpoints - INFO - Sending request to OpenAI o3 - Image: No
+2025-06-30 00:07:57 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-06-30 00:07:57 - src.checkpoints.checkpoint2 - INFO - 🤖 Saved 3 OpenAI interactions to /home/tsuser/AI/amazon-discovery/results/run_20250630_000512_xingu_deep_forest/checkpoint2_openai_interactions.json
+2025-06-30 00:07:57 - src.checkpoints.checkpoint2 - INFO - 🏛️ Creating unified archaeological maps for checkpoint 2...
+2025-06-30 00:07:57 - src.pipeline.export_manager - INFO - 📁 Unified Export Manager initialized for run 20250629_235949_xingu_deep_forest
+2025-06-30 00:07:57 - src.pipeline.export_manager - INFO -    📂 Exports will be saved to: results/run_20250629_235949_xingu_deep_forest/exports
+2025-06-30 00:07:57 - src.visualization.core - INFO - 🗺️ Archaeological Map Generator initialized
+2025-06-30 00:07:57 - src.checkpoints.checkpoint2 - INFO - 🔗 Enhanced visualizer will process checkpoint data during map generation...
+2025-06-30 00:07:57 - src.visualization.core - INFO - 🎯 Generating enhanced map for xingu_deep_forest
+2025-06-30 00:07:57 - src.visualization.core - INFO - 📡 Loaded 33 GEDI features
+2025-06-30 00:07:57 - src.visualization.core - INFO - 🛰️ Loaded 61 Sentinel-2 features
+2025-06-30 00:07:57 - src.visualization.core - INFO - 🎯 Loaded 94 validated features
+2025-06-30 00:07:57 - src.visualization.core - INFO - ⭐ Loaded 5 top candidates from xingu_deep_forest_top_5_candidates.geojson
+2025-06-30 00:07:57 - src.visualization.core - INFO - 📊 Mapped data sources: ['gedi_only', 'sentinel2_only', 'combined', 'top_candidates']
+2025-06-30 00:07:57 - src.visualization.utils - INFO - 📊 Calculated bounds: -12.289°S to -12.143°S, -53.169°W to -53.030°W
+2025-06-30 00:07:57 - src.visualization.components - INFO - 🔍 Processing ALL data sources to create single truth per coordinate
+2025-06-30 00:07:57 - src.visualization.components - INFO - 📊 Processing 33 features from gedi_only
+2025-06-30 00:07:57 - src.visualization.components - INFO - 📊 Processing 61 features from sentinel2_only
+2025-06-30 00:07:57 - src.visualization.components - INFO - 📊 Processing 94 features from combined
+2025-06-30 00:07:57 - src.visualization.components - INFO - 📊 Processing 5 features from top_candidates
+2025-06-30 00:07:57 - src.visualization.components - INFO - 🎯 Found 94 unique coordinates after deduplication
+2025-06-30 00:07:57 - src.visualization.components - INFO - ✅ Created 94 single-truth features
+2025-06-30 00:07:57 - src.visualization.components - INFO - 📊 Feature distribution: {'priority': 5, 'gedi': 29, 'sentinel2': 60}
+2025-06-30 00:07:57 - src.visualization.components - INFO - 📊 unified_features: 94 features
+2025-06-30 00:07:57 - src.visualization.templates - INFO - ✅ Generated complete HTML map for xingu_deep_forest
+2025-06-30 00:07:57 - src.visualization.core - INFO - ✅ Enhanced map generated: results/run_20250629_235949_xingu_deep_forest/visualizations/xingu_deep_forest_enhanced_map_20250630_000757.html
+2025-06-30 00:07:57 - src.checkpoints.checkpoint2 - INFO - ✅ Enhanced archaeological map created: results/run_20250629_235949_xingu_deep_forest/visualizations/xingu_deep_forest_enhanced_map_20250630_000757.html
+2025-06-30 00:07:57 - src.checkpoints.checkpoint2 - INFO - 📄 Automatic checkpoint report generated: results/run_20250629_235949_xingu_deep_forest/checkpoints/checkpoint_2_report.md
+2025-06-30 00:07:57 - src.checkpoints.base_checkpoint - INFO - ✅ Checkpoint 2 completed in 488.7s
+2025-06-30 00:07:57 - src.checkpoints.base_checkpoint - INFO - 📄 Results saved: /home/tsuser/AI/amazon-discovery/results/run_20250629_235949_xingu_deep_forest/checkpoints/checkpoint_2_result.json
+2025-06-30 00:07:57 - src.checkpoints.base_checkpoint - INFO - 📋 Validation report saved: /home/tsuser/AI/amazon-discovery/results/run_20250629_235949_xingu_deep_forest/checkpoints/checkpoint_2_validation.json
+2025-06-30 00:07:57 - openai_checkpoints - INFO - Interaction log saved to /home/tsuser/AI/amazon-discovery/results/run_20250629_235949_xingu_deep_forest/logs/openai_interactions.json
+2025-06-30 00:07:57 - openai_checkpoints - INFO - ✅ Checkpoint 2 completed successfully
