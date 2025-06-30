@@ -1,0 +1,79 @@
+# Amazon Archaeological Discovery Pipeline - Minimal Requirements
+# Essential dependencies only - removes problematic packages
+
+# Google Earth Engine (Alternative satellite data provider)
+earthengine-api>=0.1.380
+
+# Core Data Processing
+numpy>=1.24.0
+pandas>=2.0.0
+scipy>=1.11.0
+
+# Geospatial Analysis (Essential)
+geopandas>=0.14.0
+shapely>=2.0.0
+rasterio>=1.3.0
+pyproj>=3.6.0
+fiona>=1.9.0
+
+# Computer Vision & Image Processing
+opencv-python>=4.8.0
+scikit-image>=0.21.0
+Pillow>=10.0.0
+imageio>=2.31.0
+
+# Machine Learning
+scikit-learn>=1.3.0
+
+# Visualization
+matplotlib>=3.7.0
+seaborn>=0.12.0
+folium>=0.14.0
+plotly>=5.15.0
+
+# Web APIs & Data Retrieval
+requests>=2.31.0
+beautifulsoup4>=4.12.0
+
+# Utilities
+tqdm>=4.65.0
+click>=8.1.0
+python-dotenv>=1.0.0
+
+# Optional - only install if you have CUDA GPU
+tensorflow>=2.13.0
+
+# 🏛️ Academic Enhancement Dependencies (2024-2025 Research)
+# GPU Acceleration for 10x speedup potential
+cupy-cuda11x>=12.0.0  # GPU acceleration library
+numba>=0.58.0         # JIT compilation for performance
+
+# Statistical Validation (Cohen's d, p-values)
+scipy>=1.11.0  # Already included above, but emphasized for stats
+
+# Development
+jupyter>=1.0.0
+ipykernel>=6.25.0
+
+openai
+
+# Note: Removed problematic packages:
+# - pdal (LiDAR - requires system dependencies)
+# - laspy (LiDAR - not essential for satellite analysis)
+# - tensorflow (large, optional for now)
+# - earthpy (dependency issues)
+# - sentinelsat (Copernicus - backup only)
+
+pystac-client>=0.7.0
+pystac>=1.7.0
+h5py>=3.7.0
+
+rioxarray
+setuptools
+
+flake8>=6.0.0
+
+# Note: CuPy moved to enhanced dependencies above 
+
+
+geopy

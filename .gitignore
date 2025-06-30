@@ -1,0 +1,42 @@
+data/
+results/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pyw
+*.pyz
+
+.env
+.DS_Store
+src/data/
+src/results/
+venv/
+amazon_archaeological_discovery.egg-info/
+internal-docs/
+docs/archive/
+
+# Editor-specific files
+.vscode/
+
+# Temporary files
+*.tmp
+*.swp
+
+# Draft documents and temporary files
+Write-Up.md
+OpenAI-O3-formated- laste-response.md
+CLAUDE.md
+openai_checkpoints.py
+amazon-ai-scan.webp
+
+# AI-specific directories
+.claude/
+notebooks/data_bundle/
+
+
+
+
+
+
+
