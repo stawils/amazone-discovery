@@ -165,29 +165,103 @@ class CrossProviderAnalyzer:
         )
 
     def _generate_enhanced_top_candidates(self, all_features: List[FeatureDict], top_n: int = 20) -> List[EnhancedCandidate]:
-        """Generates a ranked list of top candidates based on enhanced scoring."""
+        """Generates a ranked list of top candidates based on enhanced scoring with diversity preferences."""
         enhanced_candidates: List[EnhancedCandidate] = []
         for feature in all_features:
             candidate = cast(EnhancedCandidate, feature.copy())
             
-            score = (
+            base_score = (
                 candidate.get('confidence', 0.0) * 0.4 +
                 candidate.get('convergence_score', 0.0) * 0.4 +
                 (1 if candidate.get('gedi_support') else 0) * 0.1 +
                 (1 if candidate.get('sentinel2_support') else 0) * 0.1
             )
             
-            candidate['enhanced_score'] = score
+            # Apply type diversity bonus to promote different archaeological feature types
+            feature_type = candidate.get('type', '').lower()
+            type_bonus = 0.0
+            if 'gedi_clearing' in feature_type:
+                type_bonus = 0.3  # Boost GEDI clearings
+            elif 'crop_mark' in feature_type:
+                type_bonus = 0.2  # Boost crop marks
+            elif 'earthwork' in feature_type:
+                type_bonus = 0.25  # Boost earthworks
+            elif 'geometric' in feature_type:
+                type_bonus = 0.15  # Boost geometric features
+            # terra_preta gets no bonus to reduce dominance
+            
+            # Major bonus for convergent features (cross-provider validation)
+            convergence_bonus = 0.0
+            if candidate.get('convergence_score', 0.0) > 0:
+                convergence_bonus = 0.5  # Strong boost for convergent features
+                logger.debug(f"🎯 Convergence bonus: {feature_type} +{convergence_bonus}")
+            
+            # Provider diversity bonus
+            provider_bonus = 0.0
+            if candidate.get('gedi_support') and candidate.get('sentinel2_support'):
+                provider_bonus = 0.4  # Major boost for dual-provider support
+            elif candidate.get('provider') == 'gedi':
+                provider_bonus = 0.2  # Boost GEDI features to balance against Sentinel-2 dominance
+            
+            final_score = base_score + type_bonus + convergence_bonus + provider_bonus
+            candidate['enhanced_score'] = final_score
+            candidate['score_breakdown'] = {
+                'base_score': base_score,
+                'type_bonus': type_bonus,
+                'convergence_bonus': convergence_bonus,
+                'provider_bonus': provider_bonus
+            }
             enhanced_candidates.append(candidate)
 
+        # Sort by enhanced score
         sorted_candidates = sorted(
             enhanced_candidates, 
             key=lambda x: x.get('enhanced_score', 0.0), 
             reverse=True
         )
+        
+        # Apply diversity filter to top candidates to ensure type variety
+        diverse_candidates = self._apply_diversity_filter(sorted_candidates, top_n)
 
-        logger.info(f"🏆 Generated {len(sorted_candidates)} enhanced candidates.")
-        return sorted_candidates[:top_n]
+        logger.info(f"🏆 Generated {len(diverse_candidates)} enhanced candidates with diversity filtering.")
+        for i, candidate in enumerate(diverse_candidates[:5]):
+            breakdown = candidate.get('score_breakdown', {})
+            logger.info(f"  {i+1}. {candidate.get('type')} (score: {candidate.get('enhanced_score', 0.0):.2f}) "
+                       f"[base: {breakdown.get('base_score', 0.0):.2f}, type: {breakdown.get('type_bonus', 0.0):.2f}, "
+                       f"conv: {breakdown.get('convergence_bonus', 0.0):.2f}, prov: {breakdown.get('provider_bonus', 0.0):.2f}]")
+        
+        return diverse_candidates
+    
+    def _apply_diversity_filter(self, sorted_candidates: List[EnhancedCandidate], top_n: int) -> List[EnhancedCandidate]:
+        """Apply diversity filtering to ensure variety of feature types in top candidates."""
+        if not sorted_candidates:
+            return []
+        
+        diverse_candidates = []
+        type_counts = {}
+        max_per_type = max(3, top_n // 4)  # Allow max 3 of any type, or 1/4 of total
+        
+        for candidate in sorted_candidates:
+            feature_type = candidate.get('type', 'unknown')
+            current_count = type_counts.get(feature_type, 0)
+            
+            # Always include convergent features regardless of type limits
+            is_convergent = candidate.get('convergence_score', 0.0) > 0
+            
+            if len(diverse_candidates) < top_n and (current_count < max_per_type or is_convergent):
+                diverse_candidates.append(candidate)
+                type_counts[feature_type] = current_count + 1
+            elif len(diverse_candidates) >= top_n:
+                break
+        
+        # If we don't have enough diverse candidates, fill with remaining highest scoring
+        if len(diverse_candidates) < top_n:
+            remaining_needed = top_n - len(diverse_candidates)
+            remaining_candidates = [c for c in sorted_candidates if c not in diverse_candidates]
+            diverse_candidates.extend(remaining_candidates[:remaining_needed])
+        
+        logger.info(f"🎯 Diversity filter applied: {dict(type_counts)}")
+        return diverse_candidates
 
     def _export_enhanced_results(self, zone_name: str, top_candidates: List[EnhancedCandidate]):
         """Exports the top enhanced candidates to a GeoJSON file."""

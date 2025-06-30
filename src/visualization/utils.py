@@ -30,10 +30,13 @@ class DataProcessor:
         
         all_geometries = []
         
-        # Collect all geometries
+        # Collect all geometries with validation
         for data_type, data in map_data.items():
             if hasattr(data, 'geometry') and not data.empty:
-                all_geometries.extend(data.geometry.tolist())
+                # Filter out None geometries from the dataframe
+                valid_geoms = data.geometry.dropna().tolist()
+                all_geometries.extend(valid_geoms)
+                logger.debug(f"Collected {len(valid_geoms)} valid geometries from {data_type}")
         
         if not all_geometries:
             logger.warning("No geometries found, using default Amazon bounds")
@@ -44,9 +47,20 @@ class DataProcessor:
                 'optimal_zoom': 16  # High zoom even for default bounds
             }
         
-        # Calculate bounds
-        lats = [geom.y if hasattr(geom, 'y') else geom.centroid.y for geom in all_geometries]
-        lons = [geom.x if hasattr(geom, 'x') else geom.centroid.x for geom in all_geometries]
+        # Calculate bounds - filter out None geometries
+        valid_geometries = [geom for geom in all_geometries if geom is not None]
+        
+        if not valid_geometries:
+            logger.warning("No valid geometries found after filtering None values")
+            return {
+                'north': -2.0, 'south': -8.0,
+                'east': -65.0, 'west': -75.0,
+                'center_lat': -5.0, 'center_lon': -70.0,
+                'optimal_zoom': 16
+            }
+        
+        lats = [geom.y if hasattr(geom, 'y') else geom.centroid.y for geom in valid_geometries]
+        lons = [geom.x if hasattr(geom, 'x') else geom.centroid.x for geom in valid_geometries]
         
         bounds = {
             'north': max(lats),

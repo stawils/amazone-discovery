@@ -965,69 +965,73 @@ class ModularPipeline:
             else:
                 logger.info(f"📍 No cross-validated features found for {zone_id}")
                 
-            # Export top candidates with enhanced ranking from ALL features
-            # Priority: gedi_support=True (cross-provider validation) gets major boost
-            def calculate_priority_score(feature):
-                confidence = feature.get('confidence', 0.0)
-                convergent_score = feature.get('convergent_score', 0.0)
-                area_m2 = feature.get('area_m2', 0.0)
-                gedi_support = feature.get('gedi_support', False)
-                sentinel2_support = feature.get('sentinel2_support', False)
+            # Export top candidates - defer to cross-provider analysis if multiple providers
+            if self._cross_provider_analysis_enabled():
+                logger.info(f"🏆 Skipping individual provider top candidates - will be handled by cross-provider analysis")
+            else:
+                # Single provider mode: Export top candidates with enhanced ranking from ALL features
+                # Priority: gedi_support=True (cross-provider validation) gets major boost
+                def calculate_priority_score(feature):
+                    confidence = feature.get('confidence', 0.0)
+                    convergent_score = feature.get('convergent_score', 0.0)
+                    area_m2 = feature.get('area_m2', 0.0)
+                    gedi_support = feature.get('gedi_support', False)
+                    sentinel2_support = feature.get('sentinel2_support', False)
+                    
+                    # Handle None values that can cause comparison errors
+                    if area_m2 is None:
+                        area_m2 = 0.0
+                    if confidence is None:
+                        confidence = 0.0
+                    if convergent_score is None:
+                        convergent_score = 0.0
+                    
+                    # Base score from confidence
+                    score = confidence
+                    
+                    # MAJOR boost for cross-provider validation (the most important factor)
+                    if gedi_support or sentinel2_support:
+                        score += 10.0  # Massive boost for cross-provider validation
+                        logger.debug(f"🎯 Cross-provider boost: {feature.get('type')} +10.0 points")
+                    
+                    # Additional boost for convergent score
+                    if convergent_score > 0:
+                        score += convergent_score * 1.5  # Weight convergence score
+                    
+                    # Boost for larger areas (archaeological significance)
+                    if area_m2 and area_m2 > 50000:  # > 5 hectares
+                        score += 1.0
+                    elif area_m2 and area_m2 > 10000:  # > 1 hectare
+                        score += 0.5
+                    
+                    # Boost for high-significance archaeological types
+                    feature_type = feature.get('type', '').lower()
+                    if 'terra_preta' in feature_type:
+                        score += 0.5
+                    if 'gedi_clearing' in feature_type:
+                        score += 0.3
+                    if 'multi_sensor' in feature.get('provider', ''):
+                        score += 2.0  # High boost for multi-sensor features
+                    
+                    return score
                 
-                # Handle None values that can cause comparison errors
-                if area_m2 is None:
-                    area_m2 = 0.0
-                if confidence is None:
-                    confidence = 0.0
-                if convergent_score is None:
-                    convergent_score = 0.0
-                
-                # Base score from confidence
-                score = confidence
-                
-                # MAJOR boost for cross-provider validation (the most important factor)
-                if gedi_support or sentinel2_support:
-                    score += 10.0  # Massive boost for cross-provider validation
-                    logger.debug(f"🎯 Cross-provider boost: {feature.get('type')} +10.0 points")
-                
-                # Additional boost for convergent score
-                if convergent_score > 0:
-                    score += convergent_score * 1.5  # Weight convergence score
-                
-                # Boost for larger areas (archaeological significance)
-                if area_m2 and area_m2 > 50000:  # > 5 hectares
-                    score += 1.0
-                elif area_m2 and area_m2 > 10000:  # > 1 hectare
-                    score += 0.5
-                
-                # Boost for high-significance archaeological types
-                feature_type = feature.get('type', '').lower()
-                if 'terra_preta' in feature_type:
-                    score += 0.5
-                if 'gedi_clearing' in feature_type:
-                    score += 0.3
-                if 'multi_sensor' in feature.get('provider', ''):
-                    score += 2.0  # High boost for multi-sensor features
-                
-                return score
-            
-            # Select top candidates from ALL features (not just combined)
-            if all_features:
-                top_candidates = sorted(all_features, 
-                                      key=calculate_priority_score, 
-                                      reverse=True)[:5]
-                
-                logger.info(f"🏆 Top 5 candidate ranking:")
-                for i, candidate in enumerate(top_candidates):
-                    conv_score = candidate.get('convergent_score', 0.0)
-                    priority_score = calculate_priority_score(candidate)
-                    logger.info(f"  {i+1}. {candidate.get('type')} (conf: {candidate['confidence']:.2f}, conv: {conv_score:.1f}, priority: {priority_score:.2f})")
-                for i, candidate in enumerate(top_candidates):
-                    candidate['priority_rank'] = i + 1
-                    candidate['field_investigation_priority'] = 'high' if i < 3 else 'medium'
-                
-                self.export_manager.export_top_candidates(top_candidates, zone_id, len(top_candidates))
-                logger.info(f"🎯 Exported {len(top_candidates)} top candidates for {zone_id}")
+                # Select top candidates from ALL features (not just combined)
+                if all_features:
+                    top_candidates = sorted(all_features, 
+                                          key=calculate_priority_score, 
+                                          reverse=True)[:5]
+                    
+                    logger.info(f"🏆 Top 5 candidate ranking:")
+                    for i, candidate in enumerate(top_candidates):
+                        conv_score = candidate.get('convergent_score', 0.0)
+                        priority_score = calculate_priority_score(candidate)
+                        logger.info(f"  {i+1}. {candidate.get('type')} (conf: {candidate['confidence']:.2f}, conv: {conv_score:.1f}, priority: {priority_score:.2f})")
+                    for i, candidate in enumerate(top_candidates):
+                        candidate['priority_rank'] = i + 1
+                        candidate['field_investigation_priority'] = 'high' if i < 3 else 'medium'
+                    
+                    self.export_manager.export_top_candidates(top_candidates, zone_id, len(top_candidates))
+                    logger.info(f"🎯 Exported {len(top_candidates)} top candidates for {zone_id}")
             
         except Exception as e:
             logger.error(f"Error generating unified exports for {zone_id}: {e}", exc_info=True)
@@ -1054,7 +1058,28 @@ class ModularPipeline:
                 if analysis.get("geojson_path"):
                     features = self._load_features_from_geojson(analysis["geojson_path"])
                     for f in features:
-                        if "coordinates" in f: sentinel2_features.append({'coordinates': f["coordinates"], 'provider': 'sentinel2', 'confidence': f.get('confidence', conf), 'type': f.get('type', f_type), 'area_m2': f.get('area_m2', 0.0), 'zone': zone_id, 'run_id': self.run_id, 'archaeological_grade': grade})
+                        if "coordinates" in f: 
+                            # Preserve all geometric data for proper polygon export
+                            feature_data = {
+                                'coordinates': f["coordinates"], 
+                                'provider': 'sentinel2', 
+                                'confidence': f.get('confidence', conf), 
+                                'type': f.get('type', f_type), 
+                                'area_m2': f.get('area_m2', 0.0), 
+                                'zone': zone_id, 
+                                'run_id': self.run_id, 
+                                'archaeological_grade': grade
+                            }
+                            
+                            # Preserve geometric data needed for polygon export
+                            if 'geographic_polygon_coords' in f:
+                                feature_data['geographic_polygon_coords'] = f['geographic_polygon_coords']
+                            if 'geographic_line_coords' in f:
+                                feature_data['geographic_line_coords'] = f['geographic_line_coords']
+                            if 'radius_m' in f:
+                                feature_data['radius_m'] = f['radius_m']
+                                
+                            sentinel2_features.append(feature_data)
         
         return gedi_features, sentinel2_features
 

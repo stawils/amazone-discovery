@@ -41,16 +41,29 @@ class FeatureRenderer:
     
     def _extract_coordinates(self, geometry):
         """Extract coordinates in GeoJSON format from Shapely geometry"""
-        if geometry.geom_type == 'Point':
-            return [geometry.x, geometry.y]
-        elif geometry.geom_type == 'LineString':
-            return [[coord[0], coord[1]] for coord in geometry.coords]
-        elif geometry.geom_type == 'Polygon':
-            # Return exterior ring coordinates
-            return [[[coord[0], coord[1]] for coord in geometry.exterior.coords]]
-        else:
-            # Fallback for complex geometries
-            return [geometry.centroid.x, geometry.centroid.y]
+        if geometry is None:
+            logger.warning("Received None geometry, skipping coordinate extraction")
+            return None
+            
+        try:
+            if geometry.geom_type == 'Point':
+                return [geometry.x, geometry.y]
+            elif geometry.geom_type == 'LineString':
+                return [[coord[0], coord[1]] for coord in geometry.coords]
+            elif geometry.geom_type == 'Polygon':
+                # Return exterior ring coordinates
+                return [[[coord[0], coord[1]] for coord in geometry.exterior.coords]]
+            else:
+                # Fallback for complex geometries
+                centroid = geometry.centroid
+                if centroid is not None:
+                    return [centroid.x, centroid.y]
+                else:
+                    logger.warning(f"Could not extract centroid from {geometry.geom_type}")
+                    return None
+        except Exception as e:
+            logger.warning(f"Error extracting coordinates from geometry: {e}")
+            return None
     
     def _process_feature_coordinate(self, all_coordinates: dict, coord_key: tuple, raw_data: dict, geometry, data_key: str):
         """Helper method to process a feature coordinate and merge with existing data"""
@@ -116,12 +129,18 @@ class FeatureRenderer:
                     # DataFrame format
                     for idx, row in data.iterrows():
                         try:
+                            # Check for None geometry
+                            if row.geometry is None:
+                                logger.debug(f"Skipping row {idx} from {data_key}: None geometry")
+                                continue
+                                
                             # Extract coordinates
                             if hasattr(row.geometry, 'coords'):
                                 coords = list(row.geometry.coords)[0]
                             elif hasattr(row.geometry, 'x'):
                                 coords = (row.geometry.x, row.geometry.y)
                             else:
+                                logger.debug(f"Skipping row {idx} from {data_key}: unsupported geometry type")
                                 continue
                             
                             # Round coordinates to avoid floating point duplicates
@@ -258,7 +277,7 @@ class FeatureRenderer:
             logger.info(f"🔗 Loaded {len(map_data['convergence_pairs'])} convergence pairs")
             
             # DIAGNOSTIC: Check if top candidates are diverse (they should be!)
-            if len(map_data['top_candidates']) > 0:
+            if 'top_candidates' in map_data and len(map_data['top_candidates']) > 0:
                 types = map_data['top_candidates']['type'].value_counts()
                 providers = map_data['top_candidates']['provider'].value_counts() if 'provider' in map_data['top_candidates'].columns else {}
                 if len(types) == 1:
@@ -995,6 +1014,34 @@ class FeatureRenderer:
         area_hectares = area_m2 / 10000 if area_m2 > 0 else 0
         shot_density = shot_count / area_hectares if area_hectares > 0 else 0
         
+        # LiDAR analysis fields we just added
+        gap_points = raw_data.get('gap_points_detected', shot_count)
+        mean_elevation = raw_data.get('mean_elevation', None)
+        elevation_std = raw_data.get('elevation_std', None)
+        elevation_threshold = raw_data.get('elevation_anomaly_threshold', None)
+        local_variance = raw_data.get('local_variance', None)
+        pulse_density = raw_data.get('pulse_density', None)
+        
+        # Format enhanced LiDAR analysis section
+        enhanced_analysis = ""
+        if mean_elevation is not None:
+            enhanced_analysis += f"<p><strong>Mean Elevation:</strong> {mean_elevation:.1f}m"
+            if elevation_std is not None:
+                enhanced_analysis += f" (std: {elevation_std:.1f}m)"
+            enhanced_analysis += "</p>"
+        
+        if gap_points and gap_points != shot_count:
+            enhanced_analysis += f"<p><strong>Gap Points Detected:</strong> {gap_points}</p>"
+        
+        if pulse_density is not None:
+            enhanced_analysis += f"<p><strong>Pulse Density:</strong> {pulse_density:.3f} pts/m²</p>"
+        
+        if local_variance is not None:
+            enhanced_analysis += f"<p><strong>Elevation Variance:</strong> {local_variance:.2f}</p>"
+        
+        if elevation_threshold is not None:
+            enhanced_analysis += f"<p><strong>Anomaly Threshold:</strong> {elevation_threshold:.1f}m</p>"
+
         return f"""
         <div class="popup-detailed">
             <div class="popup-header">
@@ -1007,6 +1054,7 @@ class FeatureRenderer:
                 <p><strong>Zone:</strong> {zone}</p>
                 <p><strong>LiDAR Shots:</strong> {shot_count}</p>
                 {f'<p><strong>Shot Density:</strong> {shot_density:.1f}/ha</p>' if shot_density > 0 else ''}
+                {enhanced_analysis}
             </div>
         </div>
         """
@@ -1675,6 +1723,34 @@ class FeatureRenderer:
         p_value = raw_data.get('p_value', 0.001)
         significance_level = "HIGH" if p_value < 0.01 else "MEDIUM" if p_value < 0.05 else "LOW"
         
+        # LiDAR analysis fields we just added
+        gap_points = raw_data.get('gap_points_detected', count)
+        mean_elevation = raw_data.get('mean_elevation', None)
+        elevation_std = raw_data.get('elevation_std', None)
+        elevation_threshold = raw_data.get('elevation_anomaly_threshold', None)
+        local_variance = raw_data.get('local_variance', None)
+        pulse_density = raw_data.get('pulse_density', None)
+        
+        # Format LiDAR analysis section
+        lidar_analysis = ""
+        if mean_elevation is not None:
+            lidar_analysis += f"<p><strong>Elevation:</strong> {mean_elevation:.1f}m"
+            if elevation_std is not None:
+                lidar_analysis += f" (±{elevation_std:.1f}m)"
+            lidar_analysis += "</p>"
+        
+        if gap_points and gap_points != count:
+            lidar_analysis += f"<p><strong>Gap Points:</strong> {gap_points}</p>"
+        
+        if pulse_density is not None:
+            lidar_analysis += f"<p><strong>Pulse Density:</strong> {pulse_density:.3f} pts/m²</p>"
+        
+        if local_variance is not None:
+            lidar_analysis += f"<p><strong>Elevation Variance:</strong> {local_variance:.2f}</p>"
+        
+        if elevation_threshold is not None:
+            lidar_analysis += f"<p><strong>Anomaly Threshold:</strong> {elevation_threshold:.1f}m</p>"
+
         return f"""
         <div class="popup-compact">
             <div class="popup-header">
@@ -1687,6 +1763,7 @@ class FeatureRenderer:
                 <p><strong>Type:</strong> {feature_type.replace('_', ' ').title()}</p>
                 <p><strong>LiDAR Shots:</strong> {count} ({density:.1f} shots/ha)</p>
                 <p><strong>Quality:</strong> {archaeological_grade.title()}</p>
+                {lidar_analysis}
             </div>
         </div>
         """
@@ -1791,7 +1868,9 @@ class ControlPanel:
         panels = {
             'statistics_panel': self._create_statistics_panel(stats),
             'filter_panel': self._create_filter_panel(map_data),
-            'legend_panel': self._create_legend_panel()
+            'legend_panel': self._create_legend_panel(),
+            'lidar_analysis_panel': self._create_lidar_analysis_panel(map_data),
+            'archaeological_maps_panel': self._create_archaeological_maps_panel()
         }
         
         return panels
@@ -1910,6 +1989,122 @@ class ControlPanel:
                 <div class="legend-item">
                     <span class="legend-icon">🚩</span>
                     <span class="legend-text">Priority Site</span>
+                </div>
+            </div>
+        </div>
+        """
+    
+    def _create_lidar_analysis_panel(self, map_data: Dict) -> str:
+        """Create LiDAR analysis panel showing elevation and gap statistics"""
+        
+        # Extract LiDAR analysis data from GEDI features
+        gedi_features = []
+        if 'gedi_only' in map_data:
+            gedi_features.extend(map_data['gedi_only'].to_dict('records') if hasattr(map_data['gedi_only'], 'to_dict') else map_data['gedi_only'])
+        if 'combined' in map_data:
+            # Filter for GEDI features in combined data
+            combined_data = map_data['combined']
+            if hasattr(combined_data, 'iterrows'):
+                for _, row in combined_data.iterrows():
+                    if row.get('provider') == 'gedi' or 'gedi' in str(row.get('type', '')).lower():
+                        gedi_features.append(row.to_dict())
+        
+        # Calculate LiDAR statistics
+        elevations = []
+        gap_points_total = 0
+        pulse_densities = []
+        elevation_stds = []
+        feature_count = 0
+        
+        for feature in gedi_features:
+            feature_count += 1
+            
+            # Collect elevation data
+            mean_elev = feature.get('mean_elevation')
+            if mean_elev is not None:
+                elevations.append(mean_elev)
+            
+            # Collect gap points
+            gap_points = feature.get('gap_points_detected', 0)
+            if gap_points:
+                gap_points_total += gap_points
+            
+            # Collect pulse density
+            pulse_density = feature.get('pulse_density')
+            if pulse_density is not None:
+                pulse_densities.append(pulse_density)
+            
+            # Collect elevation standard deviations
+            elev_std = feature.get('elevation_std')
+            if elev_std is not None:
+                elevation_stds.append(elev_std)
+        
+        # Calculate summary statistics
+        avg_elevation = sum(elevations) / len(elevations) if elevations else 0
+        elevation_range = f"{min(elevations):.1f} - {max(elevations):.1f}m" if elevations else "N/A"
+        avg_pulse_density = sum(pulse_densities) / len(pulse_densities) if pulse_densities else 0
+        avg_elevation_std = sum(elevation_stds) / len(elevation_stds) if elevation_stds else 0
+        
+        return f"""
+        <div class="lidar-analysis-panel">
+            <h4>📡 LiDAR Analysis Summary</h4>
+            <div class="lidar-stats">
+                <div class="lidar-stat-item">
+                    <span class="stat-number">{feature_count}</span>
+                    <span class="stat-label">GEDI Features</span>
+                </div>
+                <div class="lidar-stat-item">
+                    <span class="stat-number">{gap_points_total:,}</span>
+                    <span class="stat-label">Total Gap Points</span>
+                </div>
+                <div class="lidar-stat-item">
+                    <span class="stat-number">{avg_elevation:.1f}m</span>
+                    <span class="stat-label">Avg Elevation</span>
+                </div>
+                <div class="lidar-stat-item">
+                    <span class="stat-number">{elevation_range}</span>
+                    <span class="stat-label">Elevation Range</span>
+                </div>
+                <div class="lidar-stat-item">
+                    <span class="stat-number">{avg_pulse_density:.3f}</span>
+                    <span class="stat-label">Avg Pulse Density</span>
+                </div>
+                <div class="lidar-stat-item">
+                    <span class="stat-number">±{avg_elevation_std:.1f}m</span>
+                    <span class="stat-label">Avg Elevation Std</span>
+                </div>
+            </div>
+        </div>
+        """
+    
+    def _create_archaeological_maps_panel(self) -> str:
+        """Create panel with links to generated archaeological maps"""
+        
+        return f"""
+        <div class="archaeological-maps-panel">
+            <h4>🏛️ Archaeological Visualizations</h4>
+            <div class="archaeological-links">
+                <p><strong>Advanced LiDAR Analysis Maps:</strong></p>
+                <div class="map-links">
+                    <div class="map-link-item">
+                        <span class="map-icon">🗺️</span>
+                        <span class="map-description">Digital Elevation Model - Ground surface through canopy</span>
+                    </div>
+                    <div class="map-link-item">
+                        <span class="map-icon">🌳</span>
+                        <span class="map-description">Canopy Height Model - Vegetation analysis</span>
+                    </div>
+                    <div class="map-link-item">
+                        <span class="map-icon">🏛️</span>
+                        <span class="map-description">Archaeological Features - Temples, buildings, structures</span>
+                    </div>
+                    <div class="map-link-item">
+                        <span class="map-icon">🛤️</span>
+                        <span class="map-description">Ancient Infrastructure - Roads, causeways, terraces</span>
+                    </div>
+                </div>
+                <div class="archaeological-info">
+                    <p><em>Archaeological visualizations are automatically generated and saved to the archaeological_maps directory. These maps use advanced LiDAR processing techniques proven at Maya and Angkor sites to reveal hidden structures through forest canopy.</em></p>
                 </div>
             </div>
         </div>

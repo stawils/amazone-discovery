@@ -848,7 +848,7 @@ class GEDIArchaeologicalDetector:
             # Save results to cache
             files_saved_successfully = True
             
-            # Save clearings with proper metadata
+            # Save clearings with proper metadata and LiDAR analysis fields
             gap_clusters_with_metadata = []
             for cluster in clearing_results.get("gap_clusters", []):
                 cluster_with_meta = cluster.copy()
@@ -856,16 +856,55 @@ class GEDIArchaeologicalDetector:
                 params = get_current_params()
                 gedi_params = params['gedi']
                 
+                # Calculate analysis fields for export manager
+                cluster_center = cluster.get("center", [0, 0])
+                cluster_count = cluster.get("count", 1)
+                area_km2 = cluster.get("area_km2", 0)
+                
+                # Calculate basic elevation statistics for this cluster region
+                # Find elevation data near cluster center (approximate)
+                if len(coordinates) > 0 and len(elevation_data) > 0:
+                    center_lat, center_lon = cluster_center
+                    # Find points within cluster region (rough approximation)
+                    distances = np.sqrt((coordinates[:, 1] - center_lat)**2 + (coordinates[:, 0] - center_lon)**2)
+                    cluster_radius = np.sqrt(area_km2 / np.pi) * 111.32  # Convert km to degrees roughly
+                    nearby_mask = distances <= max(cluster_radius, 0.001)  # At least 100m radius
+                    
+                    if np.any(nearby_mask):
+                        nearby_elevations = elevation_data[nearby_mask]
+                        valid_elevations = nearby_elevations[~np.isnan(nearby_elevations)]
+                        
+                        if len(valid_elevations) > 0:
+                            mean_elevation = float(np.mean(valid_elevations))
+                            elevation_std = float(np.std(valid_elevations))
+                            local_variance = float(np.var(valid_elevations))
+                        else:
+                            mean_elevation = elevation_std = local_variance = None
+                    else:
+                        mean_elevation = elevation_std = local_variance = None
+                else:
+                    mean_elevation = elevation_std = local_variance = None
+                
                 cluster_with_meta.update({
                     "provider": "gedi",
                     "confidence": gedi_params.clearing_confidence,  # Configurable confidence
                     "type": "gedi_clearing",
-                    "area_m2": cluster.get("area_km2", 0) * 1000000,  # Convert km2 to m2
-                    "coordinates": list(cluster.get("center", []))  # Add coordinates field for compatibility
+                    "area_m2": area_km2 * 1000000,  # Convert km2 to m2
+                    "coordinates": list(cluster_center),  # Add coordinates field for compatibility
+                    
+                    # LiDAR analysis fields expected by export manager
+                    "gap_points_detected": cluster_count,
+                    "mean_elevation": mean_elevation,
+                    "elevation_std": elevation_std,
+                    "elevation_anomaly_threshold": earthwork_results.get("elevation_stats", {}).get("anomaly_threshold", None),
+                    "local_variance": local_variance,
+                    "pulse_density": cluster_count / max(area_km2 * 1000000, 490.87) if area_km2 > 0 else None  # Points per m2
                 })
                 gap_clusters_with_metadata.append(cluster_with_meta)
             
-            clearing_gdf = _create_geojson_from_features(gap_clusters_with_metadata, "clearings", "center", ["count", "area_km2", "provider", "confidence", "type", "area_m2"])
+            clearing_gdf = _create_geojson_from_features(gap_clusters_with_metadata, "clearings", "center", 
+                ["count", "area_km2", "provider", "confidence", "type", "area_m2", "gap_points_detected", 
+                 "mean_elevation", "elevation_std", "elevation_anomaly_threshold", "local_variance", "pulse_density"])
             if clearing_gdf is not None and not clearing_gdf.empty:
                 try:
                     clearing_gdf.to_file(clearings_geojson_path, driver="GeoJSON")
@@ -883,22 +922,124 @@ class GEDIArchaeologicalDetector:
             for mc in mound_clusters: # mound_clusters are lists of dicts
                 mc_copy = mc.copy()
                 mc_copy["feature_subtype"] = "mound_cluster"
+                
+                # Add LiDAR analysis fields for mounds as well
+                mound_center = mc.get("center", [0, 0])
+                mound_count = mc.get("count", 1)
+                mound_area_km2 = mc.get("area_km2", 0)
+                
+                # Calculate elevation statistics for mound
+                if len(coordinates) > 0 and len(elevation_data) > 0:
+                    center_lat, center_lon = mound_center
+                    distances = np.sqrt((coordinates[:, 1] - center_lat)**2 + (coordinates[:, 0] - center_lon)**2)
+                    mound_radius = np.sqrt(mound_area_km2 / np.pi) * 111.32
+                    nearby_mask = distances <= max(mound_radius, 0.001)
+                    
+                    if np.any(nearby_mask):
+                        nearby_elevations = elevation_data[nearby_mask]
+                        valid_elevations = nearby_elevations[~np.isnan(nearby_elevations)]
+                        
+                        if len(valid_elevations) > 0:
+                            mound_mean_elevation = float(np.mean(valid_elevations))
+                            mound_elevation_std = float(np.std(valid_elevations))
+                            mound_local_variance = float(np.var(valid_elevations))
+                        else:
+                            mound_mean_elevation = mound_elevation_std = mound_local_variance = None
+                    else:
+                        mound_mean_elevation = mound_elevation_std = mound_local_variance = None
+                else:
+                    mound_mean_elevation = mound_elevation_std = mound_local_variance = None
+                
+                mc_copy.update({
+                    "provider": "gedi",
+                    "type": "gedi_mound",
+                    "area_m2": mound_area_km2 * 1000000,
+                    "coordinates": list(mound_center),
+                    
+                    # LiDAR analysis fields
+                    "gap_points_detected": mound_count,
+                    "mean_elevation": mound_mean_elevation,
+                    "elevation_std": mound_elevation_std,
+                    "elevation_anomaly_threshold": earthwork_results.get("elevation_stats", {}).get("anomaly_threshold", None),
+                    "local_variance": mound_local_variance,
+                    "pulse_density": mound_count / max(mound_area_km2 * 1000000, 490.87) if mound_area_km2 > 0 else None
+                })
+                
                 earthwork_features_for_gdf.append(mc_copy)
 
             linear_feats = earthwork_results.get("linear_features", []) # linear_features are lists of dicts
             for lf in linear_feats:
                 lf_copy = lf.copy()
                 lf_copy["feature_subtype"] = "linear_feature"
+                
+                # Add LiDAR analysis fields for linear features
+                linear_coords = lf.get("coordinates", [])
+                if linear_coords and len(linear_coords) > 0:
+                    # Calculate centroid for analysis
+                    linear_lats = [coord[0] for coord in linear_coords if len(coord) >= 2]
+                    linear_lons = [coord[1] for coord in linear_coords if len(coord) >= 2]
+                    if linear_lats and linear_lons:
+                        centroid_lat = np.mean(linear_lats)
+                        centroid_lon = np.mean(linear_lons)
+                        
+                        # Find elevation data along the linear feature
+                        if len(coordinates) > 0 and len(elevation_data) > 0:
+                            # Use broader search radius for linear features
+                            distances = np.sqrt((coordinates[:, 1] - centroid_lat)**2 + (coordinates[:, 0] - centroid_lon)**2)
+                            nearby_mask = distances <= 0.002  # ~200m radius
+                            
+                            if np.any(nearby_mask):
+                                nearby_elevations = elevation_data[nearby_mask]
+                                valid_elevations = nearby_elevations[~np.isnan(nearby_elevations)]
+                                
+                                if len(valid_elevations) > 0:
+                                    linear_mean_elevation = float(np.mean(valid_elevations))
+                                    linear_elevation_std = float(np.std(valid_elevations))
+                                    linear_local_variance = float(np.var(valid_elevations))
+                                    linear_point_count = len(valid_elevations)
+                                else:
+                                    linear_mean_elevation = linear_elevation_std = linear_local_variance = None
+                                    linear_point_count = 0
+                            else:
+                                linear_mean_elevation = linear_elevation_std = linear_local_variance = None
+                                linear_point_count = 0
+                        else:
+                            linear_mean_elevation = linear_elevation_std = linear_local_variance = None
+                            linear_point_count = 0
+                    else:
+                        linear_mean_elevation = linear_elevation_std = linear_local_variance = None
+                        linear_point_count = 0
+                else:
+                    linear_mean_elevation = linear_elevation_std = linear_local_variance = None
+                    linear_point_count = 0
+                
+                lf_copy.update({
+                    "provider": "gedi",
+                    "type": "gedi_linear",
+                    
+                    # LiDAR analysis fields
+                    "gap_points_detected": linear_point_count,
+                    "mean_elevation": linear_mean_elevation,
+                    "elevation_std": linear_elevation_std,
+                    "elevation_anomaly_threshold": earthwork_results.get("elevation_stats", {}).get("anomaly_threshold", None),
+                    "local_variance": linear_local_variance,
+                    "pulse_density": None  # Not applicable to linear features
+                })
+                
                 # geom_key for linear features is 'coordinates' (list of points)
                 earthwork_features_for_gdf.append(lf_copy)
 
             # Need a way to tell _create_geojson_from_features about different geom_keys per subtype
             # Simpler: save mounds and linear features separately if their geometry representation differs significantly
             
-            # Save Mounds
-            mound_gdf = _create_geojson_from_features(mound_clusters, "earthworks_mounds", "center", ["count", "area_km2"])
-            # Save Linear Features (geom_key is 'coordinates')
-            linear_gdf = _create_geojson_from_features(linear_feats, "earthworks_linear", "coordinates", ["r2", "length_km"])
+            # Save Mounds with enhanced properties
+            mound_gdf = _create_geojson_from_features(mound_clusters, "earthworks_mounds", "center", 
+                ["count", "area_km2", "provider", "type", "area_m2", "gap_points_detected", 
+                 "mean_elevation", "elevation_std", "elevation_anomaly_threshold", "local_variance", "pulse_density"])
+            # Save Linear Features (geom_key is 'coordinates') with enhanced properties
+            linear_gdf = _create_geojson_from_features(linear_feats, "earthworks_linear", "coordinates", 
+                ["r2", "length_km", "provider", "type", "gap_points_detected", 
+                 "mean_elevation", "elevation_std", "elevation_anomaly_threshold", "local_variance", "pulse_density"])
 
             # Combine GDFs if both exist, or use whichever one exists
             combined_earthworks_gdf = None
