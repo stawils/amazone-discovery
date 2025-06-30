@@ -837,20 +837,20 @@ flake8 src/
 ```bibtex
 @software{amazon_archaeological_discovery_2025,
   title={Amazon Archaeological Discovery Pipeline: Multi-Sensor Remote Sensing System},
-  author={Research Team},
+  author={Suleiman Tawil},
   year={2025},
-  url={https://github.com/your-username/amazon-discovery},
+  url={https://github.com/stawils/amazon-discovery},
   note={Archaeological feature detection using NASA GEDI and Sentinel-2 data}
 }
 ```
 
 ---
 
-## 📞 **Support & Documentation**
+## 📞 ** Documentation**
 
-- **Issues**: [GitHub Issues](https://github.com/your-username/amazon-discovery/issues)
+- **Issues**: [GitHub Issues](https://github.com/stawils/amazon-discovery/issues)
 - **Documentation**: [Technical Docs](docs/)
-- **Discussions**: [Research Forum](https://github.com/your-username/amazon-discovery/discussions)
+- **Discussions**: [Research Forum](https://github.com/stawils/amazon-discovery/discussions)
 
 ---
 
